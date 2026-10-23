@@ -1,0 +1,95 @@
+@use "../utils/mixin" as *;
+
+.header {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    background-color: var(--black);
+
+}
+
+.header__container {
+    margin-left: auto;
+    margin-right: auto;
+    
+    display: flex;
+    align-items: center;
+   justify-content: space-between;
+}
+.btns {
+
+}
+.btn__characters {
+       @include text($color: #fafafa, $size: 14px, $height: 129%, $weight: 600);
+    //  @include text($color: var(--black), $size: 14px, $height: 129%, $weight: 600);
+     border: 1px solid rgba(250, 250, 250, 0.3);
+    border-radius: 1000px;
+padding: 12px 24px;
+width: 126px;
+height: 42px;
+// background: var(--green);
+background: transparent;
+
+
+}
+.btn__episodes {
+     @include text($color: #fafafa, $size: 14px, $height: 129%, $weight: 600);
+    border: 1px solid rgba(250, 250, 250, 0.3);
+border-radius: 1000px;
+padding: 12px 24px;
+width: 113px;
+height: 42px;
+background: transparent;
+}
+.search {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background-color: var(--bg-color);
+  border: 1px solid  rgba(250, 250, 250, 0.3);
+  border-radius: 50px;
+  overflow: hidden;
+  transition: 0.5s;
+  box-shadow: var(--box-shadow);
+}
+
+.search:hover {
+  width: 350px;
+  border-color: #777;
+  box-shadow: var( --hover-shadow);
+}
+
+.search input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0 70px 0 25px;
+  font-size: 1rem;
+  background-color: transparent;
+   color: #fafafa;
+  outline: none;
+}
+
+.search input::placeholder {
+  color: #fafafa;
+}
+
+.search_icon {
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ color: #fafafa;
+  font-size: 1rem;
+}
+
+.search-form {
+
+}
+.search input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
