@@ -156,6 +156,11 @@ a {
   appearance: none;
 }
 
+.logo {
+  width: 193px;
+  height: 73px;
+}
+
 .hero {
   background-color: var(--black);
   border-radius: 0 0 100px 100px;
@@ -220,6 +225,53 @@ a {
   object-fit: contain;
   width: 460px;
   height: 175px;
+}
+
+.hero__content {
+  flex-direction: column;
+  width: 555px;
+  margin-right: 80px;
+  display: flex;
+}
+
+.hero__title {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 100px;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.hero__info {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  width: 482px;
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 125%;
+}
+
+.hero__button {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  background: none;
+  border: 1px solid #fafafa4d;
+  border-radius: 1000px;
+  height: 42px;
+  margin-right: auto;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 129%;
 }
 
 :root {
