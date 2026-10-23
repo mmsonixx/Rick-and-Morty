@@ -1,0 +1,33 @@
+{
+  "name": "rick-and-morty",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "npx parcel src/index.html",
+    "build": "parcel build src/index.html  --public-url /Rick-and-Morty/",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "sass-compile": "sass src/sass/main.scss dist/css/style.css",
+    "sass-watch": "sass --watch src/sass/main.scss dist/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmsonixx/Rick-and-Morty.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mmsonixx/Rick-and-Morty/issues"
+  },
+  "homepage": "https://github.com/mmsonixx/Rick-and-Morty#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.16.4",
+    "parcel": "^2.16.4"
+  },
+  "dependencies": {
+    "gh-pages": "^6.3.0",
+    "sass": "^1.106.1"
+  }
+}
