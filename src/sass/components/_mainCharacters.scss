@@ -1,0 +1,53 @@
+@use "../utils/mixin" as *;
+.main-characters {
+  padding-top: 100px;
+  padding-bottom: 50px;
+}
+
+.title__main-characters {
+  @include text($color: black, $size: 44px, $height: 100%, $weight: 600);
+  margin-bottom: 64px;
+}
+.title__main-characters span {
+  color: #fafafa;
+  padding: 5px;
+  border-radius: 44px;
+  width: 145px;
+  height: 56px;
+  background: var(--black);
+}
+.main-characters__container {
+  display: flex;
+}
+.main-characters__img {
+  border-radius: 100px;
+  width: 504px;
+  height: 644px;
+  margin-right: 32px;
+}
+.main-characters__list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 648px;
+}
+
+.main-characters__item {
+
+  border-bottom: 1px solid rgba(17, 17, 17, 0.2);
+}
+
+.main-characters__subtitle {
+  @include text($color: #111, $size: 24px, $height: 117%, $weight: 600);
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #97ce4c;
+  }
+}
+.main-characters__text {
+  @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
+  margin-bottom: 15px;
+}
