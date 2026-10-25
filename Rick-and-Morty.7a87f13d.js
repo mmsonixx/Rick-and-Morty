@@ -1,0 +1,2 @@
+let e=document.querySelectorAll(".main-characters__subtitle"),t=document.querySelector(".main-characters__img"),c={"Rick Sanchez":{},"Morty Smith":{},"Summer Smith":{},"Beth Smith":{},"Jerry Smith":{}};e.forEach(e=>{e.addEventListener("click",()=>{let o=e.textContent.trim(),r=c[o];console.log("Изображение:",r),console.log("Тип:",typeof r),console.log("Ключи:",Object.keys(r)),t.src=r,t.alt=o})});
+//# sourceMappingURL=Rick-and-Morty.7a87f13d.js.map
