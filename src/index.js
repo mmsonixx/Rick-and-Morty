@@ -1,1 +1,1 @@
-import "./js/operation/mainCharacters.js";
+import "./js/operation/home/mainCharacters.js";

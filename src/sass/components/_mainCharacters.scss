@@ -10,7 +10,7 @@
 }
 .title__main-characters span {
   color: #fafafa;
-  padding: 5px;
+  padding: 5px 10px;
   border-radius: 44px;
   width: 145px;
   height: 56px;
@@ -33,7 +33,6 @@
 }
 
 .main-characters__item {
-
   border-bottom: 1px solid rgba(17, 17, 17, 0.2);
 }
 
@@ -41,9 +40,11 @@
   @include text($color: #111, $size: 24px, $height: 117%, $weight: 600);
   margin-bottom: 20px;
   cursor: pointer;
+
   transition: color 0.2s ease;
 
-  &:hover {
+  &:hover,
+  &.active {
     color: #97ce4c;
   }
 }

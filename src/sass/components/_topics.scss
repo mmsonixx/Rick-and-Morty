@@ -1,0 +1,151 @@
+@use "../utils/mixin" as *;
+.topics {
+  padding: 0 10px 35px;
+
+  &__tags {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 8px;
+    min-height: 65px;
+    padding-top: 20px;
+  }
+
+  &__tag {
+    @include text($color: #101719, $size: 21px, $height: 105%, $weight: 600);
+
+    letter-spacing: 0.02em;
+
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 30px;
+    background: #a8e529;
+
+    
+
+    white-space: nowrap;
+
+    &--1 {
+         background: var(--light-green);
+      position: absolute;
+      top: -19px;
+      left: 12%;
+      transform: rotate(32deg);
+      z-index: 2;
+    }
+
+    &--2 {
+      position: absolute;
+      top: -4px;
+      left: 5%;
+    }
+
+    &--3 {
+       
+      position: absolute;
+      top: 35px;
+      left: 0;
+      background: #101719;
+      color: #fff;
+    }
+
+    &--4 {
+      position: absolute;
+      top: 15px;
+      left: 27%;
+      transform: rotate(17deg);
+      background: #101719;
+      color: #a8e529;
+      z-index: 2;
+    }
+
+    &--5 {
+      position: absolute;
+      top: 35px;
+      left: 20%;
+    }
+
+    &--6 {
+        
+         background: var(--light-green);
+      position: absolute;
+      top: 20px;
+      left: 40%;
+        transform: rotate(140deg);
+      z-index: 2;
+    }
+
+    &--7 {
+           transform: rotate(180deg);
+      position: absolute;
+      top: 35px;
+      left: 45%;
+    }
+
+    &--8 {
+      position: absolute;
+      top: 35px;
+      left: 56%;
+      background: #101719;
+      color: #fff;
+    }
+
+    &--9 {
+          background: var(--light-green);
+      position: absolute;
+      top: 10px;
+      left: 67%;
+      transform: rotate(35deg);
+      z-index: 2;
+    }
+
+    &--10 {
+         transform: rotate(180deg);
+      position: absolute;
+      top: 35px;
+      left: 77%;
+      background: #101719;
+      color: #a8e529;
+    }
+
+    &--11 {
+         background: var(--light-green);
+      position: absolute;
+      top: 10px;
+      right: 3%;
+      transform: rotate(160deg);
+      z-index: 2;
+    }
+
+    &--12 {
+         transform: rotate(180deg);
+      position: absolute;
+      top: 35px;
+      right: 0;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .topics__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: auto;
+    padding-top: 25px;
+  }
+
+  .topics__tag {
+    position: static;
+    font-size: 12px;
+
+    &--1,
+    &--4,
+    &--6,
+    &--9,
+    &--11 {
+      transform: rotate(-8deg);
+    }
+  }
+}

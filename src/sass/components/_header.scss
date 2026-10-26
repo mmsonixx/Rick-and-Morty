@@ -16,17 +16,18 @@
    justify-content: space-between;
 }
 .btns {
+  
 
 }
 .btn__characters {
        @include text($color: #fafafa, $size: 14px, $height: 129%, $weight: 600);
-    //  @include text($color: var(--black), $size: 14px, $height: 129%, $weight: 600);
+    
      border: 1px solid rgba(250, 250, 250, 0.3);
     border-radius: 1000px;
 padding: 12px 24px;
 width: 126px;
 height: 42px;
-// background: var(--green);
+
 background: transparent;
 
 
@@ -99,3 +100,18 @@ background: transparent;
 width: 193px;
 height: 73px;
 }
+
+
+
+
+.btn__characters:hover,
+.btn__episodes:hover {
+    background-color: var(--green);
+    color: var(--black);
+    border-color: var(--green);
+  
+}
+
+
+
+

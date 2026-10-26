@@ -1,0 +1,62 @@
+@use "../utils/mixin" as *;
+
+.footer {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.footer__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 100px;
+
+}
+.footer__logo {
+    width: 225px;
+height: 120px;
+}
+.footer__btns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+   
+}
+.footer__btn__link {
+ 
+
+}
+.footer__btn__link button {
+    @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
+   
+letter-spacing: 0.01em;
+     background: transparent;
+}
+
+.footer__list {
+    display: flex;
+    gap: 32px;
+
+}
+.footer__item {
+border: 1px solid #11111147;
+border-radius: 12px;
+width: 56px;
+height: 56px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.footer__link{
+
+}
+.footer__svg {
+  width: 28px;
+height: 28px;
+}
+.footer__info {
+   @include text($color: rgba(17, 17, 17, 0.4), $size: 14px, $height: 129%, $weight: 400);
+
+text-align: center;
+
+}

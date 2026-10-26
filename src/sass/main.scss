@@ -5,6 +5,9 @@
 @use "./components/header";
 @use './components/hero';
 @use './components/mainCharacters';
+@use "./components/topics";
+
+@use "./components/footer";
 
 // utils
 @use "./utils/variebles";
