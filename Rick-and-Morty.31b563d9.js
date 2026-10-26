@@ -177,7 +177,7 @@
 
   // Only insert newRequire.load when it is actually used.
   // The code in this file is linted against ES5, so dynamic import is not allowed.
-  // INSERT_LOAD_HERE
+  function $parcel$resolve(url) {  url = importMap[url] || url;  return import.meta.resolve(distDir + url);}newRequire.resolve = $parcel$resolve;
 
   Object.defineProperty(newRequire, 'root', {
     get: function () {
@@ -714,71 +714,43 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"a0t4e":[function(require,module,exports,__globalThis) {
-var _mainCharactersJs = require("./js/operation/mainCharacters.js");
+var _mainCharactersJs = require("./js/operation/home/mainCharacters.js");
 
-},{"./js/operation/mainCharacters.js":"ewTvD"}],"ewTvD":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _rickSanchezWebp = require("../../img/main-characters/rick-sanchez.webp");
-var _rickSanchezWebpDefault = parcelHelpers.interopDefault(_rickSanchezWebp);
-var _mortySmithWebp = require("../../img/main-characters/morty-smith.webp");
-var _mortySmithWebpDefault = parcelHelpers.interopDefault(_mortySmithWebp);
-var _summerSmithWebp = require("../../img/main-characters/summer-smith.webp");
-var _summerSmithWebpDefault = parcelHelpers.interopDefault(_summerSmithWebp);
-var _bethSmithWebp = require("../../img/main-characters/beth-smith.webp");
-var _bethSmithWebpDefault = parcelHelpers.interopDefault(_bethSmithWebp);
-var _jerrySmithWebp = require("../../img/main-characters/jerry-smith.webp");
-var _jerrySmithWebpDefault = parcelHelpers.interopDefault(_jerrySmithWebp);
-const names = document.querySelectorAll(".main-characters__subtitle");
-const image = document.querySelector(".main-characters__img");
+},{"./js/operation/home/mainCharacters.js":"3zZ11"}],"3zZ11":[function(require,module,exports,__globalThis) {
 const characterImages = {
-    "Rick Sanchez": (0, _rickSanchezWebpDefault.default),
-    "Morty Smith": (0, _mortySmithWebpDefault.default),
-    "Summer Smith": (0, _summerSmithWebpDefault.default),
-    "Beth Smith": (0, _bethSmithWebpDefault.default),
-    "Jerry Smith": (0, _jerrySmithWebpDefault.default)
+    "Rick Sanchez": new URL(require("22e5763120dde629")).href,
+    "Morty Smith": new URL(require("2a67fdfa1072a0d3")).href,
+    "Summer Smith": new URL(require("d474a0f6a19b1000")).href,
+    "Beth Smith": new URL(require("70d8ea18fceb9ead")).href,
+    "Jerry Smith": new URL(require("d43ad518219ec48b")).href
 };
+const names = document.querySelectorAll(".main-characters__subtitle");
+const image = document.querySelector("#mainCharacterImage");
 names.forEach((name)=>{
     name.addEventListener("click", ()=>{
         const characterName = name.textContent.trim();
-        const imagePath = characterImages[characterName];
-        console.log("\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435:", imagePath);
-        console.log("\u0422\u0438\u043F:", typeof imagePath);
-        console.log("\u041A\u043B\u044E\u0447\u0438:", Object.keys(imagePath));
-        image.src = imagePath;
+        image.src = characterImages[characterName];
         image.alt = characterName;
+        names.forEach((item)=>item.classList.remove("active"));
+        name.classList.add("active");
     });
 });
 
-},{"../../img/main-characters/rick-sanchez.webp":"eFiGb","../../img/main-characters/morty-smith.webp":"kHt6w","../../img/main-characters/summer-smith.webp":"3Ls9Z","../../img/main-characters/beth-smith.webp":"bP0Xk","../../img/main-characters/jerry-smith.webp":"gc6Qh","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"eFiGb":[function() {},{}],"kHt6w":[function() {},{}],"3Ls9Z":[function() {},{}],"bP0Xk":[function() {},{}],"gc6Qh":[function() {},{}],"jnFvT":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
+},{"22e5763120dde629":"4xdel","2a67fdfa1072a0d3":"lLYkL","d474a0f6a19b1000":"epjk1","70d8ea18fceb9ead":"cDznO","d43ad518219ec48b":"2exSH"}],"4xdel":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez.60095b63.webp") + "?" + Date.now();
 
-},{}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {})
+},{}],"lLYkL":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith.f2d971c1.webp") + "?" + Date.now();
+
+},{}],"epjk1":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith.6aef4c32.webp") + "?" + Date.now();
+
+},{}],"cDznO":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith.3339513a.webp") + "?" + Date.now();
+
+},{}],"2exSH":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith.cc262a53.webp") + "?" + Date.now();
+
+},{}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
 
 //# sourceMappingURL=Rick-and-Morty.31b563d9.js.map

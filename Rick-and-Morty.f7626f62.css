@@ -161,6 +161,12 @@ a {
   height: 73px;
 }
 
+.btn__characters:hover, .btn__episodes:hover {
+  background-color: var(--green);
+  color: var(--black);
+  border-color: var(--green);
+}
+
 .hero {
   background-color: var(--black);
   border-radius: 0 0 100px 100px;
@@ -296,7 +302,7 @@ a {
   border-radius: 44px;
   width: 145px;
   height: 56px;
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 .main-characters__container {
@@ -334,7 +340,7 @@ a {
   transition: color .2s;
 }
 
-.main-characters__subtitle:hover {
+.main-characters__subtitle:hover, .main-characters__subtitle.active {
   color: #97ce4c;
 }
 
@@ -347,6 +353,218 @@ a {
   font-size: 16px;
   font-weight: 400;
   line-height: 113%;
+}
+
+.topics {
+  padding: 0 10px 35px;
+}
+
+.topics__tags {
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 8px;
+  min-height: 65px;
+  padding-top: 20px;
+  display: flex;
+  position: relative;
+}
+
+.topics__tag {
+  color: #101719;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  background: #a8e529;
+  border-radius: 30px;
+  padding: 10px 16px;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 105%;
+  display: inline-block;
+}
+
+.topics__tag--1 {
+  background: var(--light-green);
+  z-index: 2;
+  position: absolute;
+  top: -19px;
+  left: 12%;
+  transform: rotate(32deg);
+}
+
+.topics__tag--2 {
+  position: absolute;
+  top: -4px;
+  left: 5%;
+}
+
+.topics__tag--3 {
+  color: #fff;
+  background: #101719;
+  position: absolute;
+  top: 35px;
+  left: 0;
+}
+
+.topics__tag--4 {
+  color: #a8e529;
+  z-index: 2;
+  background: #101719;
+  position: absolute;
+  top: 15px;
+  left: 27%;
+  transform: rotate(17deg);
+}
+
+.topics__tag--5 {
+  position: absolute;
+  top: 35px;
+  left: 20%;
+}
+
+.topics__tag--6 {
+  background: var(--light-green);
+  z-index: 2;
+  position: absolute;
+  top: 20px;
+  left: 40%;
+  transform: rotate(140deg);
+}
+
+.topics__tag--7 {
+  position: absolute;
+  top: 35px;
+  left: 45%;
+  transform: rotate(180deg);
+}
+
+.topics__tag--8 {
+  color: #fff;
+  background: #101719;
+  position: absolute;
+  top: 35px;
+  left: 56%;
+}
+
+.topics__tag--9 {
+  background: var(--light-green);
+  z-index: 2;
+  position: absolute;
+  top: 10px;
+  left: 67%;
+  transform: rotate(35deg);
+}
+
+.topics__tag--10 {
+  color: #a8e529;
+  background: #101719;
+  position: absolute;
+  top: 35px;
+  left: 77%;
+  transform: rotate(180deg);
+}
+
+.topics__tag--11 {
+  background: var(--light-green);
+  z-index: 2;
+  position: absolute;
+  top: 10px;
+  right: 3%;
+  transform: rotate(160deg);
+}
+
+.topics__tag--12 {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  transform: rotate(180deg);
+}
+
+@media (width <= 700px) {
+  .topics__tags {
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: auto;
+    padding-top: 25px;
+    display: flex;
+  }
+
+  .topics__tag {
+    font-size: 12px;
+    position: static;
+  }
+
+  .topics__tag--1, .topics__tag--4, .topics__tag--6, .topics__tag--9, .topics__tag--11 {
+    transform: rotate(-8deg);
+  }
+}
+
+.footer {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.footer__container {
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 100px;
+  display: flex;
+}
+
+.footer__logo {
+  width: 225px;
+  height: 120px;
+}
+
+.footer__btns {
+  flex-direction: column;
+  gap: 20px;
+  display: flex;
+}
+
+.footer__btn__link button {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  letter-spacing: .01em;
+  background: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 113%;
+}
+
+.footer__list {
+  gap: 32px;
+  display: flex;
+}
+
+.footer__item {
+  border: 1px solid #11111147;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  display: flex;
+}
+
+.footer__svg {
+  width: 28px;
+  height: 28px;
+}
+
+.footer__info {
+  color: #1116;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 129%;
 }
 
 :root {
