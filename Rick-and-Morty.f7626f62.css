@@ -280,6 +280,12 @@ a {
   line-height: 129%;
 }
 
+.hero__button:hover {
+  background-color: var(--green);
+  color: var(--black);
+  border-color: var(--green);
+}
+
 .main-characters {
   padding-top: 100px;
   padding-bottom: 50px;
@@ -501,9 +507,91 @@ a {
   }
 }
 
+.characters {
+  padding-top: 50px;
+  padding-bottom: 70px;
+}
+
+.characters__container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  display: flex;
+}
+
+.characters__list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 50px 24px;
+  display: grid;
+}
+
+.characters__item {
+  align-items: none;
+  gap: 6px;
+  justify-content: none;
+  flex-direction: column;
+  display: flex;
+}
+
+.characters__img {
+  border: 2px solid var(--green);
+  border-radius: 18px;
+  width: 278px;
+  height: 314px;
+  margin-bottom: 10px;
+}
+
+.characters__title {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 113%;
+}
+
+.characters__info {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 129%;
+}
+
+.characters__info span {
+  color: #11111180;
+}
+
+.moreCharacters {
+  color: var(--black);
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  background: var(--green);
+  border-radius: 1000px;
+  width: 126px;
+  height: 42px;
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 129%;
+}
+
 .footer {
   padding-top: 50px;
   padding-bottom: 20px;
+}
+
+.characters-page .footer, .episodes-page .footer {
+  background: var(--black);
 }
 
 .footer__container {
@@ -529,11 +617,18 @@ a {
   font-style: normal;
   font-family: var(--font-family);
   letter-spacing: 0;
-  letter-spacing: .01em;
-  background: none;
   font-size: 16px;
   font-weight: 400;
   line-height: 113%;
+}
+
+.characters-page .footer__btn__link button, .episodes-page .footer__btn__link button {
+  color: #fafafa;
+}
+
+.footer__btn__link button {
+  letter-spacing: .01em;
+  background: none;
 }
 
 .footer__list {
@@ -551,6 +646,14 @@ a {
   display: flex;
 }
 
+.characters-page .footer__item, .episodes-page .footer__item {
+  border: 1px solid #4c4b4baa;
+}
+
+.characters-page .footer__link, .episodes-page .footer__link {
+  fill: #fafafa;
+}
+
 .footer__svg {
   width: 28px;
   height: 28px;
@@ -565,6 +668,10 @@ a {
   font-size: 14px;
   font-weight: 400;
   line-height: 129%;
+}
+
+.characters-page .footer__info, .episodes-page .footer__info {
+  color: #fafafa66;
 }
 
 :root {

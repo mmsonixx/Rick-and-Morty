@@ -714,29 +714,149 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"a0t4e":[function(require,module,exports,__globalThis) {
-var _mainCharactersJs = require("./js/operation/home/mainCharacters.js");
+var _renderPageJs = require("./js/markup/renderPage.js");
+(0, _renderPageJs.renderPage)();
 
-},{"./js/operation/home/mainCharacters.js":"3zZ11"}],"3zZ11":[function(require,module,exports,__globalThis) {
-const characterImages = {
-    "Rick Sanchez": new URL(require("22e5763120dde629")).href,
-    "Morty Smith": new URL(require("2a67fdfa1072a0d3")).href,
-    "Summer Smith": new URL(require("d474a0f6a19b1000")).href,
-    "Beth Smith": new URL(require("70d8ea18fceb9ead")).href,
-    "Jerry Smith": new URL(require("d43ad518219ec48b")).href
+},{"./js/markup/renderPage.js":"7MoIJ"}],"7MoIJ":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderPage", ()=>renderPage);
+var _renderCharactersJs = require("./renderCharacters.js");
+var _loadMoreCharactersJs = require("../operation/charactersPage/loadMoreCharacters.js");
+var _mainCharactersJs = require("../operation/homePage/mainCharacters.js");
+const startEvents = async ()=>{
+    const moreBtn = document.querySelector(".moreCharacters");
+    if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
+    (0, _mainCharactersJs.startMainCharactersEvents)();
 };
-const names = document.querySelectorAll(".main-characters__subtitle");
-const image = document.querySelector("#mainCharacterImage");
-names.forEach((name)=>{
-    name.addEventListener("click", ()=>{
-        const characterName = name.textContent.trim();
-        image.src = characterImages[characterName];
-        image.alt = characterName;
-        names.forEach((item)=>item.classList.remove("active"));
-        name.classList.add("active");
-    });
-});
+const renderPage = async ()=>{
+    await (0, _renderCharactersJs.renderCharacters)();
+    await startEvents();
+};
 
-},{"22e5763120dde629":"4xdel","2a67fdfa1072a0d3":"lLYkL","d474a0f6a19b1000":"epjk1","70d8ea18fceb9ead":"cDznO","d43ad518219ec48b":"2exSH"}],"4xdel":[function(require,module,exports,__globalThis) {
+},{"./renderCharacters.js":"f27BX","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/homePage/mainCharacters.js":"fx8t1"}],"f27BX":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
+var _getCharactersApiJs = require("../api/characters/getCharactersApi.js");
+var _makeCharactersListJs = require("./makeCharactersList.js");
+const renderCharacters = async ()=>{
+    const charactersList = document.querySelector(".characters__list");
+    if (!charactersList) return;
+    const result = await (0, _getCharactersApiJs.getCharactersApi)();
+    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(result.results);
+};
+
+},{"../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1mQTM":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
+const getCharactersApi = async (page = 1)=>{
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"bsyGr":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeCharactersList", ()=>makeCharactersList);
+const makeCharactersList = (characters)=>{
+    const markup = characters.map((character)=>`
+        <li class="characters__item">
+            <img src="${character.image}" alt="" class="characters__img">
+            <h2 class="characters__title">${character.name}</h2>
+            <p class="characters__info"><span>Origin:</span> ${character.origin.name}</p>
+            <p class="characters__info"><span>Location:</span> Svazilend</p>
+          </li>
+      `).join("");
+    return markup;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"lV1uf":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "loadMoreCharacters", ()=>loadMoreCharacters);
+var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
+var _makeCharactersListJs = require("../../markup/makeCharactersList.js");
+const charactersList = document.querySelector(".characters__list");
+const moreBtn = document.querySelector(".moreCharacters");
+let page = 2;
+const loadMoreCharacters = async ()=>{
+    const result = await (0, _getCharactersApiJs.getCharactersApi)(page);
+    if (!result || !Array.isArray(result.results)) return;
+    charactersList.insertAdjacentHTML("beforeend", (0, _makeCharactersListJs.makeCharactersList)(result.results));
+    if (result.info.next === null) {
+        moreBtn.hidden = true;
+        return;
+    }
+    page++;
+};
+
+},{"../../api/characters/getCharactersApi.js":"1mQTM","../../markup/makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fx8t1":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "startMainCharactersEvents", ()=>startMainCharactersEvents);
+const characterImages = {
+    "Rick Sanchez": new URL(require("2c2ae79b397b6fba")).href,
+    "Morty Smith": new URL(require("d1c9e648c5ffa96c")).href,
+    "Summer Smith": new URL(require("6ee8da9ab53e4e94")).href,
+    "Beth Smith": new URL(require("14981c8b2208c6e8")).href,
+    "Jerry Smith": new URL(require("4da36e722b54faf6")).href
+};
+const startMainCharactersEvents = ()=>{
+    const names = document.querySelectorAll(".main-characters__subtitle");
+    const image = document.querySelector("#mainCharacterImage");
+    console.log("\u0418\u043C\u0435\u043D\u0430:", names.length);
+    console.log("\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435:", image);
+    if (!image || !names.length) return;
+    names.forEach((name)=>{
+        name.addEventListener("click", ()=>{
+            const characterName = name.textContent.trim();
+            if (!characterImages[characterName]) return;
+            image.src = characterImages[characterName];
+            image.alt = characterName;
+            names.forEach((item)=>item.classList.remove("active"));
+            name.classList.add("active");
+        });
+    });
+};
+
+},{"2c2ae79b397b6fba":"4xdel","d1c9e648c5ffa96c":"lLYkL","6ee8da9ab53e4e94":"epjk1","14981c8b2208c6e8":"cDznO","4da36e722b54faf6":"2exSH","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"4xdel":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("rick-sanchez.60095b63.webp") + "?" + Date.now();
 
 },{}],"lLYkL":[function(require,module,exports,__globalThis) {
