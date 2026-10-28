@@ -1,0 +1,54 @@
+@use "../utils/mixin" as *;
+.characters {
+    padding-top: 50px;
+    padding-bottom: 70px;
+}
+.characters__container {
+  @include flex-position(
+    $vertically: center,
+    $horizontally: center,
+    $direction: column
+  );
+}
+.characters__list {
+   display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 50px 24px;
+  align-items: start;
+}
+.characters__item {
+  @include flex-position(
+    $gap: 6px,
+    $vertically: none,
+    $horizontally: none,
+    $direction: column
+  );
+}
+.characters__img {
+  border: 2px solid var(--green);
+  border-radius: 18px;
+  width: 278px;
+  height: 314px;
+  margin-bottom: 10px;
+}
+.characters__title {
+  @include text($color: #111, $size: 16px, $height: 113%, $weight: 600);
+}
+.characters__info {
+  @include text($color: #111, $size: 14px, $height: 129%, $weight: 400);
+}
+.characters__info span {
+  color: rgba(17, 17, 17, 0.5);
+}
+
+.moreCharacters {
+  @include text($color: var(--black), $size: 14px, $height: 129%, $weight: 600);
+  border-radius: 1000px;
+  padding: 12px 24px;
+  width: 126px;
+  height: 42px;
+  background: var(--green);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+}

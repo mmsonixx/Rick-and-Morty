@@ -7,3 +7,11 @@
         letter-spacing: $spacing;
         font-weight: $weight;
 }
+
+@mixin flex-position($gap: 0, $vertically:center, $horizontally:center, $direction:row ) {
+    display: flex;
+        align-items: $vertically;
+        gap: $gap;
+        justify-content: $horizontally;
+        flex-direction: $direction;
+}

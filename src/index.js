@@ -1,1 +1,3 @@
-import "./js/operation/home/mainCharacters.js";
+import { renderPage } from "./js/markup/renderPage.js";
+
+renderPage();

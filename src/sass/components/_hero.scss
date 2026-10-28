@@ -96,6 +96,12 @@ margin-right: auto;
 
 
 }
+.hero__button:hover {
+   background-color: var(--green);
+    color: var(--black);
+    border-color: var(--green);
+}
+
 .hero__characters-wrapper {
 }
 .hero__img {
