@@ -84,13 +84,112 @@
       </div>
     </section>
 
+   <div class="characters__filtering">
+  <div class="container">
+    <div class="filter">
+
+      <!-- Name -->
+      <div class="filter-item">
+        <label for="search-characters">Name</label>
+        <div class="filter-search">
+          <input
+            id="search-characters"
+            type="search"
+            placeholder="Enter name"
+            data-search
+          />
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="filter-item" data-status>
+        <label>Status</label>
+        <div class="select">
+          <button class="selected" type="button">
+            <span class="selected-text">Alive</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="options">
+            <button class="option" data-status="alive" type="button">Alive</button>
+            <button class="option" data-status="dead" type="button">Dead</button>
+            <button class="option" data-status="unknown" type="button">Unknown</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Species -->
+      <div class="filter-item" data-species>
+        <label>Species</label>
+        <div class="select">
+          <button class="selected" type="button">
+            <span class="selected-text">Human</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="options">
+            <button class="option" data-species="human" type="button">Human</button>
+            <button class="option" data-species="alien" type="button">Alien</button>
+            <button class="option" data-species="mythological creature" type="button">Mythological Creature</button>
+            <button class="option" data-species="humanoid" type="button">Humanoid</button>
+            <button class="option" data-species="animal" type="button">Animal</button>
+            <button class="option" data-species="cronenberg" type="button">Cronenberg</button>
+            <button class="option" data-species="poopybutthole" type="button">Poopybutthole</button>
+            <button class="option" data-species="robot" type="button">Robot</button>
+            <button class="option" data-species="disease" type="button">Disease</button>
+            <button class="option" data-species="unknown" type="button">Unknown</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div class="filter-item" data-type>
+        <label>Type</label>
+        <div class="select">
+          <button class="selected" type="button">
+            <span class="selected-text">Parasite</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="options">
+            <button class="option" data-type="parasite" type="button">Parasite</button>
+            <button class="option" data-type="human with ant..." type="button">Human with antennae</button>
+            <button class="option" data-type="superhuman" type="button">Superhuman</button>
+            <button class="option" data-type="genetic" type="button">Genetic Experiment</button>
+            <button class="option" data-type="fish-person" type="button">Fish-Person</button>
+            <button class="option" data-type="cromulon" type="button">Cromulon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="filter-item" data-gender>
+        <label>Gender</label>
+        <div class="select">
+          <button class="selected" type="button">
+            <span class="selected-text">All</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="options">
+            <button class="option" data-gender="all" type="button">All</button>
+            <button class="option" data-gender="female" type="button">Female</button>
+            <button class="option" data-gender="male" type="button">Male</button>
+            <button class="option" data-gender="genderless" type="button">Genderless</button>
+            <button class="option" data-gender="unknown" type="button">Unknown</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
     <section class="characters">
       <div class="container characters__container">
-        
-        <ul class="characters__list"> 
-          
-        </ul>
-          <button type="submit" class="moreCharacters">More</button>
+        <ul class="characters__list"></ul>
+        <button type="submit" class="moreCharacters">More</button>
       </div>
     </section>
     <footer class="footer">
@@ -133,6 +232,6 @@
         <p class="footer__info">Privacy Policy Public Offering Agreement</p>
       </div>
     </footer>
-     <script type="module" src="./index.js"></script>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>

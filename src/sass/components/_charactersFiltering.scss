@@ -1,0 +1,237 @@
+@use "../utils/mixin" as *;
+.characters__filtering {
+  padding: 40px 0 55px;
+  background-color: #fff;
+
+  .filter {
+    display: grid;
+    grid-template-columns: 1.2fr 0.85fr 1.05fr 0.9fr 0.9fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .filter-item {
+    position: relative;
+    min-width: 0;
+
+    label {
+      @include text($color: #111, $size: 14px, $height: 129%, $weight: 400);
+
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+  }
+
+  // Search
+
+  .filter-search {
+    position: relative;
+
+    input {
+      @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
+      width: 100%;
+      height: 44px;
+      padding: 0 42px 0 20px;
+      border: 1.5px solid #111;
+      border-radius: 30px;
+      outline: none;
+      background-color: #d5ff35;
+
+      &::placeholder {
+        color: #333;
+      }
+
+      &:focus {
+        border-color: #a5cc00;
+      }
+    }
+
+    i {
+      position: absolute;
+      right: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      color: #111;
+      pointer-events: none;
+    }
+  }
+
+  // Select
+
+  .select {
+    position: relative;
+    width: 100%;
+
+    .selected {
+      @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 44px;
+      padding: 0 16px 0 20px;
+      border: 1.5px solid #111;
+      border-radius: 30px;
+      background-color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+
+      i {
+        font-size: 12px;
+      }
+    }
+
+    .selected i {
+      transition: transform 0.3s ease;
+    }
+
+    &.active {
+      .selected i {
+        transform: rotate(180deg);
+      }
+    }
+
+    // Dropdown
+
+    .options {
+      position: absolute;
+      top: calc(100% + 1px);
+      left: 0;
+      z-index: 10;
+
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      max-height: 220px;
+      padding: 8px 0;
+      overflow-y: auto;
+
+      border: 1px solid #111;
+      border-radius: 0 0 17px 17px;
+      background-color: #fff;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #555;
+      }
+
+      .option {
+              @include text($color: #111, $size: 14px, $height: 129%, $weight: 400);
+              width: 100%;
+        padding: 6px 15px;
+        border: none;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #efffa8;
+        }
+      }
+    }
+
+    // Open dropdown
+
+    &.active {
+      .selected {
+        border-radius: 22px 22px 0 0;
+      }
+
+      .options {
+        display: flex;
+      }
+    }
+  }
+
+  // Адаптив
+
+
+}
+@media (max-width: 1024px) {
+  .characters__filtering {
+    .filter {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .characters__filtering {
+    padding: 30px 0 40px;
+
+    .filter {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 10px;
+    }
+
+    // Поиск на всю ширину
+    .filter-item:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .filter-item label {
+      font-size: 12px;
+    }
+
+    .filter-search input {
+      height: 42px;
+      padding: 0 35px 0 15px;
+      font-size: 14px;
+    }
+
+    .select {
+      .selected {
+        height: 42px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      .options {
+        z-index: 20;
+        max-height: 180px;
+
+        .option {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .characters__filtering {
+    padding: 25px 0 30px;
+
+    .filter {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 8px;
+    }
+
+    .filter-item:first-child {
+      grid-column: 1 / -1;
+    }
+
+    .filter-search input {
+      height: 40px;
+    }
+
+    .select .selected {
+      height: 40px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    .select .options {
+      max-height: 160px;
+    }
+  }
+}

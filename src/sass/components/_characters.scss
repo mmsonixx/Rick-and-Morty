@@ -1,6 +1,6 @@
 @use "../utils/mixin" as *;
 .characters {
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 70px;
 }
 .characters__container {
@@ -51,4 +51,82 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 70px;
+}
+
+// Адаптив
+
+@media (max-width: 1200px) {
+  .characters__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px 20px;
+  }
+
+  .characters__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 278 / 314;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 900px) {
+  .characters {
+    padding-bottom: 50px;
+  }
+
+  .characters__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 35px 20px;
+  }
+
+  .characters__title {
+    font-size: 15px;
+  }
+
+  .characters__info {
+    font-size: 13px;
+  }
+
+  .moreCharacters {
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .characters {
+    padding-top: 10px;
+    padding-bottom: 35px;
+  }
+
+  .characters__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px 12px;
+    width: 100%;
+  }
+
+  .characters__img {
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    margin-bottom: 5px;
+    border-radius: 12px;
+  }
+
+  .characters__title {
+    font-size: 13px;
+  }
+
+  .characters__info {
+    font-size: 12px;
+  }
+
+  .moreCharacters {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 360px) {
+  .characters__list {
+    grid-template-columns: 1fr;
+    max-width: 278px;
+  }
 }

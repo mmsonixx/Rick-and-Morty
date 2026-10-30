@@ -1,6 +1,8 @@
 import { renderCharacters } from "./renderCharacters.js";
 import { loadMoreCharacters } from "../operation/charactersPage/loadMoreCharacters.js";
 import { startMainCharactersEvents } from "../operation/homePage/mainCharacters.js";
+import { startCharactersFilteringEvents } from "../operation/charactersPage/charactersFiltering.js";
+
 
 const startEvents = async () => {
   const moreBtn = document.querySelector(".moreCharacters");
@@ -10,6 +12,7 @@ const startEvents = async () => {
   }
 
   startMainCharactersEvents();
+   startCharactersFilteringEvents();
 };
 
 export const renderPage = async () => {

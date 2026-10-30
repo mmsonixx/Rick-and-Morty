@@ -1,6 +1,12 @@
 import { getCharactersApi } from "../api/characters/getCharactersApi.js";
 import { makeCharactersList } from "./makeCharactersList.js";
 
+export let charactersData = [];
+
+export const addCharacters = (newCharacters) => {
+  charactersData.push(...newCharacters);
+};
+
 export const renderCharacters = async () => {
   const charactersList = document.querySelector(".characters__list");
 
@@ -8,5 +14,7 @@ export const renderCharacters = async () => {
 
   const result = await getCharactersApi();
 
-  charactersList.innerHTML = makeCharactersList(result.results);
+  charactersData = result.results;
+
+  charactersList.innerHTML = makeCharactersList(charactersData);
 };
