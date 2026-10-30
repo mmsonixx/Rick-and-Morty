@@ -508,7 +508,7 @@ a {
 }
 
 .characters {
-  padding-top: 50px;
+  padding-top: 20px;
   padding-bottom: 70px;
 }
 
@@ -583,6 +583,314 @@ a {
   font-size: 14px;
   font-weight: 600;
   line-height: 129%;
+}
+
+@media (width <= 1200px) {
+  .characters__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px 20px;
+  }
+
+  .characters__img {
+    aspect-ratio: 278 / 314;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (width <= 900px) {
+  .characters {
+    padding-bottom: 50px;
+  }
+
+  .characters__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 35px 20px;
+  }
+
+  .characters__title {
+    font-size: 15px;
+  }
+
+  .characters__info {
+    font-size: 13px;
+  }
+
+  .moreCharacters {
+    margin-top: 50px;
+  }
+}
+
+@media (width <= 480px) {
+  .characters {
+    padding-top: 10px;
+    padding-bottom: 35px;
+  }
+
+  .characters__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px 12px;
+    width: 100%;
+  }
+
+  .characters__img {
+    aspect-ratio: 1 / 1.1;
+    border-radius: 12px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .characters__title {
+    font-size: 13px;
+  }
+
+  .characters__info {
+    font-size: 12px;
+  }
+
+  .moreCharacters {
+    margin-top: 35px;
+  }
+}
+
+@media (width <= 360px) {
+  .characters__list {
+    grid-template-columns: 1fr;
+    max-width: 278px;
+  }
+}
+
+.characters__filtering {
+  background-color: #fff;
+  padding: 40px 0 55px;
+}
+
+.characters__filtering .filter {
+  grid-template-columns: 1.2fr .85fr 1.05fr .9fr .9fr;
+  align-items: start;
+  gap: 14px;
+  display: grid;
+}
+
+.characters__filtering .filter-item {
+  min-width: 0;
+  position: relative;
+}
+
+.characters__filtering .filter-item label {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 129%;
+  display: block;
+}
+
+.characters__filtering .filter-search {
+  position: relative;
+}
+
+.characters__filtering .filter-search input {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  background-color: #d5ff35;
+  border: 1.5px solid #111;
+  border-radius: 30px;
+  outline: none;
+  width: 100%;
+  height: 44px;
+  padding: 0 42px 0 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 113%;
+}
+
+.characters__filtering .filter-search input::placeholder {
+  color: #333;
+}
+
+.characters__filtering .filter-search input:focus {
+  border-color: #a5cc00;
+}
+
+.characters__filtering .filter-search i {
+  color: #111;
+  pointer-events: none;
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  transform: translateY(-50%);
+}
+
+.characters__filtering .select {
+  width: 100%;
+  position: relative;
+}
+
+.characters__filtering .select .selected {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1.5px solid #111;
+  border-radius: 30px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  padding: 0 16px 0 20px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 113%;
+  display: flex;
+}
+
+.characters__filtering .select .selected i {
+  font-size: 12px;
+  transition: transform .3s;
+}
+
+.characters__filtering .select.active .selected i {
+  transform: rotate(180deg);
+}
+
+.characters__filtering .select .options {
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #111;
+  border-radius: 0 0 17px 17px;
+  flex-direction: column;
+  width: 100%;
+  max-height: 220px;
+  padding: 8px 0;
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  overflow-y: auto;
+}
+
+.characters__filtering .select .options::-webkit-scrollbar {
+  width: 5px;
+}
+
+.characters__filtering .select .options::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.characters__filtering .select .options .option {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 6px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 129%;
+  transition: background-color .2s;
+}
+
+.characters__filtering .select .options .option:hover {
+  background-color: #efffa8;
+}
+
+.characters__filtering .select.active .selected {
+  border-radius: 22px 22px 0 0;
+}
+
+.characters__filtering .select.active .options {
+  display: flex;
+}
+
+@media (width <= 1024px) {
+  .characters__filtering .filter {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (width <= 768px) {
+  .characters__filtering {
+    padding: 30px 0 40px;
+  }
+
+  .characters__filtering .filter {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+  }
+
+  .characters__filtering .filter-item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .characters__filtering .filter-item label {
+    font-size: 12px;
+  }
+
+  .characters__filtering .filter-search input {
+    height: 42px;
+    padding: 0 35px 0 15px;
+    font-size: 14px;
+  }
+
+  .characters__filtering .select .selected {
+    height: 42px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .characters__filtering .select .options {
+    z-index: 20;
+    max-height: 180px;
+  }
+
+  .characters__filtering .select .options .option {
+    font-size: 13px;
+  }
+}
+
+@media (width <= 480px) {
+  .characters__filtering {
+    padding: 25px 0 30px;
+  }
+
+  .characters__filtering .filter {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 8px;
+  }
+
+  .characters__filtering .filter-item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .characters__filtering .filter-search input {
+    height: 40px;
+  }
+
+  .characters__filtering .select .selected {
+    height: 40px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .characters__filtering .select .options {
+    max-height: 160px;
+  }
 }
 
 .footer {

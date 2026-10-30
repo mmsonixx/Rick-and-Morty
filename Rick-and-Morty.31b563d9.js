@@ -724,27 +724,36 @@ parcelHelpers.export(exports, "renderPage", ()=>renderPage);
 var _renderCharactersJs = require("./renderCharacters.js");
 var _loadMoreCharactersJs = require("../operation/charactersPage/loadMoreCharacters.js");
 var _mainCharactersJs = require("../operation/homePage/mainCharacters.js");
+var _charactersFilteringJs = require("../operation/charactersPage/charactersFiltering.js");
 const startEvents = async ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
     if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
     (0, _mainCharactersJs.startMainCharactersEvents)();
+    (0, _charactersFilteringJs.startCharactersFilteringEvents)();
 };
 const renderPage = async ()=>{
     await (0, _renderCharactersJs.renderCharacters)();
     await startEvents();
 };
 
-},{"./renderCharacters.js":"f27BX","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/homePage/mainCharacters.js":"fx8t1"}],"f27BX":[function(require,module,exports,__globalThis) {
+},{"./renderCharacters.js":"f27BX","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z"}],"f27BX":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "charactersData", ()=>charactersData);
+parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
 parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
 var _getCharactersApiJs = require("../api/characters/getCharactersApi.js");
 var _makeCharactersListJs = require("./makeCharactersList.js");
+let charactersData = [];
+const addCharacters = (newCharacters)=>{
+    charactersData.push(...newCharacters);
+};
 const renderCharacters = async ()=>{
     const charactersList = document.querySelector(".characters__list");
     if (!charactersList) return;
     const result = await (0, _getCharactersApiJs.getCharactersApi)();
-    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(result.results);
+    charactersData = result.results;
+    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
 };
 
 },{"../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1mQTM":[function(require,module,exports,__globalThis) {
@@ -813,12 +822,14 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadMoreCharacters", ()=>loadMoreCharacters);
 var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
 var _makeCharactersListJs = require("../../markup/makeCharactersList.js");
+var _renderCharactersJs = require("../../markup/renderCharacters.js");
 const charactersList = document.querySelector(".characters__list");
 const moreBtn = document.querySelector(".moreCharacters");
 let page = 2;
 const loadMoreCharacters = async ()=>{
     const result = await (0, _getCharactersApiJs.getCharactersApi)(page);
     if (!result || !Array.isArray(result.results)) return;
+    (0, _renderCharactersJs.addCharacters)(result.results);
     charactersList.insertAdjacentHTML("beforeend", (0, _makeCharactersListJs.makeCharactersList)(result.results));
     if (result.info.next === null) {
         moreBtn.hidden = true;
@@ -827,7 +838,7 @@ const loadMoreCharacters = async ()=>{
     page++;
 };
 
-},{"../../api/characters/getCharactersApi.js":"1mQTM","../../markup/makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fx8t1":[function(require,module,exports,__globalThis) {
+},{"../../api/characters/getCharactersApi.js":"1mQTM","../../markup/makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/renderCharacters.js":"f27BX"}],"fx8t1":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "startMainCharactersEvents", ()=>startMainCharactersEvents);
@@ -871,6 +882,103 @@ module.exports = module.bundle.resolve("beth-smith.3339513a.webp") + "?" + Date.
 },{}],"2exSH":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("jerry-smith.cc262a53.webp") + "?" + Date.now();
 
-},{}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
+},{}],"icb2Z":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "startCharactersFilteringEvents", ()=>startCharactersFilteringEvents);
+var _renderCharactersJs = require("../../markup/renderCharacters.js");
+var _makeCharactersListJs = require("../../markup/makeCharactersList.js");
+var _filterCharactersJs = require("./filterCharacters.js");
+var _searchCharactersJs = require("./searchCharacters.js");
+const startCharactersFilteringEvents = ()=>{
+    const charactersList = document.querySelector(".characters__list");
+    const searchInput = document.querySelector("#search-characters");
+    const selects = document.querySelectorAll(".select");
+    const statusOptions = document.querySelectorAll(".option[data-status]");
+    const speciesOptions = document.querySelectorAll(".option[data-species]");
+    const typeOptions = document.querySelectorAll(".option[data-type]");
+    const genderOptions = document.querySelectorAll(".option[data-gender]");
+    let filters = {
+        status: "",
+        species: "",
+        type: "",
+        gender: ""
+    };
+    // Обновление персонажей
+    const updateCharacters = ()=>{
+        console.log("\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0435\u0439");
+        let filteredCharacters = (0, _filterCharactersJs.filterCharacters)(filters, (0, _renderCharactersJs.charactersData));
+        filteredCharacters = (0, _searchCharactersJs.searchCharacters)(searchInput.value, filteredCharacters);
+        console.log("\u041D\u0430\u0439\u0434\u0435\u043D\u043E:", filteredCharacters.length);
+        charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(filteredCharacters);
+    };
+    // Поиск
+    searchInput.addEventListener("input", ()=>{
+        console.log("INPUT EVENT WORKS");
+        updateCharacters();
+    });
+    // Фильтрация
+    const addFilterEvents = (options, filterName)=>{
+        options.forEach((option)=>{
+            option.addEventListener("click", ()=>{
+                filters[filterName] = option.dataset[filterName];
+                updateCharacters();
+            });
+        });
+    };
+    addFilterEvents(statusOptions, "status");
+    addFilterEvents(speciesOptions, "species");
+    addFilterEvents(typeOptions, "type");
+    addFilterEvents(genderOptions, "gender");
+    // Открытие и закрытие выпадающих списков
+    selects.forEach((select)=>{
+        const selected = select.querySelector(".selected");
+        const options = select.querySelectorAll(".option");
+        const selectedText = select.querySelector(".selected-text");
+        selected.addEventListener("click", ()=>{
+            selects.forEach((item)=>{
+                if (item !== select) item.classList.remove("active");
+            });
+            select.classList.toggle("active");
+        });
+        // Выбор значения
+        options.forEach((option)=>{
+            option.addEventListener("click", ()=>{
+                selectedText.textContent = option.textContent.trim();
+                select.classList.remove("active");
+            });
+        });
+    });
+    // Закрытие при клике за пределами списка
+    document.addEventListener("click", (event)=>{
+        if (!event.target.closest(".select")) selects.forEach((select)=>{
+            select.classList.remove("active");
+        });
+    });
+};
+
+},{"../../markup/renderCharacters.js":"f27BX","../../markup/makeCharactersList.js":"bsyGr","./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"bLpCG":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "filterCharacters", ()=>filterCharacters);
+const filterCharacters = (filters, characters)=>{
+    return characters.filter((character)=>{
+        const matchesStatus = !filters.status || character.status.toLowerCase() === filters.status.toLowerCase();
+        const matchesSpecies = !filters.species || character.species.toLowerCase() === filters.species.toLowerCase();
+        const matchesType = !filters.type || character.type.toLowerCase().includes(filters.type.toLowerCase());
+        const matchesGender = !filters.gender || filters.gender === "all" || character.gender.toLowerCase() === filters.gender.toLowerCase();
+        return matchesStatus && matchesSpecies && matchesType && matchesGender;
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"5k6uW":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "searchCharacters", ()=>searchCharacters);
+const searchCharacters = (query, characters)=>{
+    return characters.filter((character)=>character.name.toLowerCase().includes(query.trim().toLowerCase()));
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
 
 //# sourceMappingURL=Rick-and-Morty.31b563d9.js.map
