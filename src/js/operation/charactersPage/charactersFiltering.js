@@ -5,11 +5,11 @@ import { filterCharacters } from "./filterCharacters.js";
 import { searchCharacters } from "./searchCharacters.js";
 
 export const startCharactersFilteringEvents = () => {
-    
   const charactersList = document.querySelector(".characters__list");
-const searchInput = document.querySelector("#search-characters");
-  
+  const searchInput = document.querySelector("#search-characters");
 
+  
+  if (!charactersList || !searchInput) return;
 
   const selects = document.querySelectorAll(".select");
 

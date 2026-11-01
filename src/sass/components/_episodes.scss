@@ -1,0 +1,73 @@
+@use "../utils/mixin" as *;
+.episodes {
+  padding-top: 20px;
+  padding-bottom: 70px;
+}
+
+.episodes__container {
+}
+
+.episodes__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.episodes__item {
+  position: relative;
+  border: 2px solid var(--green);
+  border-radius: 18px;
+  width: 284px;
+  height: 200px;
+  overflow: hidden;
+   &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.707);
+    z-index: 1;
+  }
+}
+
+.episodes__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.episodes__title {
+  @include text($color: var(--green), $size: 16px, $height: 113%, $weight: 600);
+
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+.episodes__details {
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.episodes__info {
+  position: absolute;
+  flex-direction: column;
+  left: 80px;
+  bottom: 30px;
+  display: flex;
+  gap: 8px;
+  color: black;
+}
+
+.episodes__info span {
+      @include text($color: rgba(250, 250, 250, 0.5), $size: 12px, $height: 117%, $weight: 400);
+
+
+}
