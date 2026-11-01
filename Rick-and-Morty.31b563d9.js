@@ -725,6 +725,7 @@ var _renderCharactersJs = require("./renderCharacters.js");
 var _loadMoreCharactersJs = require("../operation/charactersPage/loadMoreCharacters.js");
 var _mainCharactersJs = require("../operation/homePage/mainCharacters.js");
 var _charactersFilteringJs = require("../operation/charactersPage/charactersFiltering.js");
+var _renderEpisodesJs = require("./episodes/renderEpisodes.js");
 const startEvents = async ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
     if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
@@ -734,9 +735,10 @@ const startEvents = async ()=>{
 const renderPage = async ()=>{
     await (0, _renderCharactersJs.renderCharacters)();
     await startEvents();
+    await (0, _renderEpisodesJs.renderEpisodes)();
 };
 
-},{"./renderCharacters.js":"f27BX","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z"}],"f27BX":[function(require,module,exports,__globalThis) {
+},{"./renderCharacters.js":"f27BX","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h"}],"f27BX":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "charactersData", ()=>charactersData);
@@ -843,23 +845,93 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "startMainCharactersEvents", ()=>startMainCharactersEvents);
 const characterImages = {
-    "Rick Sanchez": new URL(require("2c2ae79b397b6fba")).href,
-    "Morty Smith": new URL(require("d1c9e648c5ffa96c")).href,
-    "Summer Smith": new URL(require("6ee8da9ab53e4e94")).href,
-    "Beth Smith": new URL(require("14981c8b2208c6e8")).href,
-    "Jerry Smith": new URL(require("4da36e722b54faf6")).href
+    "Rick Sanchez": {
+        desktop: [
+            new URL(require("bc9e937eb15af3c9")).href,
+            new URL(require("d65119ca483a8dad")).href
+        ],
+        tablet: [
+            new URL(require("f9384ca54768ea0e")).href,
+            new URL(require("a6324b94a9449f8")).href
+        ],
+        mobile: [
+            new URL(require("4451f4257d3e6f9b")).href,
+            new URL(require("9711758e75052df6")).href
+        ]
+    },
+    "Morty Smith": {
+        desktop: [
+            new URL(require("70a0651aecc0593a")).href,
+            new URL(require("b1a309ad349cc196")).href
+        ],
+        tablet: [
+            new URL(require("d2b458fcf9570350")).href,
+            new URL(require("bbe21053e187135b")).href
+        ],
+        mobile: [
+            new URL(require("acdb59feeb9863f4")).href,
+            new URL(require("d10974e2781ddb92")).href
+        ]
+    },
+    "Summer Smith": {
+        desktop: [
+            new URL(require("b1fc065d8e2526cb")).href,
+            new URL(require("5c4b2755d94b12d9")).href
+        ],
+        tablet: [
+            new URL(require("8e4ff447c15dfbbb")).href,
+            new URL(require("390def69bacae2ab")).href
+        ],
+        mobile: [
+            new URL(require("546f971cc4e2f028")).href,
+            new URL(require("f35da7384997e239")).href
+        ]
+    },
+    "Beth Smith": {
+        desktop: [
+            new URL(require("d3607d06ef73c4ff")).href,
+            new URL(require("c84e129db9013b6c")).href
+        ],
+        tablet: [
+            new URL(require("1cb99338c0ee54c8")).href,
+            new URL(require("f068d137c67287c2")).href
+        ],
+        mobile: [
+            new URL(require("f6f63bca759b7525")).href,
+            new URL(require("486708465b44e33a")).href
+        ]
+    },
+    "Jerry Smith": {
+        desktop: [
+            new URL(require("be22cc04d735e58f")).href,
+            new URL(require("b7b80d8e80ad1e77")).href
+        ],
+        tablet: [
+            new URL(require("437317dc11422b6a")).href,
+            new URL(require("a44710d674d4034")).href
+        ],
+        mobile: [
+            new URL(require("1470b95607b67833")).href,
+            new URL(require("48cac1c886cf938d")).href
+        ]
+    }
 };
 const startMainCharactersEvents = ()=>{
     const names = document.querySelectorAll(".main-characters__subtitle");
     const image = document.querySelector("#mainCharacterImage");
-    console.log("\u0418\u043C\u0435\u043D\u0430:", names.length);
-    console.log("\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435:", image);
-    if (!image || !names.length) return;
+    const desktop = document.querySelector(".main-characters__desktop");
+    const tablet = document.querySelector(".main-characters__tablet");
+    const mobile = document.querySelector(".main-characters__mobile");
+    if (!image || !names.length || !desktop || !tablet || !mobile) return;
     names.forEach((name)=>{
         name.addEventListener("click", ()=>{
             const characterName = name.textContent.trim();
-            if (!characterImages[characterName]) return;
-            image.src = characterImages[characterName];
+            const character = characterImages[characterName];
+            if (!character) return;
+            desktop.srcset = `${character.desktop[0]} 1x, ${character.desktop[1]} 2x`;
+            tablet.srcset = `${character.tablet[0]} 1x, ${character.tablet[1]} 2x`;
+            mobile.srcset = `${character.mobile[0]} 1x, ${character.mobile[1]} 2x`;
+            image.src = character.desktop[0];
             image.alt = characterName;
             names.forEach((item)=>item.classList.remove("active"));
             name.classList.add("active");
@@ -867,20 +939,95 @@ const startMainCharactersEvents = ()=>{
     });
 };
 
-},{"2c2ae79b397b6fba":"4xdel","d1c9e648c5ffa96c":"lLYkL","6ee8da9ab53e4e94":"epjk1","14981c8b2208c6e8":"cDznO","4da36e722b54faf6":"2exSH","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"4xdel":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("rick-sanchez.60095b63.webp") + "?" + Date.now();
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","bc9e937eb15af3c9":"7jaqT","d65119ca483a8dad":"bXaGQ","f9384ca54768ea0e":"8DvF3","a6324b94a9449f8":"3q8K2","4451f4257d3e6f9b":"9Ym67","9711758e75052df6":"fs3JC","70a0651aecc0593a":"jK7AO","b1a309ad349cc196":"dck3f","d2b458fcf9570350":"6Ivcm","bbe21053e187135b":"6qRds","acdb59feeb9863f4":"9mARq","d10974e2781ddb92":"ekoyN","b1fc065d8e2526cb":"4rYHc","5c4b2755d94b12d9":"4rPtn","8e4ff447c15dfbbb":"hfKh7","390def69bacae2ab":"a3r4b","546f971cc4e2f028":"gVvlM","f35da7384997e239":"kVgLR","d3607d06ef73c4ff":"6LVHZ","c84e129db9013b6c":"lCV6V","1cb99338c0ee54c8":"hNNxX","f068d137c67287c2":"iVDwZ","f6f63bca759b7525":"2NYyZ","486708465b44e33a":"9lGPq","be22cc04d735e58f":"7hrfa","b7b80d8e80ad1e77":"8ZKuX","437317dc11422b6a":"aIDYA","a44710d674d4034":"5kCCt","1470b95607b67833":"eL4fu","48cac1c886cf938d":"4VAn0"}],"7jaqT":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez@desktop-1x.fa69660a.webp") + "?" + Date.now();
 
-},{}],"lLYkL":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("morty-smith.f2d971c1.webp") + "?" + Date.now();
+},{}],"bXaGQ":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez@desktop-2x.a3e6a025.webp") + "?" + Date.now();
 
-},{}],"epjk1":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("summer-smith.6aef4c32.webp") + "?" + Date.now();
+},{}],"8DvF3":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez@tablet-1x.bc149aba.webp") + "?" + Date.now();
 
-},{}],"cDznO":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("beth-smith.3339513a.webp") + "?" + Date.now();
+},{}],"3q8K2":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez@tablet-2x.ec8af5eb.webp") + "?" + Date.now();
 
-},{}],"2exSH":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("jerry-smith.cc262a53.webp") + "?" + Date.now();
+},{}],"9Ym67":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez@mobile-1x.6c1f6b0a.webp") + "?" + Date.now();
+
+},{}],"fs3JC":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("rick-sanchez@mobile-2x.8e79c601.webp") + "?" + Date.now();
+
+},{}],"jK7AO":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith@desktop-1x.37e64d41.webp") + "?" + Date.now();
+
+},{}],"dck3f":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith@desktop-2x.24c09920.webp") + "?" + Date.now();
+
+},{}],"6Ivcm":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith@tablet-1x.c6569080.webp") + "?" + Date.now();
+
+},{}],"6qRds":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith@tablet-2x.12013c9a.webp") + "?" + Date.now();
+
+},{}],"9mARq":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith@mobile-1x.a7babf40.webp") + "?" + Date.now();
+
+},{}],"ekoyN":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("morty-smith@mobile-2x.d39cb3cc.webp") + "?" + Date.now();
+
+},{}],"4rYHc":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith@desktop-1x.315ae8a0.webp") + "?" + Date.now();
+
+},{}],"4rPtn":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith@desktop-2x.3c2cbfb8.webp") + "?" + Date.now();
+
+},{}],"hfKh7":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith@tablet-1x.db21ce2d.webp") + "?" + Date.now();
+
+},{}],"a3r4b":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith@tablet-2x.6005c39d.webp") + "?" + Date.now();
+
+},{}],"gVvlM":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith@mobile-1x.9dc84d1b.webp") + "?" + Date.now();
+
+},{}],"kVgLR":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("summer-smith@mobile-2x.cee407d0.webp") + "?" + Date.now();
+
+},{}],"6LVHZ":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith@desktop-1x.cd1f41a8.webp") + "?" + Date.now();
+
+},{}],"lCV6V":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith@desktop-2x.46ab4301.webp") + "?" + Date.now();
+
+},{}],"hNNxX":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith@tablet-1x.adf35551.webp") + "?" + Date.now();
+
+},{}],"iVDwZ":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith@tablet-2x.085e5fa0.webp") + "?" + Date.now();
+
+},{}],"2NYyZ":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith@mobile-1x.cbcbed85.webp") + "?" + Date.now();
+
+},{}],"9lGPq":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("beth-smith@mobile-2x.e602e4e3.webp") + "?" + Date.now();
+
+},{}],"7hrfa":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith@desktop-1x.b27f3bad.webp") + "?" + Date.now();
+
+},{}],"8ZKuX":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith@desktop-2x.fee9b271.webp") + "?" + Date.now();
+
+},{}],"aIDYA":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith@tablet-1x.dcc493e7.webp") + "?" + Date.now();
+
+},{}],"5kCCt":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith@tablet-2x.41b6f1fa.webp") + "?" + Date.now();
+
+},{}],"eL4fu":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith@mobile-1x.5f218c22.webp") + "?" + Date.now();
+
+},{}],"4VAn0":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("jerry-smith@mobile-2x.a3a98245.webp") + "?" + Date.now();
 
 },{}],"icb2Z":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -893,6 +1040,7 @@ var _searchCharactersJs = require("./searchCharacters.js");
 const startCharactersFilteringEvents = ()=>{
     const charactersList = document.querySelector(".characters__list");
     const searchInput = document.querySelector("#search-characters");
+    if (!charactersList || !searchInput) return;
     const selects = document.querySelectorAll(".select");
     const statusOptions = document.querySelectorAll(".option[data-status]");
     const speciesOptions = document.querySelectorAll(".option[data-species]");
@@ -979,6 +1127,94 @@ const searchCharacters = (query, characters)=>{
     return characters.filter((character)=>character.name.toLowerCase().includes(query.trim().toLowerCase()));
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"deM5h":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "episodesData", ()=>episodesData);
+parcelHelpers.export(exports, "renderEpisodes", ()=>renderEpisodes);
+var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
+var _makeEpisodesListJs = require("./makeEpisodesList.js");
+let episodesData = [];
+const renderEpisodes = async ()=>{
+    const episodesList = document.querySelector(".episodes__list");
+    if (!episodesList) return;
+    const result = await (0, _getEpisodesApiJs.getEpisodesApi)();
+    episodesData = result.results;
+    episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(episodesData);
+};
+
+},{"../../api/episodes/getEpisodesApi.js":"18nPX","./makeEpisodesList.js":"1QUQf","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"18nPX":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getEpisodesApi", ()=>getEpisodesApi);
+const getEpisodesApi = async (page = 1)=>{
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/episode?page=${page}`);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1QUQf":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeEpisodesList", ()=>makeEpisodesList);
+const episodesImages = {
+    1: new URL(require("aeff8f78bcde3893")).href,
+    2: new URL(require("84794266307e276a")).href,
+    3: new URL(require("f4e023180085420b")).href,
+    4: new URL(require("964a16b52586e182")).href,
+    5: new URL(require("87106697de2aa050")).href,
+    6: new URL(require("a99c74f319f0b021")).href
+};
+const makeEpisodesList = (episodes)=>{
+    const markup = episodes.map((episode)=>{
+        const season = Number(episode.episode.split("E")[0].replace("S", ""));
+        return `
+        <li class="episodes__item">
+          <img
+            src="${episodesImages[season] || ""}"
+            alt="${episode.name}"
+            class="episodes__img"
+          >
+
+          <h2 class="episodes__title">${episode.name}</h2>
+
+          <p class="episodes__details">
+            <span>Season</span>
+            ${season}
+          </p>
+
+          <p class="episodes__info">
+            <span>Air date</span>
+            ${episode.air_date}
+          </p>
+        </li>
+      `;
+    }).join("");
+    return markup;
+};
+
+},{"aeff8f78bcde3893":"1viRO","84794266307e276a":"g3IR0","f4e023180085420b":"igdcw","964a16b52586e182":"ldcam","87106697de2aa050":"g7lUi","a99c74f319f0b021":"iQKN9","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1viRO":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-1.5b71d146.webp") + "?" + Date.now();
+
+},{}],"g3IR0":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-2.db28978b.webp") + "?" + Date.now();
+
+},{}],"igdcw":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-3.077b19db.webp") + "?" + Date.now();
+
+},{}],"ldcam":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-4.b9e5b6d7.webp") + "?" + Date.now();
+
+},{}],"g7lUi":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-5.e8f6bd63.webp") + "?" + Date.now();
+
+},{}],"iQKN9":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-6.2f23f582.webp") + "?" + Date.now();
+
+},{}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
 
 //# sourceMappingURL=Rick-and-Morty.31b563d9.js.map
