@@ -900,14 +900,15 @@ a {
 
 .episodes__list {
   flex-wrap: wrap;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
-  display: flex;
+  display: grid;
 }
 
 .episodes__item {
   border: 2px solid var(--green);
   border-radius: 18px;
-  width: 284px;
+  width: 100%;
   height: 200px;
   position: relative;
   overflow: hidden;
@@ -916,7 +917,7 @@ a {
 .episodes__item:after {
   content: "";
   z-index: 1;
-  background: #000000b4;
+  background: #000000b3;
   position: absolute;
   inset: 0;
 }
@@ -938,31 +939,36 @@ a {
   font-weight: 600;
   line-height: 113%;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 16px;
+  left: 18px;
+  right: 12px;
 }
 
-.episodes__details {
+.episodes__meta {
   z-index: 2;
-  flex-direction: column;
-  gap: 20px;
-  display: flex;
+  grid-template-columns: 55px 1fr;
+  gap: 0;
+  display: grid;
   position: absolute;
   bottom: 15px;
-  left: 20px;
+  left: 18px;
+  right: 18px;
 }
 
-.episodes__info {
-  color: #000;
+.episodes__details, .episodes__info {
+  color: #fff;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 117%;
   display: flex;
-  position: absolute;
-  bottom: 30px;
-  left: 80px;
 }
 
-.episodes__info span {
+.episodes__details span, .episodes__info span {
   color: #fafafa80;
   font-style: normal;
   font-family: var(--font-family);
@@ -970,6 +976,304 @@ a {
   font-size: 12px;
   font-weight: 400;
   line-height: 117%;
+}
+
+.moreEpisodes {
+  color: var(--black);
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  background: var(--green);
+  border-radius: 1000px;
+  width: 126px;
+  height: 42px;
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 129%;
+}
+
+.moreEpisodes:active {
+  transform: scale(.97);
+}
+
+.moreEpisodes[hidden] {
+  display: none;
+}
+
+@media (width <= 1024px) {
+  .episodes__list {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .episodes__item {
+    width: calc(50% - 10px);
+    max-width: 400px;
+  }
+}
+
+@media (width <= 768px) {
+  .episodes {
+    padding-top: 15px;
+    padding-bottom: 50px;
+  }
+
+  .episodes__list {
+    gap: 16px;
+  }
+
+  .episodes__item {
+    width: 100%;
+    max-width: 400px;
+    height: 190px;
+  }
+}
+
+@media (width <= 480px) {
+  .episodes__item {
+    border-radius: 14px;
+    height: 170px;
+  }
+
+  .episodes__title {
+    font-size: 14px;
+    top: 14px;
+    left: 14px;
+  }
+
+  .episodes__meta {
+    grid-template-columns: 55px 1fr;
+    bottom: 12px;
+    left: 14px;
+    right: 14px;
+  }
+
+  .episodes__details, .episodes__info {
+    font-size: 12px;
+  }
+
+  .episodes__details span, .episodes__info span {
+    font-size: 11px;
+  }
+}
+
+.episodes__filtering {
+  background-color: #fff;
+  padding: 40px 0 55px;
+}
+
+.episodes__filtering .filter {
+  grid-template-columns: 233px 190px;
+  align-items: start;
+  gap: 20px;
+  display: grid;
+}
+
+.episodes__filtering .filter-item {
+  min-width: 0;
+  position: relative;
+}
+
+.episodes__filtering .filter-item label {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 129%;
+  display: block;
+}
+
+.episodes__filtering .filter-search {
+  position: relative;
+}
+
+.episodes__filtering .filter-search input {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  background-color: #d5ff35;
+  border: 1.5px solid #111;
+  border-radius: 30px;
+  outline: none;
+  width: 100%;
+  height: 44px;
+  padding: 0 42px 0 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 113%;
+}
+
+.episodes__filtering .filter-search input::placeholder {
+  color: #333;
+}
+
+.episodes__filtering .filter-search input:focus {
+  border-color: #a5cc00;
+}
+
+.episodes__filtering .filter-search i {
+  color: #111;
+  pointer-events: none;
+  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  transform: translateY(-50%);
+}
+
+.episodes__filtering .select {
+  width: 100%;
+  position: relative;
+}
+
+.episodes__filtering .select .selected {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1.5px solid #111;
+  border-radius: 30px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  padding: 0 16px 0 20px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 113%;
+  display: flex;
+}
+
+.episodes__filtering .select .selected i {
+  font-size: 12px;
+  transition: transform .3s;
+}
+
+.episodes__filtering .select.active .selected {
+  border-radius: 22px 22px 0 0;
+}
+
+.episodes__filtering .select.active .selected i {
+  transform: rotate(180deg);
+}
+
+.episodes__filtering .select.active .options {
+  display: flex;
+}
+
+.episodes__filtering .select .options {
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #111;
+  border-radius: 0 0 17px 17px;
+  flex-direction: column;
+  width: 100%;
+  max-height: 220px;
+  padding: 8px 0;
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  overflow-y: auto;
+}
+
+.episodes__filtering .select .options::-webkit-scrollbar {
+  width: 5px;
+}
+
+.episodes__filtering .select .options::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.episodes__filtering .select .options .option {
+  color: #111;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 6px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 129%;
+  transition: background-color .2s;
+}
+
+.episodes__filtering .select .options .option:hover {
+  background-color: #efffa8;
+}
+
+@media (width <= 768px) {
+  .episodes__filtering {
+    padding: 30px 0 40px;
+  }
+
+  .episodes__filtering .filter {
+    gap: 14px 10px;
+  }
+
+  .episodes__filtering .filter-item label {
+    font-size: 12px;
+  }
+
+  .episodes__filtering .filter-search input {
+    height: 42px;
+    padding: 0 35px 0 15px;
+    font-size: 14px;
+  }
+
+  .episodes__filtering .select .selected {
+    height: 42px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .episodes__filtering .select .options {
+    z-index: 20;
+    max-height: 180px;
+  }
+
+  .episodes__filtering .select .options .option {
+    font-size: 13px;
+  }
+}
+
+@media (width <= 480px) {
+  .episodes__filtering {
+    padding: 25px 0 30px;
+  }
+
+  .episodes__filtering .filter {
+    grid-template-columns: 1fr;
+  }
+
+  .episodes__filtering .filter-search input {
+    height: 40px;
+  }
+
+  .episodes__filtering .select .selected {
+    height: 40px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .episodes__filtering .select .options {
+    max-height: 160px;
+  }
 }
 
 .footer {
