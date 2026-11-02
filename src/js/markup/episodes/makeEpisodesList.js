@@ -22,15 +22,17 @@ export const makeEpisodesList = (episodes) => {
 
           <h2 class="episodes__title">${episode.name}</h2>
 
-          <p class="episodes__details">
-            <span>Season</span>
-            ${season}
-          </p>
+         <div class="episodes__meta">
+    <p class="episodes__details">
+      <span>Season</span>
+      ${season}
+    </p>
 
-          <p class="episodes__info">
-            <span>Air date</span>
-            ${episode.air_date}
-          </p>
+    <p class="episodes__info">
+      <span>Air date</span>
+      ${episode.air_date}
+    </p>
+  </div>
         </li>
       `;
     })

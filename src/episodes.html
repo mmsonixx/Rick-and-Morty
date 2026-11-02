@@ -110,6 +110,48 @@
         <span class="topics__tag topics__tag--12">Whoa</span>
       </div>
     </section>
+<section class="episodes__filtering">
+  <div class="container">
+    <div class="filter">
+      <!-- Name -->
+      <div class="filter-item">
+        <label for="search-episodes">Enter name</label>
+
+        <div class="filter-search">
+          <input
+            id="search-episodes"
+            type="search"
+            placeholder="Enter name"
+            data-search
+          />
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </div>
+
+      <!-- Season -->
+      <div class="filter-item" data-season>
+        <label>All seasons</label>
+
+        <div class="select">
+          <button class="selected" type="button">
+            <span class="selected-text">All seasons</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="options">
+            <button class="option" data-season="" type="button">All seasons</button>
+            <button class="option" data-season="1" type="button">Season 1</button>
+            <button class="option" data-season="2" type="button">Season 2</button>
+            <button class="option" data-season="3" type="button">Season 3</button>
+            <button class="option" data-season="4" type="button">Season 4</button>
+            <button class="option" data-season="5" type="button">Season 5</button>
+            <button class="option" data-season="6" type="button">Season 6</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="episodes">
   <div class="container">

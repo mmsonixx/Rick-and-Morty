@@ -3,6 +3,17 @@ import { makeEpisodesList } from "./makeEpisodesList.js";
 
 export let episodesData = [];
 
+
+export const setEpisodes = (episodes) => {
+  episodesData = episodes;
+};
+
+
+export const addEpisodes = (episodes) => {
+  episodesData.push(...episodes);
+};
+
+
 export const renderEpisodes = async () => {
   const episodesList = document.querySelector(".episodes__list");
 
@@ -10,7 +21,7 @@ export const renderEpisodes = async () => {
 
   const result = await getEpisodesApi();
 
-  episodesData = result.results;
+  setEpisodes(result.results);
 
   episodesList.innerHTML = makeEpisodesList(episodesData);
 };
