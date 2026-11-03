@@ -16,9 +16,7 @@ export const startEpisodesFilteringEvents = () => {
     ".episodes__filtering .select",
   );
 
-  const seasonOptions = document.querySelectorAll(
-    ".episodes__filtering .option[data-season]",
-  );
+
 
   let filters = {
     season: "",
@@ -27,38 +25,37 @@ export const startEpisodesFilteringEvents = () => {
   // Обновление эпизодов
 
   updateEpisodes = () => {
-    let filteredEpisodes = filterEpisodes(filters, episodesData);
+  console.log("Season:", filters.season);
+  console.log("Episodes count:", episodesData.length);
 
-    filteredEpisodes = searchEpisodes(
-      searchInput.value,
-      filteredEpisodes,
-    );
+  console.log(
+    "Available seasons:",
+    [...new Set(episodesData.map((episode) => episode.episode.slice(1, 3)))],
+  );
 
-    episodesList.innerHTML = makeEpisodesList(filteredEpisodes);
-  };
+  let filteredEpisodes = filterEpisodes(filters, episodesData);
 
+  filteredEpisodes = searchEpisodes(searchInput.value, filteredEpisodes);
+
+  console.log("Filtered count:", filteredEpisodes.length);
+
+  episodesList.innerHTML = makeEpisodesList(filteredEpisodes);
+};
   // Поиск
 
   searchInput.addEventListener("input", updateEpisodes);
 
-  // Фильтрация по сезонам
 
-  seasonOptions.forEach((option) => {
-    option.addEventListener("click", () => {
-      filters.season = option.dataset.season;
+ // Открытие и закрытие select
 
-      updateEpisodes();
-    });
-  });
-
-  // Открытие и закрытие select
-
-  selects.forEach((select) => {
+selects.forEach((select) => {
   const selected = select.querySelector(".selected");
   const options = select.querySelectorAll(".option");
   const selectedText = select.querySelector(".selected-text");
 
-  selected.addEventListener("click", () => {
+  selected.addEventListener("click", (event) => {
+    event.stopPropagation();
+
     selects.forEach((item) => {
       if (item !== select) {
         item.classList.remove("active");
@@ -69,20 +66,16 @@ export const startEpisodesFilteringEvents = () => {
   });
 
   options.forEach((option) => {
-    option.addEventListener("click", () => {
+    option.addEventListener("click", (event) => {
+      event.stopPropagation();
+
       selectedText.textContent = option.textContent.trim();
+      filters.season = option.dataset.season;
+
       select.classList.remove("active");
+
+      updateEpisodes();
     });
   });
 });
-
-  // Закрытие при клике вне select
-
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".episodes__filtering .select")) {
-      selects.forEach((select) => {
-        select.classList.remove("active");
-      });
-    }
-  });
 };

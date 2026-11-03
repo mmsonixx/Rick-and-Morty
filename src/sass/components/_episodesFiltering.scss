@@ -8,7 +8,8 @@
      display: grid;
   grid-template-columns: 233px 190px;
   gap: 20px;
-  align-items: start;
+  align-items: center;
+  justify-content: center;
   }
 
   .filter-item {

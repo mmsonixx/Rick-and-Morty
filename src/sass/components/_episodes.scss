@@ -101,13 +101,13 @@
 // Tablet
 @media (max-width: 1024px) {
   .episodes__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
-    justify-content: center;
   }
 
   .episodes__item {
-    width: calc(50% - 10px);
-    max-width: 400px;
+    width: 100%;
+    max-width: none;
   }
 }
 
@@ -119,6 +119,7 @@
   }
 
   .episodes__list {
+    grid-template-columns: 1fr;
     gap: 16px;
   }
 
@@ -126,6 +127,7 @@
     width: 100%;
     max-width: 400px;
     height: 190px;
+    justify-self: center;
   }
 }
 

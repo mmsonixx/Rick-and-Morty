@@ -106,3 +106,156 @@ margin-right: auto;
 }
 .hero__img {
 }
+
+
+// Tablet
+@media (max-width: 1024px) {
+  .hero {
+    padding-top: 30px;
+    padding-bottom: 50px;
+    border-radius: 0 0 70px 70px;
+  }
+
+  .hero__container {
+    gap: 20px;
+  }
+
+  .hero__text {
+    width: 260px;
+    font-size: 14px;
+    margin-top: 60px;
+    margin-right: 0;
+  }
+
+  .hero__img {
+    width: 420px;
+    height: 330px;
+  }
+
+  .hero__logo {
+    width: 360px;
+    height: 140px;
+  }
+
+  // Characters
+  .hero__content {
+    width: 50%;
+    margin-right: 20px;
+  }
+
+  .hero__title {
+    font-size: 72px;
+  }
+
+  .hero__info {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .hero__wrapper::before {
+    top: 230px;
+    width: 300px;
+  }
+}
+
+// Mobile
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 25px;
+    padding-bottom: 40px;
+    border-radius: 0 0 45px 45px;
+  }
+
+  .hero__container {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .hero__text {
+    width: 100%;
+    max-width: 450px;
+    margin: 0;
+    align-self: center;
+    font-size: 14px;
+  }
+
+  .hero__wrapper {
+    width: 100%;
+  }
+
+  .hero__img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+  }
+
+  .hero__logo {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+  }
+
+  .hero__wrapper::before {
+    top: 65%;
+    width: 70%;
+    height: 70px;
+  }
+
+  // Characters
+  .hero__content {
+    width: 100%;
+    margin-right: 0;
+    align-items: center;
+  }
+
+  .hero__title {
+    font-size: 56px;
+    margin-bottom: 15px;
+  }
+
+  .hero__info {
+    width: 100%;
+    max-width: 500px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .hero__button {
+    margin: 0 auto;
+  }
+}
+
+// Small mobile
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 20px;
+    padding-bottom: 35px;
+    border-radius: 0 0 35px 35px;
+  }
+
+  .hero__text {
+    font-size: 13px;
+  }
+
+  .hero__img {
+    max-width: 320px;
+  }
+
+  .hero__logo {
+    max-width: 280px;
+  }
+
+  .hero__title {
+    font-size: 42px;
+  }
+
+  .hero__info {
+    font-size: 13px;
+  }
+
+  .hero__button {
+    font-size: 13px;
+  }
+}

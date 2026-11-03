@@ -12,7 +12,11 @@ export const loadMoreEpisodes = async () => {
 
     addEpisodes(result.results);
 
-    updateEpisodes();
+if (updateEpisodes) {
+  updateEpisodes();
+}
+
+   
 
     if (result.info.next === null) {
       document.querySelector(".moreEpisodes").hidden = true;
