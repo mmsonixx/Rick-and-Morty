@@ -1,4 +1,4 @@
-import { getCharactersApi } from "../api/characters/getCharactersApi.js";
+import { getCharactersApi } from "../../api/characters/getCharactersApi.js";
 import { makeCharactersList } from "./makeCharactersList.js";
 
 export let charactersData = [];

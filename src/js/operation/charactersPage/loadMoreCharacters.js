@@ -1,6 +1,6 @@
 import { getCharactersApi } from "../../api/characters/getCharactersApi.js";
-import { makeCharactersList } from "../../markup/makeCharactersList.js";
-import { addCharacters } from "../../markup/renderCharacters.js";
+import { makeCharactersList } from "../../markup/characters/makeCharactersList.js";
+import { addCharacters } from "../../markup/characters/renderCharacters.js";
 
 const charactersList = document.querySelector(".characters__list");
 const moreBtn = document.querySelector(".moreCharacters");

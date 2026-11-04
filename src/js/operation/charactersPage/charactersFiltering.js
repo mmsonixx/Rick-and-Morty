@@ -1,5 +1,5 @@
-import { charactersData } from "../../markup/renderCharacters.js";
-import { makeCharactersList } from "../../markup/makeCharactersList.js";
+import { charactersData } from "../../markup/characters/renderCharacters.js";
+import { makeCharactersList } from "../../markup/characters/makeCharactersList.js";
 
 import { filterCharacters } from "./filterCharacters.js";
 import { searchCharacters } from "./searchCharacters.js";

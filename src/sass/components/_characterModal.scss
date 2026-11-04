@@ -1,0 +1,251 @@
+
+@use "../utils/mixin" as *;
+.character-modal-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: 0.3s ease;
+}
+
+.character-modal-container.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.character-modal__overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+}
+
+.character-modal {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 286px 1fr;
+  gap: 18px;
+
+  width: min(850px, 100%);
+  max-height: 85vh;
+
+  padding: 33px;
+
+  background: var(--black);
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  animation: modalShow 0.35s ease;
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.character-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 2;
+
+  border: none;
+  background: transparent;
+
+  color: #adff2f;
+  font-size: 30px;
+
+  cursor: pointer;
+}
+
+.character-modal__image {
+  width: 100%;
+  aspect-ratio: 1;
+
+  object-fit: cover;
+
+  border: 2px solid #adff2f;
+  border-radius: 17px;
+}
+
+.character-modal__details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 10px;
+margin-top: 15px;
+  padding: 20px;
+
+border: 2px solid var(--green);
+border-radius: 18px;
+}
+
+.character-modal__detail span,
+.episode-card__info span {
+
+ @include text($color: rgba(250, 250, 250, 0.5), $size: 12px, $height: 117%, $weight: 400);
+
+
+  display: block;
+  margin-bottom: 6px;
+
+  
+}
+
+.character-modal__detail p,
+.episode-card__info p {
+
+ @include text($color: #fafafa, $size: 16px, $height: 113%, $weight: 400);
+
+  margin: 0;
+
+}
+
+.character-modal__right {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.character-modal__title {
+ @include text($color: #fafafa, $size: 24px, $height: 117%, $weight: 600);
+
+  margin: 0;
+ 
+  font-size: 26px;
+}
+
+.character-modal__episodes {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  max-height: 65vh;
+  overflow-y: auto;
+
+  padding: 0 4px 0 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+.episode-card {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 69px;
+  padding: 12px 15px;
+
+  border: 2px solid #adff2f;
+  border-radius: 19px;
+}
+
+.episode-card span {
+    @include text($color: rgba(250, 250, 250, 0.5), $size: 12px, $height: 117%, $weight: 400);
+
+ 
+}
+
+.episode-card p {
+ @include text($color: #fafafa, $size: 14px, $height: 129%, $weight: 400);
+}
+
+.episode-card__name {
+@include text($color: var(--green), $size: 14px, $height: 129%, $weight: 600);
+    
+
+  margin: 0;
+ 
+}
+
+.episode-card__info {
+  display: grid;
+  grid-template-columns: 55px 1fr;
+  gap: 8px;
+}
+
+.episode-card__info p {
+  font-size: 13px;
+}
+
+.character-modal__episodes::-webkit-scrollbar {
+  width: 5px;
+}
+
+.character-modal__episodes::-webkit-scrollbar-thumb {
+  background: #adff2f;
+  border-radius: 10px;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 700px) {
+  .character-modal {
+    grid-template-columns: 1fr;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px 20px;
+  }
+
+  .character-modal__left {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 12px;
+  }
+
+  .character-modal__details {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .character-modal__image {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .character-modal__episodes {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .character-modal__left {
+    grid-template-columns: 1fr;
+  }
+
+  .character-modal__image {
+    aspect-ratio: 1;
+  }
+}
