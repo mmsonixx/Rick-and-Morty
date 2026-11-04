@@ -721,13 +721,14 @@ var _renderPageJs = require("./js/markup/renderPage.js");
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "renderPage", ()=>renderPage);
-var _renderCharactersJs = require("./renderCharacters.js");
+var _renderCharactersJs = require("./characters/renderCharacters.js");
 var _loadMoreCharactersJs = require("../operation/charactersPage/loadMoreCharacters.js");
 var _loadMoreEpisodesJs = require("../operation/episodesPage/loadMoreEpisodes.js");
 var _mainCharactersJs = require("../operation/homePage/mainCharacters.js");
 var _charactersFilteringJs = require("../operation/charactersPage/charactersFiltering.js");
 var _renderEpisodesJs = require("./episodes/renderEpisodes.js");
 var _episodesFilteringJs = require("../operation/episodesPage/episodesFiltering.js");
+var _characterModalJs = require("../operation/charactersPage/characterModal.js");
 const startEvents = async ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
     if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
@@ -736,6 +737,7 @@ const startEvents = async ()=>{
     (0, _mainCharactersJs.startMainCharactersEvents)();
     (0, _charactersFilteringJs.startCharactersFilteringEvents)();
     (0, _episodesFilteringJs.startEpisodesFilteringEvents)();
+    (0, _characterModalJs.startCharacterModalEvents)();
 };
 const renderPage = async ()=>{
     await (0, _renderCharactersJs.renderCharacters)();
@@ -743,41 +745,7 @@ const renderPage = async ()=>{
     await startEvents();
 };
 
-},{"./renderCharacters.js":"f27BX","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/episodesPage/episodesFiltering.js":"86OMy"}],"f27BX":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "charactersData", ()=>charactersData);
-parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
-parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
-var _getCharactersApiJs = require("../api/characters/getCharactersApi.js");
-var _makeCharactersListJs = require("./makeCharactersList.js");
-let charactersData = [];
-const addCharacters = (newCharacters)=>{
-    charactersData.push(...newCharacters);
-};
-const renderCharacters = async ()=>{
-    const charactersList = document.querySelector(".characters__list");
-    if (!charactersList) return;
-    const result = await (0, _getCharactersApiJs.getCharactersApi)();
-    charactersData = result.results;
-    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
-};
-
-},{"../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1mQTM":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
-const getCharactersApi = async (page = 1)=>{
-    try {
-        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        console.log(error.message);
-    }
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57"}],"jnFvT":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -807,29 +775,13 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"bsyGr":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "makeCharactersList", ()=>makeCharactersList);
-const makeCharactersList = (characters)=>{
-    const markup = characters.map((character)=>`
-        <li class="characters__item">
-            <img src="${character.image}" alt="" class="characters__img">
-            <h2 class="characters__title">${character.name}</h2>
-            <p class="characters__info"><span>Origin:</span> ${character.origin.name}</p>
-            <p class="characters__info"><span>Location:</span> Svazilend</p>
-          </li>
-      `).join("");
-    return markup;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"lV1uf":[function(require,module,exports,__globalThis) {
+},{}],"lV1uf":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadMoreCharacters", ()=>loadMoreCharacters);
 var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
-var _makeCharactersListJs = require("../../markup/makeCharactersList.js");
-var _renderCharactersJs = require("../../markup/renderCharacters.js");
+var _makeCharactersListJs = require("../../markup/characters/makeCharactersList.js");
+var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
 const charactersList = document.querySelector(".characters__list");
 const moreBtn = document.querySelector(".moreCharacters");
 let page = 2;
@@ -845,7 +797,282 @@ const loadMoreCharacters = async ()=>{
     page++;
 };
 
-},{"../../api/characters/getCharactersApi.js":"1mQTM","../../markup/makeCharactersList.js":"bsyGr","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/renderCharacters.js":"f27BX"}],"fx8t1":[function(require,module,exports,__globalThis) {
+},{"../../api/characters/getCharactersApi.js":"1mQTM","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/makeCharactersList.js":"6aKzq","../../markup/characters/renderCharacters.js":"aRxsR"}],"1mQTM":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
+const getCharactersApi = async (page = 1)=>{
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"6aKzq":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeCharactersList", ()=>makeCharactersList);
+const makeCharactersList = (characters)=>{
+    const markup = characters.map((character)=>`
+        <li class="characters__item">
+            <img src="${character.image}" alt="" class="characters__img">
+             <h2 class="characters__title">
+  <button
+    type="button"
+    class="characters__name"
+    data-character-id="${character.id}"
+  >
+    ${character.name}
+  </button>
+</h2>
+            <p class="characters__info"><span>Origin:</span> ${character.origin.name}</p>
+            <p class="characters__info"><span>Location:</span> Svazilend</p>
+          </li>
+      `).join("");
+    return markup;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aRxsR":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "charactersData", ()=>charactersData);
+parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
+parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
+var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
+var _makeCharactersListJs = require("./makeCharactersList.js");
+let charactersData = [];
+const addCharacters = (newCharacters)=>{
+    charactersData.push(...newCharacters);
+};
+const renderCharacters = async ()=>{
+    const charactersList = document.querySelector(".characters__list");
+    if (!charactersList) return;
+    const result = await (0, _getCharactersApiJs.getCharactersApi)();
+    charactersData = result.results;
+    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
+};
+
+},{"../../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"6aKzq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aAso4":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "loadMoreEpisodes", ()=>loadMoreEpisodes);
+var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
+var _renderEpisodesJs = require("../../markup/episodes/renderEpisodes.js");
+var _episodesFilteringJs = require("./episodesFiltering.js");
+let page = 2;
+const loadMoreEpisodes = async ()=>{
+    try {
+        const result = await (0, _getEpisodesApiJs.getEpisodesApi)(page);
+        if (!result || !Array.isArray(result.results)) return;
+        (0, _renderEpisodesJs.addEpisodes)(result.results);
+        if (0, _episodesFilteringJs.updateEpisodes) (0, _episodesFilteringJs.updateEpisodes)();
+        if (result.info.next === null) {
+            document.querySelector(".moreEpisodes").hidden = true;
+            return;
+        }
+        page++;
+    } catch (error) {
+        console.error("Error loading episodes:", error);
+    }
+};
+
+},{"../../api/episodes/getEpisodesApi.js":"18nPX","../../markup/episodes/renderEpisodes.js":"deM5h","./episodesFiltering.js":"86OMy","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"18nPX":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getEpisodesApi", ()=>getEpisodesApi);
+const getEpisodesApi = async (page = 1)=>{
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/episode?page=${page}`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error loading episodes:", error.message);
+        return null;
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"deM5h":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "episodesData", ()=>episodesData);
+parcelHelpers.export(exports, "setEpisodes", ()=>setEpisodes);
+parcelHelpers.export(exports, "addEpisodes", ()=>addEpisodes);
+parcelHelpers.export(exports, "renderEpisodes", ()=>renderEpisodes);
+var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
+var _makeEpisodesListJs = require("./makeEpisodesList.js");
+let episodesData = [];
+const setEpisodes = (episodes)=>{
+    episodesData = episodes;
+};
+const addEpisodes = (episodes)=>{
+    episodesData.push(...episodes);
+};
+const renderEpisodes = async ()=>{
+    const episodesList = document.querySelector(".episodes__list");
+    if (!episodesList) return;
+    const result = await (0, _getEpisodesApiJs.getEpisodesApi)();
+    if (!result || !result.info) return;
+    let allEpisodes = [
+        ...result.results
+    ];
+    for(let page = 2; page <= result.info.pages; page++){
+        const nextResult = await (0, _getEpisodesApiJs.getEpisodesApi)(page);
+        if (!nextResult) continue;
+        allEpisodes.push(...nextResult.results);
+    }
+    allEpisodes.sort((a, b)=>{
+        const seasonA = Number(a.episode.slice(1, 3));
+        const seasonB = Number(b.episode.slice(1, 3));
+        const episodeA = Number(a.episode.slice(4));
+        const episodeB = Number(b.episode.slice(4));
+        if (seasonA !== seasonB) return seasonA - seasonB;
+        return episodeA - episodeB;
+    });
+    setEpisodes(allEpisodes);
+    episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(episodesData);
+};
+
+},{"../../api/episodes/getEpisodesApi.js":"18nPX","./makeEpisodesList.js":"1QUQf","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1QUQf":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeEpisodesList", ()=>makeEpisodesList);
+const episodesImages = {
+    1: new URL(require("aeff8f78bcde3893")).href,
+    2: new URL(require("84794266307e276a")).href,
+    3: new URL(require("f4e023180085420b")).href,
+    4: new URL(require("964a16b52586e182")).href,
+    5: new URL(require("87106697de2aa050")).href,
+    6: new URL(require("a99c74f319f0b021")).href
+};
+const makeEpisodesList = (episodes)=>{
+    const markup = episodes.map((episode)=>{
+        const season = Number(episode.episode.split("E")[0].replace("S", ""));
+        return `
+        <li class="episodes__item">
+          <img
+            src="${episodesImages[season] || ""}"
+            alt="${episode.name}"
+            class="episodes__img"
+          >
+
+          <h2 class="episodes__title">${episode.name}</h2>
+
+         <div class="episodes__meta">
+    <p class="episodes__details">
+      <span>Season</span>
+      ${season}
+    </p>
+
+    <p class="episodes__info">
+      <span>Air date</span>
+      ${episode.air_date}
+    </p>
+  </div>
+        </li>
+      `;
+    }).join("");
+    return markup;
+};
+
+},{"aeff8f78bcde3893":"1viRO","84794266307e276a":"g3IR0","f4e023180085420b":"igdcw","964a16b52586e182":"ldcam","87106697de2aa050":"g7lUi","a99c74f319f0b021":"iQKN9","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1viRO":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-1.5b71d146.webp") + "?" + Date.now();
+
+},{}],"g3IR0":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-2.db28978b.webp") + "?" + Date.now();
+
+},{}],"igdcw":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-3.077b19db.webp") + "?" + Date.now();
+
+},{}],"ldcam":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-4.b9e5b6d7.webp") + "?" + Date.now();
+
+},{}],"g7lUi":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-5.e8f6bd63.webp") + "?" + Date.now();
+
+},{}],"iQKN9":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("episode-6.2f23f582.webp") + "?" + Date.now();
+
+},{}],"86OMy":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "updateEpisodes", ()=>updateEpisodes);
+parcelHelpers.export(exports, "startEpisodesFilteringEvents", ()=>startEpisodesFilteringEvents);
+var _renderEpisodesJs = require("../../markup/episodes/renderEpisodes.js");
+var _makeEpisodesListJs = require("../../markup/episodes/makeEpisodesList.js");
+var _filterEpisodesJs = require("./filterEpisodes.js");
+var _searchEpisodesJs = require("./searchEpisodes.js");
+let updateEpisodes;
+const startEpisodesFilteringEvents = ()=>{
+    const episodesList = document.querySelector(".episodes__list");
+    const searchInput = document.querySelector("#search-episodes");
+    if (!episodesList || !searchInput) return;
+    const selects = document.querySelectorAll(".episodes__filtering .select");
+    let filters = {
+        season: ""
+    };
+    // Обновление эпизодов
+    updateEpisodes = ()=>{
+        console.log("Season:", filters.season);
+        console.log("Episodes count:", (0, _renderEpisodesJs.episodesData).length);
+        console.log("Available seasons:", [
+            ...new Set((0, _renderEpisodesJs.episodesData).map((episode)=>episode.episode.slice(1, 3)))
+        ]);
+        let filteredEpisodes = (0, _filterEpisodesJs.filterEpisodes)(filters, (0, _renderEpisodesJs.episodesData));
+        filteredEpisodes = (0, _searchEpisodesJs.searchEpisodes)(searchInput.value, filteredEpisodes);
+        console.log("Filtered count:", filteredEpisodes.length);
+        episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(filteredEpisodes);
+    };
+    // Поиск
+    searchInput.addEventListener("input", updateEpisodes);
+    // Открытие и закрытие select
+    selects.forEach((select)=>{
+        const selected = select.querySelector(".selected");
+        const options = select.querySelectorAll(".option");
+        const selectedText = select.querySelector(".selected-text");
+        selected.addEventListener("click", (event)=>{
+            event.stopPropagation();
+            selects.forEach((item)=>{
+                if (item !== select) item.classList.remove("active");
+            });
+            select.classList.toggle("active");
+        });
+        options.forEach((option)=>{
+            option.addEventListener("click", (event)=>{
+                event.stopPropagation();
+                selectedText.textContent = option.textContent.trim();
+                filters.season = option.dataset.season;
+                select.classList.remove("active");
+                updateEpisodes();
+            });
+        });
+    });
+};
+
+},{"../../markup/episodes/renderEpisodes.js":"deM5h","../../markup/episodes/makeEpisodesList.js":"1QUQf","./filterEpisodes.js":"e6YlG","./searchEpisodes.js":"aGMTN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"e6YlG":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "filterEpisodes", ()=>filterEpisodes);
+const filterEpisodes = (filters, episodes)=>{
+    return episodes.filter((episode)=>{
+        const season = episode.episode.slice(1, 3);
+        const matchesSeason = !filters.season || season === filters.season.padStart(2, "0");
+        return matchesSeason;
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aGMTN":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "searchEpisodes", ()=>searchEpisodes);
+const searchEpisodes = (query, episodes)=>{
+    return episodes.filter((episode)=>episode.name.toLowerCase().includes(query.trim().toLowerCase()));
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fx8t1":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "startMainCharactersEvents", ()=>startMainCharactersEvents);
@@ -944,7 +1171,7 @@ const startMainCharactersEvents = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","bc9e937eb15af3c9":"7jaqT","d65119ca483a8dad":"bXaGQ","f9384ca54768ea0e":"8DvF3","a6324b94a9449f8":"3q8K2","4451f4257d3e6f9b":"9Ym67","9711758e75052df6":"fs3JC","70a0651aecc0593a":"jK7AO","b1a309ad349cc196":"dck3f","d2b458fcf9570350":"6Ivcm","bbe21053e187135b":"6qRds","acdb59feeb9863f4":"9mARq","d10974e2781ddb92":"ekoyN","b1fc065d8e2526cb":"4rYHc","5c4b2755d94b12d9":"4rPtn","8e4ff447c15dfbbb":"hfKh7","390def69bacae2ab":"a3r4b","546f971cc4e2f028":"gVvlM","f35da7384997e239":"kVgLR","d3607d06ef73c4ff":"6LVHZ","c84e129db9013b6c":"lCV6V","1cb99338c0ee54c8":"hNNxX","f068d137c67287c2":"iVDwZ","f6f63bca759b7525":"2NYyZ","486708465b44e33a":"9lGPq","be22cc04d735e58f":"7hrfa","b7b80d8e80ad1e77":"8ZKuX","437317dc11422b6a":"aIDYA","a44710d674d4034":"5kCCt","1470b95607b67833":"eL4fu","48cac1c886cf938d":"4VAn0"}],"7jaqT":[function(require,module,exports,__globalThis) {
+},{"bc9e937eb15af3c9":"7jaqT","d65119ca483a8dad":"bXaGQ","f9384ca54768ea0e":"8DvF3","a6324b94a9449f8":"3q8K2","4451f4257d3e6f9b":"9Ym67","9711758e75052df6":"fs3JC","70a0651aecc0593a":"jK7AO","b1a309ad349cc196":"dck3f","d2b458fcf9570350":"6Ivcm","bbe21053e187135b":"6qRds","acdb59feeb9863f4":"9mARq","d10974e2781ddb92":"ekoyN","b1fc065d8e2526cb":"4rYHc","5c4b2755d94b12d9":"4rPtn","8e4ff447c15dfbbb":"hfKh7","390def69bacae2ab":"a3r4b","546f971cc4e2f028":"gVvlM","f35da7384997e239":"kVgLR","d3607d06ef73c4ff":"6LVHZ","c84e129db9013b6c":"lCV6V","1cb99338c0ee54c8":"hNNxX","f068d137c67287c2":"iVDwZ","f6f63bca759b7525":"2NYyZ","486708465b44e33a":"9lGPq","be22cc04d735e58f":"7hrfa","b7b80d8e80ad1e77":"8ZKuX","437317dc11422b6a":"aIDYA","a44710d674d4034":"5kCCt","1470b95607b67833":"eL4fu","48cac1c886cf938d":"4VAn0","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"7jaqT":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("rick-sanchez@desktop-1x.fa69660a.webp") + "?" + Date.now();
 
 },{}],"bXaGQ":[function(require,module,exports,__globalThis) {
@@ -1038,8 +1265,8 @@ module.exports = module.bundle.resolve("jerry-smith@mobile-2x.a3a98245.webp") + 
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "startCharactersFilteringEvents", ()=>startCharactersFilteringEvents);
-var _renderCharactersJs = require("../../markup/renderCharacters.js");
-var _makeCharactersListJs = require("../../markup/makeCharactersList.js");
+var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
+var _makeCharactersListJs = require("../../markup/characters/makeCharactersList.js");
 var _filterCharactersJs = require("./filterCharacters.js");
 var _searchCharactersJs = require("./searchCharacters.js");
 const startCharactersFilteringEvents = ()=>{
@@ -1110,7 +1337,7 @@ const startCharactersFilteringEvents = ()=>{
     });
 };
 
-},{"../../markup/renderCharacters.js":"f27BX","../../markup/makeCharactersList.js":"bsyGr","./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"bLpCG":[function(require,module,exports,__globalThis) {
+},{"./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/makeCharactersList.js":"6aKzq","../../markup/characters/renderCharacters.js":"aRxsR"}],"bLpCG":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "filterCharacters", ()=>filterCharacters);
@@ -1132,221 +1359,162 @@ const searchCharacters = (query, characters)=>{
     return characters.filter((character)=>character.name.toLowerCase().includes(query.trim().toLowerCase()));
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"deM5h":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1md57":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "episodesData", ()=>episodesData);
-parcelHelpers.export(exports, "setEpisodes", ()=>setEpisodes);
-parcelHelpers.export(exports, "addEpisodes", ()=>addEpisodes);
-parcelHelpers.export(exports, "renderEpisodes", ()=>renderEpisodes);
-var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
-var _makeEpisodesListJs = require("./makeEpisodesList.js");
-let episodesData = [];
-const setEpisodes = (episodes)=>{
-    episodesData = episodes;
-};
-const addEpisodes = (episodes)=>{
-    episodesData.push(...episodes);
-};
-const renderEpisodes = async ()=>{
-    const episodesList = document.querySelector(".episodes__list");
-    if (!episodesList) return;
-    const result = await (0, _getEpisodesApiJs.getEpisodesApi)();
-    if (!result || !result.info) return;
-    let allEpisodes = [
-        ...result.results
-    ];
-    for(let page = 2; page <= result.info.pages; page++){
-        const nextResult = await (0, _getEpisodesApiJs.getEpisodesApi)(page);
-        if (!nextResult) continue;
-        allEpisodes.push(...nextResult.results);
-    }
-    allEpisodes.sort((a, b)=>{
-        const seasonA = Number(a.episode.slice(1, 3));
-        const seasonB = Number(b.episode.slice(1, 3));
-        const episodeA = Number(a.episode.slice(4));
-        const episodeB = Number(b.episode.slice(4));
-        if (seasonA !== seasonB) return seasonA - seasonB;
-        return episodeA - episodeB;
+parcelHelpers.export(exports, "startCharacterModalEvents", ()=>startCharacterModalEvents);
+var _renderCharactersModalJs = require("../../markup/characters/renderCharactersModal.js");
+const startCharacterModalEvents = ()=>{
+    const charactersList = document.querySelector(".characters__list");
+    const modalContainer = document.querySelector(".character-modal-container");
+    if (!charactersList || !modalContainer) return;
+    charactersList.addEventListener("click", async (event)=>{
+        const button = event.target.closest(".characters__name");
+        if (!button) return;
+        await (0, _renderCharactersModalJs.renderCharacterModal)(button.dataset.characterId);
+        document.body.classList.add("modal-open");
+        modalContainer.classList.add("active");
     });
-    setEpisodes(allEpisodes);
-    episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(episodesData);
+    modalContainer.addEventListener("click", (event)=>{
+        if (event.target.classList.contains("character-modal-container") || event.target.classList.contains("character-modal__overlay") || event.target.closest(".character-modal__close")) {
+            modalContainer.classList.remove("active");
+            document.body.classList.remove("modal-open");
+        }
+    });
+    document.addEventListener("keydown", (event)=>{
+        if (event.key === "Escape") {
+            modalContainer.classList.remove("active");
+            document.body.classList.remove("modal-open");
+        }
+    });
 };
 
-},{"../../api/episodes/getEpisodesApi.js":"18nPX","./makeEpisodesList.js":"1QUQf","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"18nPX":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/renderCharactersModal.js":"eSdI6"}],"eSdI6":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getEpisodesApi", ()=>getEpisodesApi);
-const getEpisodesApi = async (page = 1)=>{
+parcelHelpers.export(exports, "renderCharacterModal", ()=>renderCharacterModal);
+var _makeCharactersModalJs = require("./makeCharactersModal.js");
+var _makeCharacterEpisodesListJs = require("./makeCharacterEpisodesList.js");
+const renderCharacterModal = async (characterId)=>{
+    const modalContainer = document.querySelector(".character-modal-container");
     try {
-        const response = await fetch(`https://rickandmortyapi.com/api/episode?page=${page}`);
-        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-        const result = await response.json();
-        return result;
+        // Получаем персонажа
+        const response = await fetch(`https://rickandmortyapi.com/api/character/${characterId}`);
+        const character = await response.json();
+        if (!response.ok) throw new Error("Character not found");
+        // Рендерим модалку
+        modalContainer.innerHTML = (0, _makeCharactersModalJs.makeCharacterModal)(character);
+        // Получаем эпизоды персонажа
+        const episodes = await Promise.all(character.episode.map(async (url)=>{
+            const response = await fetch(url);
+            return response.json();
+        }));
+        // Рендерим список эпизодов
+        const episodesList = modalContainer.querySelector(".character-modal__episodes");
+        episodesList.innerHTML = (0, _makeCharacterEpisodesListJs.makeCharacterEpisodesList)(episodes);
     } catch (error) {
-        console.error("Error loading episodes:", error.message);
-        return null;
+        console.error("Error rendering character modal:", error);
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1QUQf":[function(require,module,exports,__globalThis) {
+},{"./makeCharacterEpisodesList.js":"bkVYy","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./makeCharactersModal.js":"dzclk"}],"bkVYy":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "makeEpisodesList", ()=>makeEpisodesList);
-const episodesImages = {
-    1: new URL(require("aeff8f78bcde3893")).href,
-    2: new URL(require("84794266307e276a")).href,
-    3: new URL(require("f4e023180085420b")).href,
-    4: new URL(require("964a16b52586e182")).href,
-    5: new URL(require("87106697de2aa050")).href,
-    6: new URL(require("a99c74f319f0b021")).href
-};
-const makeEpisodesList = (episodes)=>{
-    const markup = episodes.map((episode)=>{
-        const season = Number(episode.episode.split("E")[0].replace("S", ""));
-        return `
-        <li class="episodes__item">
-          <img
-            src="${episodesImages[season] || ""}"
-            alt="${episode.name}"
-            class="episodes__img"
-          >
+parcelHelpers.export(exports, "makeCharacterEpisodesList", ()=>makeCharacterEpisodesList);
+const makeCharacterEpisodesList = (episodes)=>{
+    const markup = episodes.map((episode)=>`
+        <li class="episode-card">
 
-          <h2 class="episodes__title">${episode.name}</h2>
+          <h3 class="episode-card__name">
+            ${episode.name}
+          </h3>
 
-         <div class="episodes__meta">
-    <p class="episodes__details">
-      <span>Season</span>
-      ${season}
-    </p>
+          <div class="episode-card__info">
 
-    <p class="episodes__info">
-      <span>Air date</span>
-      ${episode.air_date}
-    </p>
-  </div>
+            <div>
+              <span>Season</span>
+              <p>${episode.episode.match(/S(\d+)E/)?.[1] || "?"}</p>
+            </div>
+
+            <div>
+              <span>Air date</span>
+              <p>${episode.air_date}</p>
+            </div>
+
+          </div>
+
         </li>
-      `;
-    }).join("");
+      `).join("");
     return markup;
 };
 
-},{"aeff8f78bcde3893":"1viRO","84794266307e276a":"g3IR0","f4e023180085420b":"igdcw","964a16b52586e182":"ldcam","87106697de2aa050":"g7lUi","a99c74f319f0b021":"iQKN9","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1viRO":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("episode-1.5b71d146.webp") + "?" + Date.now();
-
-},{}],"g3IR0":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("episode-2.db28978b.webp") + "?" + Date.now();
-
-},{}],"igdcw":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("episode-3.077b19db.webp") + "?" + Date.now();
-
-},{}],"ldcam":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("episode-4.b9e5b6d7.webp") + "?" + Date.now();
-
-},{}],"g7lUi":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("episode-5.e8f6bd63.webp") + "?" + Date.now();
-
-},{}],"iQKN9":[function(require,module,exports,__globalThis) {
-module.exports = module.bundle.resolve("episode-6.2f23f582.webp") + "?" + Date.now();
-
-},{}],"aAso4":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"dzclk":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "loadMoreEpisodes", ()=>loadMoreEpisodes);
-var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
-var _renderEpisodesJs = require("../../markup/episodes/renderEpisodes.js");
-var _episodesFilteringJs = require("./episodesFiltering.js");
-let page = 2;
-const loadMoreEpisodes = async ()=>{
-    try {
-        const result = await (0, _getEpisodesApiJs.getEpisodesApi)(page);
-        if (!result || !Array.isArray(result.results)) return;
-        (0, _renderEpisodesJs.addEpisodes)(result.results);
-        if (0, _episodesFilteringJs.updateEpisodes) (0, _episodesFilteringJs.updateEpisodes)();
-        if (result.info.next === null) {
-            document.querySelector(".moreEpisodes").hidden = true;
-            return;
-        }
-        page++;
-    } catch (error) {
-        console.error("Error loading episodes:", error);
-    }
-};
+parcelHelpers.export(exports, "makeCharacterModal", ()=>makeCharacterModal);
+const makeCharacterModal = (character)=>{
+    return `
+    <div class="character-modal__overlay">
+      <div class="character-modal">
 
-},{"../../api/episodes/getEpisodesApi.js":"18nPX","../../markup/episodes/renderEpisodes.js":"deM5h","./episodesFiltering.js":"86OMy","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"86OMy":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "updateEpisodes", ()=>updateEpisodes);
-parcelHelpers.export(exports, "startEpisodesFilteringEvents", ()=>startEpisodesFilteringEvents);
-var _renderEpisodesJs = require("../../markup/episodes/renderEpisodes.js");
-var _makeEpisodesListJs = require("../../markup/episodes/makeEpisodesList.js");
-var _filterEpisodesJs = require("./filterEpisodes.js");
-var _searchEpisodesJs = require("./searchEpisodes.js");
-let updateEpisodes;
-const startEpisodesFilteringEvents = ()=>{
-    const episodesList = document.querySelector(".episodes__list");
-    const searchInput = document.querySelector("#search-episodes");
-    if (!episodesList || !searchInput) return;
-    const selects = document.querySelectorAll(".episodes__filtering .select");
-    let filters = {
-        season: ""
-    };
-    // Обновление эпизодов
-    updateEpisodes = ()=>{
-        console.log("Season:", filters.season);
-        console.log("Episodes count:", (0, _renderEpisodesJs.episodesData).length);
-        console.log("Available seasons:", [
-            ...new Set((0, _renderEpisodesJs.episodesData).map((episode)=>episode.episode.slice(1, 3)))
-        ]);
-        let filteredEpisodes = (0, _filterEpisodesJs.filterEpisodes)(filters, (0, _renderEpisodesJs.episodesData));
-        filteredEpisodes = (0, _searchEpisodesJs.searchEpisodes)(searchInput.value, filteredEpisodes);
-        console.log("Filtered count:", filteredEpisodes.length);
-        episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(filteredEpisodes);
-    };
-    // Поиск
-    searchInput.addEventListener("input", updateEpisodes);
-    // Открытие и закрытие select
-    selects.forEach((select)=>{
-        const selected = select.querySelector(".selected");
-        const options = select.querySelectorAll(".option");
-        const selectedText = select.querySelector(".selected-text");
-        selected.addEventListener("click", (event)=>{
-            event.stopPropagation();
-            selects.forEach((item)=>{
-                if (item !== select) item.classList.remove("active");
-            });
-            select.classList.toggle("active");
-        });
-        options.forEach((option)=>{
-            option.addEventListener("click", (event)=>{
-                event.stopPropagation();
-                selectedText.textContent = option.textContent.trim();
-                filters.season = option.dataset.season;
-                select.classList.remove("active");
-                updateEpisodes();
-            });
-        });
-    });
-};
+        <button class="character-modal__close" type="button">
+          &times;
+        </button>
 
-},{"../../markup/episodes/renderEpisodes.js":"deM5h","./filterEpisodes.js":"e6YlG","./searchEpisodes.js":"aGMTN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/episodes/makeEpisodesList.js":"1QUQf"}],"e6YlG":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "filterEpisodes", ()=>filterEpisodes);
-const filterEpisodes = (filters, episodes)=>{
-    return episodes.filter((episode)=>{
-        const season = episode.episode.slice(1, 3);
-        const matchesSeason = !filters.season || season === filters.season.padStart(2, "0");
-        return matchesSeason;
-    });
-};
+        <div class="character-modal__left">
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aGMTN":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "searchEpisodes", ()=>searchEpisodes);
-const searchEpisodes = (query, episodes)=>{
-    return episodes.filter((episode)=>episode.name.toLowerCase().includes(query.trim().toLowerCase()));
+          <img
+            src="${character.image}"
+            alt="${character.name}"
+            class="character-modal__image"
+          >
+
+          <div class="character-modal__details">
+
+            <div class="character-modal__detail">
+              <span>Status</span>
+              <p>${character.status}</p>
+            </div>
+
+            <div class="character-modal__detail">
+              <span>Species</span>
+              <p>${character.species}</p>
+            </div>
+
+            <div class="character-modal__detail">
+              <span>Gender</span>
+              <p>${character.gender}</p>
+            </div>
+
+            <div class="character-modal__detail">
+              <span>Origin</span>
+              <p${character.origin.name.replace(/\s*\(.*?\)/g, "")}</p>
+            </div>
+
+            <div class="character-modal__detail">
+              <span>Location</span>
+              <p>${character.location.name.replace(/\s*\(.*?\)/g, "")}</p>
+            </div>
+
+            <div class="character-modal__detail">
+              <span>Type</span>
+              <p>${character.type || "Unknown"}</p>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="character-modal__right">
+
+          <h2 class="character-modal__title">Episodes</h2>
+
+          <ul class="character-modal__episodes"></ul>
+
+        </div>
+
+      </div>
+    </div>
+  `;
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")

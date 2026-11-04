@@ -1601,6 +1601,250 @@ a {
   }
 }
 
+.character-modal-container {
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  transition: all .3s;
+  display: flex;
+  position: fixed;
+  inset: 0;
+}
+
+.character-modal-container.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.character-modal__overlay {
+  backdrop-filter: blur(12px);
+  background: #0000008c;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  display: flex;
+  position: absolute;
+  inset: 0;
+}
+
+.character-modal {
+  background: var(--black);
+  border-radius: 22px;
+  grid-template-columns: 286px 1fr;
+  gap: 18px;
+  width: min(850px, 100%);
+  max-height: 85vh;
+  padding: 33px;
+  animation: .35s modalShow;
+  display: grid;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes modalShow {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.character-modal__close {
+  z-index: 2;
+  color: #adff2f;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.character-modal__image {
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 2px solid #adff2f;
+  border-radius: 17px;
+  width: 100%;
+}
+
+.character-modal__details {
+  border: 2px solid var(--green);
+  border-radius: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 10px;
+  margin-top: 15px;
+  padding: 20px;
+  display: grid;
+}
+
+.character-modal__detail span, .episode-card__info span {
+  color: #fafafa80;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 117%;
+  display: block;
+}
+
+.character-modal__detail p, .episode-card__info p {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 113%;
+}
+
+.character-modal__right {
+  flex-direction: column;
+  gap: 15px;
+  min-width: 0;
+  display: flex;
+}
+
+.character-modal__title {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 117%;
+}
+
+.character-modal__episodes {
+  flex-direction: column;
+  gap: 9px;
+  max-height: 65vh;
+  margin: 0;
+  padding: 0 4px 0 0;
+  list-style: none;
+  display: flex;
+  overflow-y: auto;
+}
+
+.episode-card {
+  border: 2px solid #adff2f;
+  border-radius: 19px;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 69px;
+  padding: 12px 15px;
+  display: grid;
+}
+
+.episode-card span {
+  color: #fafafa80;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 117%;
+}
+
+.episode-card p {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 129%;
+}
+
+.episode-card__name {
+  color: var(--green);
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 129%;
+}
+
+.episode-card__info {
+  grid-template-columns: 55px 1fr;
+  gap: 8px;
+  display: grid;
+}
+
+.episode-card__info p {
+  font-size: 13px;
+}
+
+.character-modal__episodes::-webkit-scrollbar {
+  width: 5px;
+}
+
+.character-modal__episodes::-webkit-scrollbar-thumb {
+  background: #adff2f;
+  border-radius: 10px;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (width <= 700px) {
+  .character-modal {
+    grid-template-columns: 1fr;
+    max-height: 90vh;
+    padding: 25px 20px;
+    overflow-y: auto;
+  }
+
+  .character-modal__left {
+    grid-template-columns: 130px 1fr;
+    gap: 12px;
+    display: grid;
+  }
+
+  .character-modal__details {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .character-modal__image {
+    object-fit: cover;
+    height: 100%;
+  }
+
+  .character-modal__episodes {
+    max-height: 300px;
+  }
+}
+
+@media (width <= 400px) {
+  .character-modal__left {
+    grid-template-columns: 1fr;
+  }
+
+  .character-modal__image {
+    aspect-ratio: 1;
+  }
+}
+
 .footer {
   padding-top: 50px;
   padding-bottom: 20px;
