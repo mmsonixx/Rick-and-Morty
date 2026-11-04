@@ -6,6 +6,8 @@ import { startCharactersFilteringEvents } from "../operation/charactersPage/char
 import { renderEpisodes } from "./episodes/renderEpisodes.js";
 import { startEpisodesFilteringEvents } from "../operation/episodesPage/episodesFiltering.js";
 import { startCharacterModalEvents } from "../operation/charactersPage/characterModal.js";
+import { renderExplore } from "./episodes/renderExplore.js";
+import { startEpisodeModalEvents } from "../operation/episodesPage/episodeModal.js";
 
 
 const startEvents = async () => {
@@ -24,11 +26,13 @@ const startEvents = async () => {
   startCharactersFilteringEvents();
   startEpisodesFilteringEvents();
     startCharacterModalEvents();
+    startEpisodeModalEvents();
  
 };
 export const renderPage = async () => {
   await renderCharacters();
   await renderEpisodes();
+  renderExplore();
   await startEvents();
 };
 

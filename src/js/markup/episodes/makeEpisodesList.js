@@ -13,7 +13,7 @@ export const makeEpisodesList = (episodes) => {
       const season = Number(episode.episode.split("E")[0].replace("S", ""));
 
       return `
-        <li class="episodes__item">
+        <li class="episodes__item" data-episode-id="${episode.id}>
           <img
             src="${episodesImages[season] || ""}"
             alt="${episode.name}"

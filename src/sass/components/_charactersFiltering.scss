@@ -155,25 +155,52 @@
 
 
 }
-@media (max-width: 1024px) {
-  .characters__filtering {
-    .filter {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
+
+.characters__filtering {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  .filter {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .filter-item {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .filter-search,
+  .select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .filter-search input,
+  .select .selected {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
   .characters__filtering {
-    padding: 30px 0 40px;
+    padding: 25px 0 35px;
 
     .filter {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px 10px;
     }
 
-    // Поиск на всю ширину
     .filter-item:first-child {
       grid-column: 1 / -1;
     }
@@ -184,54 +211,49 @@
 
     .filter-search input {
       height: 42px;
-      padding: 0 35px 0 15px;
+      padding: 0 38px 0 14px;
       font-size: 14px;
     }
 
-    .select {
-      .selected {
-        height: 42px;
-        padding: 0 12px;
-        font-size: 13px;
-      }
+    .select .selected {
+      height: 42px;
+      padding: 0 10px;
+      font-size: 12px;
+      gap: 5px;
+    }
 
-      .options {
-        z-index: 20;
-        max-height: 180px;
+    .select .selected i {
+      flex-shrink: 0;
+    }
 
-        .option {
-          font-size: 13px;
-        }
-      }
+    .select .options {
+      max-width: 100%;
+      z-index: 30;
     }
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .characters__filtering {
-    padding: 25px 0 30px;
+    padding: 20px 0 30px;
+
 
     .filter {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 8px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
     }
 
     .filter-item:first-child {
-      grid-column: 1 / -1;
+      grid-column: auto;
     }
 
-    .filter-search input {
+    .filter-search input,
+    .select .selected {
       height: 40px;
     }
 
     .select .selected {
-      height: 40px;
-      padding: 0 10px;
-      font-size: 12px;
-    }
-
-    .select .options {
-      max-height: 160px;
+      font-size: 13px;
     }
   }
 }
