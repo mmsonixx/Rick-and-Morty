@@ -729,6 +729,8 @@ var _charactersFilteringJs = require("../operation/charactersPage/charactersFilt
 var _renderEpisodesJs = require("./episodes/renderEpisodes.js");
 var _episodesFilteringJs = require("../operation/episodesPage/episodesFiltering.js");
 var _characterModalJs = require("../operation/charactersPage/characterModal.js");
+var _renderExploreJs = require("./episodes/renderExplore.js");
+var _episodeModalJs = require("../operation/episodesPage/episodeModal.js");
 const startEvents = async ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
     if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
@@ -738,14 +740,16 @@ const startEvents = async ()=>{
     (0, _charactersFilteringJs.startCharactersFilteringEvents)();
     (0, _episodesFilteringJs.startEpisodesFilteringEvents)();
     (0, _characterModalJs.startCharacterModalEvents)();
+    (0, _episodeModalJs.startEpisodeModalEvents)();
 };
 const renderPage = async ()=>{
     await (0, _renderCharactersJs.renderCharacters)();
     await (0, _renderEpisodesJs.renderEpisodes)();
+    (0, _renderExploreJs.renderExplore)();
     await startEvents();
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57"}],"jnFvT":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX"}],"jnFvT":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -952,7 +956,7 @@ const makeEpisodesList = (episodes)=>{
     const markup = episodes.map((episode)=>{
         const season = Number(episode.episode.split("E")[0].replace("S", ""));
         return `
-        <li class="episodes__item">
+        <li class="episodes__item" data-episode-id="${episode.id}>
           <img
             src="${episodesImages[season] || ""}"
             alt="${episode.name}"
@@ -1515,6 +1519,218 @@ const makeCharacterModal = (character)=>{
       </div>
     </div>
   `;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"do906":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderExplore", ()=>renderExplore);
+var _getExploreApiJs = require("../../api/episodes/getExploreApi.js");
+const renderExplore = async ()=>{
+    const track = document.querySelector("#exploreTrack");
+    if (!track) return;
+    const data = await (0, _getExploreApiJs.getExploreApi)();
+    if (!data?.results?.length) return;
+    const characterIds = new Set();
+    data.results.forEach((location)=>{
+        location.residents.forEach((resident)=>{
+            if (characterIds.size < 15) characterIds.add(resident.split("/").pop());
+        });
+    });
+    const ids = [
+        ...characterIds
+    ];
+    if (!ids.length) return;
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/character/${ids.join(",")}`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const characters = await response.json();
+        const charactersArray = Array.isArray(characters) ? characters : [
+            characters
+        ];
+        const images = charactersArray.map(({ image, name })=>`
+          <div class="explore__item">
+            <img src="${image}" alt="${name}" loading="lazy">
+          </div>
+        `).join("");
+        track.innerHTML = `
+      <div class="explore__group">
+        ${images}
+      </div>
+
+      <div class="explore__group" aria-hidden="true">
+        ${images}
+      </div>
+    `;
+    } catch (error) {
+        console.error("Error rendering explore:", error.message);
+    }
+};
+
+},{"../../api/episodes/getExploreApi.js":"9coeC","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"9coeC":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getExploreApi", ()=>getExploreApi);
+const getExploreApi = async ()=>{
+    try {
+        const response = await fetch("https://rickandmortyapi.com/api/location");
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        return await response.json();
+    } catch (error) {
+        console.error("Error loading locations:", error.message);
+        return null;
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"3rvdX":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "startEpisodeModalEvents", ()=>startEpisodeModalEvents);
+var _renderEpisodeModalJs = require("../../markup/episodes/renderEpisodeModal.js");
+const startEpisodeModalEvents = ()=>{
+    const episodesList = document.querySelector(".episodes__list");
+    const modalContainer = document.querySelector(".episode-modal-container");
+    if (!episodesList || !modalContainer) return;
+    episodesList.addEventListener("click", async (event)=>{
+        const card = event.target.closest(".episodes__item");
+        if (!card) return;
+        const episodeId = card.dataset.episodeId.match(/^\d+/)?.[0];
+        console.log("Episode ID:", episodeId);
+        if (!episodeId) return;
+        const isRendered = await (0, _renderEpisodeModalJs.renderEpisodeModal)(episodeId);
+        if (!isRendered) return;
+        document.body.classList.add("modal-open");
+        modalContainer.classList.add("active");
+    });
+    modalContainer.addEventListener("click", (event)=>{
+        if (event.target.classList.contains("episode-modal__overlay") || event.target.closest(".episode-modal__close")) {
+            modalContainer.classList.remove("active");
+            document.body.classList.remove("modal-open");
+        }
+    });
+    document.addEventListener("keydown", (event)=>{
+        if (event.key === "Escape") {
+            modalContainer.classList.remove("active");
+            document.body.classList.remove("modal-open");
+        }
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/episodes/renderEpisodeModal.js":"cjXUd"}],"cjXUd":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderEpisodeModal", ()=>renderEpisodeModal);
+var _makeEpisodeModalJs = require("./makeEpisodeModal.js");
+var _getEpisodeByIdApiJs = require("../../api/episodes/getEpisodeByIdApi.js");
+var _getEpisodeCharactersApiJs = require("../../api/episodes/getEpisodeCharactersApi.js");
+const renderEpisodeModal = async (episodeId)=>{
+    const modalContainer = document.querySelector(".episode-modal-container");
+    if (!modalContainer) return false;
+    // Получаем информацию об эпизоде
+    const episode = await (0, _getEpisodeByIdApiJs.getEpisodeByIdApi)(episodeId);
+    if (!episode) return false;
+    // Получаем персонажей этого эпизода
+    const characters = await (0, _getEpisodeCharactersApiJs.getEpisodeCharactersApi)(episode.characters);
+    if (!characters) return false;
+    // Создаём HTML модального окна
+    modalContainer.innerHTML = (0, _makeEpisodeModalJs.makeEpisodeModal)(episode, characters);
+    return true;
+};
+
+},{"./makeEpisodeModal.js":"iU8Y4","../../api/episodes/getEpisodeByIdApi.js":"7DCr9","../../api/episodes/getEpisodeCharactersApi.js":"71s2c","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"iU8Y4":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeEpisodeModal", ()=>makeEpisodeModal);
+const makeEpisodeModal = (episode, characters)=>{
+    const charactersMarkup = characters.map((character)=>`
+        <div class="episode-modal__character">
+          <img
+            src="${character.image}"
+            alt="${character.name}"
+          />
+          <span>${character.name}</span>
+        </div>
+      `).join("");
+    return `
+    <div class="episode-modal__overlay">
+      <div class="episode-modal">
+
+        <button class="episode-modal__close" type="button">
+          &times;
+        </button>
+
+        <div class="episode-modal__content">
+
+          <h2 class="episode-modal__title">
+            ${episode.name}
+          </h2>
+
+          <div class="episode-modal__info">
+            <div>
+              <span>Id</span>
+              <p>${episode.id}</p>
+            </div>
+
+            <div>
+              <span>Air date</span>
+              <p>${episode.air_date}</p>
+            </div>
+          </div>
+
+          <h3 class="episode-modal__subtitle">
+            Characters
+          </h3>
+
+          <span class="episode-modal__label">
+            Major Characters
+          </span>
+
+          <div class="episode-modal__characters">
+            ${charactersMarkup}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"7DCr9":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getEpisodeByIdApi", ()=>getEpisodeByIdApi);
+const getEpisodeByIdApi = async (episodeId)=>{
+    const url = `https://rickandmortyapi.com/api/episode/${episodeId}`;
+    try {
+        console.log("Request URL:", url);
+        const response = await fetch(url);
+        console.log("Response status:", response.status);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        return await response.json();
+    } catch (error) {
+        console.error("Error loading episode:", error);
+        return null;
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"71s2c":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getEpisodeCharactersApi", ()=>getEpisodeCharactersApi);
+const getEpisodeCharactersApi = async (characters)=>{
+    try {
+        const ids = characters.map((url)=>url.split("/").pop());
+        if (!ids.length) return [];
+        const response = await fetch(`https://rickandmortyapi.com/api/character/${ids.join(",")}`);
+        if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+        const result = await response.json();
+        return Array.isArray(result) ? result : [
+            result
+        ];
+    } catch (error) {
+        console.error("Error loading episode characters:", error.message);
+        return null;
+    }
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
