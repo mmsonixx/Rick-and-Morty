@@ -784,38 +784,77 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadMoreCharacters", ()=>loadMoreCharacters);
 var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
-var _makeCharactersListJs = require("../../markup/characters/makeCharactersList.js");
 var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
-const charactersList = document.querySelector(".characters__list");
-const moreBtn = document.querySelector(".moreCharacters");
-let page = 2;
+var _charactersFilteringJs = require("./charactersFiltering.js");
+let isLoading = false;
 const loadMoreCharacters = async ()=>{
-    const result = await (0, _getCharactersApiJs.getCharactersApi)(page);
-    if (!result || !Array.isArray(result.results)) return;
-    (0, _renderCharactersJs.addCharacters)(result.results);
-    charactersList.insertAdjacentHTML("beforeend", (0, _makeCharactersListJs.makeCharactersList)(result.results));
-    if (result.info.next === null) {
-        moreBtn.hidden = true;
-        return;
+    const moreBtn = document.querySelector(".moreCharacters");
+    if (!(0, _renderCharactersJs.nextPage) || isLoading) return;
+    isLoading = true;
+    if (moreBtn) moreBtn.disabled = true;
+    try {
+        const currentPage = (0, _renderCharactersJs.nextPage);
+        const result = await (0, _getCharactersApiJs.getCharactersApi)(currentPage);
+        if (!result || !Array.isArray(result.results)) return;
+        (0, _renderCharactersJs.addCharacters)(result.results);
+        (0, _renderCharactersJs.setNextPage)(result.info.next ? currentPage + 1 : null);
+        (0, _charactersFilteringJs.updateCharacters)();
+        if (moreBtn) moreBtn.hidden = (0, _renderCharactersJs.nextPage) === null;
+    } catch (error) {
+        console.error("Error loading characters:", error);
+    } finally{
+        isLoading = false;
+        if (moreBtn) moreBtn.disabled = false;
     }
-    page++;
 };
 
-},{"../../api/characters/getCharactersApi.js":"1mQTM","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/makeCharactersList.js":"6aKzq","../../markup/characters/renderCharacters.js":"aRxsR"}],"1mQTM":[function(require,module,exports,__globalThis) {
+},{"../../api/characters/getCharactersApi.js":"1mQTM","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/renderCharacters.js":"aRxsR","./charactersFiltering.js":"icb2Z"}],"1mQTM":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
 const getCharactersApi = async (page = 1)=>{
     try {
         const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
-        const result = await response.json();
-        return result;
+        if (!response.ok) throw new Error("Failed to load characters");
+        return await response.json();
     } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
+        return null;
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"6aKzq":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aRxsR":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "charactersData", ()=>charactersData);
+parcelHelpers.export(exports, "nextPage", ()=>nextPage);
+parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
+parcelHelpers.export(exports, "setNextPage", ()=>setNextPage);
+parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
+var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
+var _makeCharactersListJs = require("./makeCharactersList.js");
+let charactersData = [];
+let nextPage = 2;
+const addCharacters = (newCharacters)=>{
+    charactersData.push(...newCharacters);
+};
+const setNextPage = (page)=>{
+    nextPage = page;
+};
+const renderCharacters = async ()=>{
+    const charactersList = document.querySelector(".characters__list");
+    const moreBtn = document.querySelector(".moreCharacters");
+    if (!charactersList) return;
+    const result = await (0, _getCharactersApiJs.getCharactersApi)(1);
+    if (!result || !Array.isArray(result.results)) return;
+    charactersData = result.results;
+    // Проверяем, существует ли следующая страница
+    setNextPage(result.info.next ? 2 : null);
+    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
+    if (moreBtn) moreBtn.hidden = nextPage === null;
+};
+
+},{"../../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"6aKzq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"6aKzq":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "makeCharactersList", ()=>makeCharactersList);
@@ -839,27 +878,144 @@ const makeCharactersList = (characters)=>{
     return markup;
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aRxsR":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"icb2Z":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "charactersData", ()=>charactersData);
-parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
-parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
-var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
-var _makeCharactersListJs = require("./makeCharactersList.js");
-let charactersData = [];
-const addCharacters = (newCharacters)=>{
-    charactersData.push(...newCharacters);
-};
-const renderCharacters = async ()=>{
+parcelHelpers.export(exports, "updateCharacters", ()=>updateCharacters);
+parcelHelpers.export(exports, "startCharactersFilteringEvents", ()=>startCharactersFilteringEvents);
+var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
+var _makeCharactersListJs = require("../../markup/characters/makeCharactersList.js");
+var _filterCharactersJs = require("./filterCharacters.js");
+var _searchCharactersJs = require("./searchCharacters.js");
+var _renderEmptyStateJs = require("../../markup/renderEmptyState.js");
+let updateCharacters;
+const startCharactersFilteringEvents = ()=>{
     const charactersList = document.querySelector(".characters__list");
-    if (!charactersList) return;
-    const result = await (0, _getCharactersApiJs.getCharactersApi)();
-    charactersData = result.results;
-    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
+    const searchInput = document.querySelector("#search-characters");
+    const emptyState = document.querySelector(".characters__empty-state");
+    const moreBtn = document.querySelector(".moreCharacters");
+    if (!charactersList || !searchInput) return;
+    const selects = document.querySelectorAll(".select");
+    const statusOptions = document.querySelectorAll(".option[data-status]");
+    const speciesOptions = document.querySelectorAll(".option[data-species]");
+    const typeOptions = document.querySelectorAll(".option[data-type]");
+    const genderOptions = document.querySelectorAll(".option[data-gender]");
+    let filters = {
+        status: "",
+        species: "",
+        type: "",
+        gender: ""
+    };
+    updateCharacters = ()=>{
+        let filteredCharacters = (0, _filterCharactersJs.filterCharacters)(filters, (0, _renderCharactersJs.charactersData));
+        filteredCharacters = (0, _searchCharactersJs.searchCharacters)(searchInput.value, filteredCharacters);
+        charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(filteredCharacters);
+        const isEmpty = filteredCharacters.length === 0;
+        (0, _renderEmptyStateJs.renderEmptyState)(emptyState, isEmpty);
+        if (moreBtn) moreBtn.hidden = isEmpty || (0, _renderCharactersJs.nextPage) === null;
+    };
+    // Поиск
+    searchInput.addEventListener("input", updateCharacters);
+    // Фильтрация
+    const addFilterEvents = (options, filterName)=>{
+        options.forEach((option)=>{
+            option.addEventListener("click", ()=>{
+                filters = {
+                    status: "",
+                    species: "",
+                    type: "",
+                    gender: ""
+                };
+                const value = option.dataset[filterName];
+                filters[filterName] = value === "all" ? "" : value;
+                selects.forEach((select)=>{
+                    const selectedText = select.querySelector(".selected-text");
+                    if (selectedText) selectedText.textContent = selectedText.dataset.defaultText || "All";
+                    select.classList.remove("active");
+                });
+                const selectedText = option.closest(".select").querySelector(".selected-text");
+                selectedText.textContent = option.textContent.trim();
+                updateCharacters();
+            });
+        });
+    };
+    addFilterEvents(statusOptions, "status");
+    addFilterEvents(speciesOptions, "species");
+    addFilterEvents(typeOptions, "type");
+    addFilterEvents(genderOptions, "gender");
+    // Открытие и закрытие select
+    selects.forEach((select)=>{
+        const selected = select.querySelector(".selected");
+        const options = select.querySelectorAll(".option");
+        selected.addEventListener("click", (event)=>{
+            event.stopPropagation();
+            selects.forEach((item)=>{
+                if (item !== select) item.classList.remove("active");
+            });
+            select.classList.toggle("active");
+        });
+        options.forEach((option)=>{
+            option.addEventListener("click", ()=>{
+                select.classList.remove("active");
+            });
+        });
+    });
+    // Закрытие select при клике вне него
+    document.addEventListener("click", (event)=>{
+        if (!event.target.closest(".select")) selects.forEach((select)=>{
+            select.classList.remove("active");
+        });
+    });
 };
 
-},{"../../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"6aKzq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aAso4":[function(require,module,exports,__globalThis) {
+},{"./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/makeCharactersList.js":"6aKzq","../../markup/characters/renderCharacters.js":"aRxsR","../../markup/renderEmptyState.js":"hVWt8"}],"bLpCG":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "filterCharacters", ()=>filterCharacters);
+const filterCharacters = (filters, characters)=>{
+    return characters.filter((character)=>{
+        const matchesStatus = !filters.status || character.status.toLowerCase() === filters.status.toLowerCase();
+        const matchesSpecies = !filters.species || character.species.toLowerCase() === filters.species.toLowerCase();
+        const matchesType = !filters.type || character.type.toLowerCase().includes(filters.type.toLowerCase());
+        const matchesGender = !filters.gender || character.gender.toLowerCase() === filters.gender.toLowerCase();
+        return matchesStatus && matchesSpecies && matchesType && matchesGender;
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"5k6uW":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "searchCharacters", ()=>searchCharacters);
+const searchCharacters = (query, characters)=>{
+    return characters.filter((character)=>character.name.toLowerCase().includes(query.trim().toLowerCase()));
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"hVWt8":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderEmptyState", ()=>renderEmptyState);
+const emptyImage = new URL(require("8638a140c6828267")).href;
+function renderEmptyState(container, isEmpty) {
+    container.innerHTML = "";
+    if (!isEmpty) return;
+    container.innerHTML = `
+    <div class="empty-state">
+      <img
+        src="${emptyImage}"
+        alt="No results found"
+        class="empty-state__img"
+      >
+      <p class="empty-state__text">
+        Oops! Try looking for something else...
+      </p>
+    </div>
+  `;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","8638a140c6828267":"hEehL"}],"hEehL":[function(require,module,exports,__globalThis) {
+module.exports = module.bundle.resolve("kisspng-portal-morty-rick.140c7cba.webp") + "?" + Date.now();
+
+},{}],"aAso4":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadMoreEpisodes", ()=>loadMoreEpisodes);
@@ -956,7 +1112,7 @@ const makeEpisodesList = (episodes)=>{
     const markup = episodes.map((episode)=>{
         const season = Number(episode.episode.split("E")[0].replace("S", ""));
         return `
-        <li class="episodes__item" data-episode-id="${episode.id}>
+        <li class="episodes__item" data-episode-id="${episode.id}">
           <img
             src="${episodesImages[season] || ""}"
             alt="${episode.name}"
@@ -1009,10 +1165,13 @@ var _renderEpisodesJs = require("../../markup/episodes/renderEpisodes.js");
 var _makeEpisodesListJs = require("../../markup/episodes/makeEpisodesList.js");
 var _filterEpisodesJs = require("./filterEpisodes.js");
 var _searchEpisodesJs = require("./searchEpisodes.js");
+var _renderEmptyStateJs = require("../../markup/renderEmptyState.js");
 let updateEpisodes;
 const startEpisodesFilteringEvents = ()=>{
     const episodesList = document.querySelector(".episodes__list");
     const searchInput = document.querySelector("#search-episodes");
+    const emptyState = document.querySelector(".episodes__empty-state");
+    const moreBtn = document.querySelector(".moreEpisodes");
     if (!episodesList || !searchInput) return;
     const selects = document.querySelectorAll(".episodes__filtering .select");
     let filters = {
@@ -1020,15 +1179,11 @@ const startEpisodesFilteringEvents = ()=>{
     };
     // Обновление эпизодов
     updateEpisodes = ()=>{
-        console.log("Season:", filters.season);
-        console.log("Episodes count:", (0, _renderEpisodesJs.episodesData).length);
-        console.log("Available seasons:", [
-            ...new Set((0, _renderEpisodesJs.episodesData).map((episode)=>episode.episode.slice(1, 3)))
-        ]);
         let filteredEpisodes = (0, _filterEpisodesJs.filterEpisodes)(filters, (0, _renderEpisodesJs.episodesData));
         filteredEpisodes = (0, _searchEpisodesJs.searchEpisodes)(searchInput.value, filteredEpisodes);
-        console.log("Filtered count:", filteredEpisodes.length);
         episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(filteredEpisodes);
+        (0, _renderEmptyStateJs.renderEmptyState)(emptyState, filteredEpisodes.length === 0);
+        if (moreBtn) moreBtn.hidden = filteredEpisodes.length === 0 || moreBtn.dataset.hasMore === "false";
     };
     // Поиск
     searchInput.addEventListener("input", updateEpisodes);
@@ -1056,7 +1211,7 @@ const startEpisodesFilteringEvents = ()=>{
     });
 };
 
-},{"../../markup/episodes/renderEpisodes.js":"deM5h","../../markup/episodes/makeEpisodesList.js":"1QUQf","./filterEpisodes.js":"e6YlG","./searchEpisodes.js":"aGMTN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"e6YlG":[function(require,module,exports,__globalThis) {
+},{"../../markup/episodes/renderEpisodes.js":"deM5h","../../markup/episodes/makeEpisodesList.js":"1QUQf","./filterEpisodes.js":"e6YlG","./searchEpisodes.js":"aGMTN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/renderEmptyState.js":"hVWt8"}],"e6YlG":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "filterEpisodes", ()=>filterEpisodes);
@@ -1265,105 +1420,7 @@ module.exports = module.bundle.resolve("jerry-smith@mobile-1x.5f218c22.webp") + 
 },{}],"4VAn0":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("jerry-smith@mobile-2x.a3a98245.webp") + "?" + Date.now();
 
-},{}],"icb2Z":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "startCharactersFilteringEvents", ()=>startCharactersFilteringEvents);
-var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
-var _makeCharactersListJs = require("../../markup/characters/makeCharactersList.js");
-var _filterCharactersJs = require("./filterCharacters.js");
-var _searchCharactersJs = require("./searchCharacters.js");
-const startCharactersFilteringEvents = ()=>{
-    const charactersList = document.querySelector(".characters__list");
-    const searchInput = document.querySelector("#search-characters");
-    if (!charactersList || !searchInput) return;
-    const selects = document.querySelectorAll(".select");
-    const statusOptions = document.querySelectorAll(".option[data-status]");
-    const speciesOptions = document.querySelectorAll(".option[data-species]");
-    const typeOptions = document.querySelectorAll(".option[data-type]");
-    const genderOptions = document.querySelectorAll(".option[data-gender]");
-    let filters = {
-        status: "",
-        species: "",
-        type: "",
-        gender: ""
-    };
-    // Обновление персонажей
-    const updateCharacters = ()=>{
-        console.log("\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0435\u0439");
-        let filteredCharacters = (0, _filterCharactersJs.filterCharacters)(filters, (0, _renderCharactersJs.charactersData));
-        filteredCharacters = (0, _searchCharactersJs.searchCharacters)(searchInput.value, filteredCharacters);
-        console.log("\u041D\u0430\u0439\u0434\u0435\u043D\u043E:", filteredCharacters.length);
-        charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(filteredCharacters);
-    };
-    // Поиск
-    searchInput.addEventListener("input", ()=>{
-        console.log("INPUT EVENT WORKS");
-        updateCharacters();
-    });
-    // Фильтрация
-    const addFilterEvents = (options, filterName)=>{
-        options.forEach((option)=>{
-            option.addEventListener("click", ()=>{
-                filters[filterName] = option.dataset[filterName];
-                updateCharacters();
-            });
-        });
-    };
-    addFilterEvents(statusOptions, "status");
-    addFilterEvents(speciesOptions, "species");
-    addFilterEvents(typeOptions, "type");
-    addFilterEvents(genderOptions, "gender");
-    // Открытие и закрытие выпадающих списков
-    selects.forEach((select)=>{
-        const selected = select.querySelector(".selected");
-        const options = select.querySelectorAll(".option");
-        const selectedText = select.querySelector(".selected-text");
-        selected.addEventListener("click", ()=>{
-            selects.forEach((item)=>{
-                if (item !== select) item.classList.remove("active");
-            });
-            select.classList.toggle("active");
-        });
-        // Выбор значения
-        options.forEach((option)=>{
-            option.addEventListener("click", ()=>{
-                selectedText.textContent = option.textContent.trim();
-                select.classList.remove("active");
-            });
-        });
-    });
-    // Закрытие при клике за пределами списка
-    document.addEventListener("click", (event)=>{
-        if (!event.target.closest(".select")) selects.forEach((select)=>{
-            select.classList.remove("active");
-        });
-    });
-};
-
-},{"./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/makeCharactersList.js":"6aKzq","../../markup/characters/renderCharacters.js":"aRxsR"}],"bLpCG":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "filterCharacters", ()=>filterCharacters);
-const filterCharacters = (filters, characters)=>{
-    return characters.filter((character)=>{
-        const matchesStatus = !filters.status || character.status.toLowerCase() === filters.status.toLowerCase();
-        const matchesSpecies = !filters.species || character.species.toLowerCase() === filters.species.toLowerCase();
-        const matchesType = !filters.type || character.type.toLowerCase().includes(filters.type.toLowerCase());
-        const matchesGender = !filters.gender || filters.gender === "all" || character.gender.toLowerCase() === filters.gender.toLowerCase();
-        return matchesStatus && matchesSpecies && matchesType && matchesGender;
-    });
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"5k6uW":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "searchCharacters", ()=>searchCharacters);
-const searchCharacters = (query, characters)=>{
-    return characters.filter((character)=>character.name.toLowerCase().includes(query.trim().toLowerCase()));
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1md57":[function(require,module,exports,__globalThis) {
+},{}],"1md57":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "startCharacterModalEvents", ()=>startCharacterModalEvents);
