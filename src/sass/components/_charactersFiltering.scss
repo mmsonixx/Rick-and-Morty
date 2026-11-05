@@ -36,15 +36,16 @@
       border: 1.5px solid #111;
       border-radius: 30px;
       outline: none;
-      background-color: #d5ff35;
+     
 
       &::placeholder {
         color: #333;
       }
 
-      &:focus {
-        border-color: #a5cc00;
-      }
+    &:focus {
+  background-color: #d5ff35;
+  border-color: #a5cc00;
+}
     }
 
     i {
@@ -78,7 +79,11 @@
       background-color: #fff;
       font-size: 14px;
       cursor: pointer;
-
+ &:focus {
+  background-color: #d5ff35;
+  border-color: #a5cc00;
+  outline: none;
+}
       i {
         font-size: 12px;
       }
@@ -89,9 +94,20 @@
     }
 
     &.active {
-      .selected i {
-        transform: rotate(180deg);
-      }
+  .selected {
+    background-color: #d5ff35;
+    border-color: #a5cc00;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .selected i {
+    transform: rotate(180deg);
+  }
+
+  .options {
+    display: flex;
+  }
+}
     }
 
     // Dropdown
@@ -154,7 +170,7 @@
   // Адаптив
 
 
-}
+
 
 .characters__filtering {
   width: 100%;
@@ -194,7 +210,7 @@
 
 @media (max-width: 768px) {
   .characters__filtering {
-    padding: 25px 0 35px;
+    padding: 25px 10px 35px;
 
     .filter {
       grid-template-columns: repeat(2, minmax(0, 1fr));

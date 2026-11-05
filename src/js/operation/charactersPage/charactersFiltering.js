@@ -1,14 +1,23 @@
-import { charactersData } from "../../markup/characters/renderCharacters.js";
+import {
+  charactersData,
+  nextPage,
+} from "../../markup/characters/renderCharacters.js";
+
 import { makeCharactersList } from "../../markup/characters/makeCharactersList.js";
 
 import { filterCharacters } from "./filterCharacters.js";
 import { searchCharacters } from "./searchCharacters.js";
 
+import { renderEmptyState } from "../../markup/renderEmptyState.js";
+
+export let updateCharacters;
+
 export const startCharactersFilteringEvents = () => {
   const charactersList = document.querySelector(".characters__list");
   const searchInput = document.querySelector("#search-characters");
+  const emptyState = document.querySelector(".characters__empty-state");
+  const moreBtn = document.querySelector(".moreCharacters");
 
-  
   if (!charactersList || !searchInput) return;
 
   const selects = document.querySelectorAll(".select");
@@ -25,35 +34,59 @@ export const startCharactersFilteringEvents = () => {
     gender: "",
   };
 
-  // Обновление персонажей
+  updateCharacters = () => {
+    let filteredCharacters = filterCharacters(filters, charactersData);
 
-const updateCharacters = () => {
-  console.log("Обновление персонажей");
+    filteredCharacters = searchCharacters(
+      searchInput.value,
+      filteredCharacters,
+    );
 
-  let filteredCharacters = filterCharacters(filters, charactersData);
+    charactersList.innerHTML = makeCharactersList(filteredCharacters);
 
-  filteredCharacters = searchCharacters(
-    searchInput.value,
-    filteredCharacters,
-  );
+    const isEmpty = filteredCharacters.length === 0;
 
-  console.log("Найдено:", filteredCharacters.length);
+    renderEmptyState(emptyState, isEmpty);
 
-  charactersList.innerHTML = makeCharactersList(filteredCharacters);
-};
+    if (moreBtn) {
+      moreBtn.hidden = isEmpty || nextPage === null;
+    }
+  };
 
   // Поиск
+  searchInput.addEventListener("input", updateCharacters);
 
-searchInput.addEventListener("input", () => {
-  console.log("INPUT EVENT WORKS");
-  updateCharacters();
-});
   // Фильтрация
-
   const addFilterEvents = (options, filterName) => {
     options.forEach((option) => {
       option.addEventListener("click", () => {
-        filters[filterName] = option.dataset[filterName];
+        filters = {
+          status: "",
+          species: "",
+          type: "",
+          gender: "",
+        };
+
+        const value = option.dataset[filterName];
+
+        filters[filterName] = value === "all" ? "" : value;
+
+        selects.forEach((select) => {
+          const selectedText = select.querySelector(".selected-text");
+
+          if (selectedText) {
+            selectedText.textContent =
+              selectedText.dataset.defaultText || "All";
+          }
+
+          select.classList.remove("active");
+        });
+
+        const selectedText = option
+          .closest(".select")
+          .querySelector(".selected-text");
+
+        selectedText.textContent = option.textContent.trim();
 
         updateCharacters();
       });
@@ -65,14 +98,14 @@ searchInput.addEventListener("input", () => {
   addFilterEvents(typeOptions, "type");
   addFilterEvents(genderOptions, "gender");
 
-  // Открытие и закрытие выпадающих списков
-
+  // Открытие и закрытие select
   selects.forEach((select) => {
     const selected = select.querySelector(".selected");
     const options = select.querySelectorAll(".option");
-    const selectedText = select.querySelector(".selected-text");
 
-    selected.addEventListener("click", () => {
+    selected.addEventListener("click", (event) => {
+      event.stopPropagation();
+
       selects.forEach((item) => {
         if (item !== select) {
           item.classList.remove("active");
@@ -82,19 +115,14 @@ searchInput.addEventListener("input", () => {
       select.classList.toggle("active");
     });
 
-    // Выбор значения
-
     options.forEach((option) => {
       option.addEventListener("click", () => {
-        selectedText.textContent = option.textContent.trim();
-
         select.classList.remove("active");
       });
     });
   });
 
-  // Закрытие при клике за пределами списка
-
+  // Закрытие select при клике вне него
   document.addEventListener("click", (event) => {
     if (!event.target.closest(".select")) {
       selects.forEach((select) => {

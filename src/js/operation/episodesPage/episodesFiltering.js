@@ -4,11 +4,15 @@ import { makeEpisodesList } from "../../markup/episodes/makeEpisodesList.js";
 import { filterEpisodes } from "./filterEpisodes.js";
 import { searchEpisodes } from "./searchEpisodes.js";
 
+import { renderEmptyState } from "../../markup/renderEmptyState.js";
 export let updateEpisodes;
 
 export const startEpisodesFilteringEvents = () => {
   const episodesList = document.querySelector(".episodes__list");
   const searchInput = document.querySelector("#search-episodes");
+
+  const emptyState = document.querySelector(".episodes__empty-state");
+const moreBtn = document.querySelector(".moreEpisodes");
 
   if (!episodesList || !searchInput) return;
 
@@ -24,22 +28,20 @@ export const startEpisodesFilteringEvents = () => {
 
   // Обновление эпизодов
 
-  updateEpisodes = () => {
-  console.log("Season:", filters.season);
-  console.log("Episodes count:", episodesData.length);
-
-  console.log(
-    "Available seasons:",
-    [...new Set(episodesData.map((episode) => episode.episode.slice(1, 3)))],
-  );
-
+ updateEpisodes = () => {
   let filteredEpisodes = filterEpisodes(filters, episodesData);
 
   filteredEpisodes = searchEpisodes(searchInput.value, filteredEpisodes);
 
-  console.log("Filtered count:", filteredEpisodes.length);
-
   episodesList.innerHTML = makeEpisodesList(filteredEpisodes);
+
+  renderEmptyState(emptyState, filteredEpisodes.length === 0);
+
+  if (moreBtn) {
+    moreBtn.hidden =
+      filteredEpisodes.length === 0 ||
+      moreBtn.dataset.hasMore === "false";
+  }
 };
   // Поиск
 

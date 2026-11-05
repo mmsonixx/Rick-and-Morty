@@ -1,0 +1,33 @@
+@use "../utils/mixin" as *;
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 15px;
+  text-align: center;
+
+  &__img {
+    width: 300px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  &__text {
+    @include text(
+      $color: #111,
+      $size: 24px,
+      $height: 100%,
+      $weight: 400,
+      $spacing: 0.02em
+    );
+
+    margin-top: 20px;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}

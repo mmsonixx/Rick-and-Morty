@@ -1,11 +1,16 @@
 export const getCharactersApi = async (page = 1) => {
   try {
-    const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character?page=${page}`
+    );
 
-    const result = await response.json();
+    if (!response.ok) {
+      throw new Error("Failed to load characters");
+    }
 
-    return result;
+    return await response.json();
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
+    return null;
   }
 };

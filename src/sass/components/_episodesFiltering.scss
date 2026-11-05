@@ -38,15 +38,16 @@
       border: 1.5px solid #111;
       border-radius: 30px;
       outline: none;
-      background-color: #d5ff35;
+
 
       &::placeholder {
         color: #333;
       }
 
-      &:focus {
-        border-color: #a5cc00;
-      }
+     &:focus {
+  background-color: #d5ff35;
+  border-color: #a5cc00;
+}
     }
 
     i {
@@ -80,7 +81,11 @@
       background-color: #fff;
       font-size: 14px;
       cursor: pointer;
-
+&:focus {
+  background-color: #d5ff35;
+  border-color: #a5cc00;
+  outline: none;
+}
       i {
         font-size: 12px;
         transition: transform 0.3s ease;
@@ -88,18 +93,20 @@
     }
 
     &.active {
-      .selected {
-        border-radius: 22px 22px 0 0;
+  .selected {
+    background-color: #d5ff35;
+    border-color: #a5cc00;
+    border-radius: 22px 22px 0 0;
 
-        i {
-          transform: rotate(180deg);
-        }
-      }
-
-      .options {
-        display: flex;
-      }
+    i {
+      transform: rotate(180deg);
     }
+  }
+
+  .options {
+    display: flex;
+  }
+}
 
     // Dropdown
 

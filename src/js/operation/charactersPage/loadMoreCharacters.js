@@ -1,28 +1,48 @@
 import { getCharactersApi } from "../../api/characters/getCharactersApi.js";
-import { makeCharactersList } from "../../markup/characters/makeCharactersList.js";
-import { addCharacters } from "../../markup/characters/renderCharacters.js";
 
-const charactersList = document.querySelector(".characters__list");
-const moreBtn = document.querySelector(".moreCharacters");
+import {
+  addCharacters,
+  nextPage,
+  setNextPage,
+} from "../../markup/characters/renderCharacters.js";
 
-let page = 2;
+import { updateCharacters } from "./charactersFiltering.js";
+
+let isLoading = false;
 
 export const loadMoreCharacters = async () => {
-  const result = await getCharactersApi(page);
+  const moreBtn = document.querySelector(".moreCharacters");
 
-  if (!result || !Array.isArray(result.results)) return;
+  if (!nextPage || isLoading) return;
 
-  addCharacters(result.results);
+  isLoading = true;
 
-  charactersList.insertAdjacentHTML(
-    "beforeend",
-    makeCharactersList(result.results),
-  );
-
-  if (result.info.next === null) {
-    moreBtn.hidden = true;
-    return;
+  if (moreBtn) {
+    moreBtn.disabled = true;
   }
 
-  page++;
+  try {
+    const currentPage = nextPage;
+    const result = await getCharactersApi(currentPage);
+
+    if (!result || !Array.isArray(result.results)) return;
+
+    addCharacters(result.results);
+
+    setNextPage(result.info.next ? currentPage + 1 : null);
+
+    updateCharacters();
+
+    if (moreBtn) {
+      moreBtn.hidden = nextPage === null;
+    }
+  } catch (error) {
+    console.error("Error loading characters:", error);
+  } finally {
+    isLoading = false;
+
+    if (moreBtn) {
+      moreBtn.disabled = false;
+    }
+  }
 };
