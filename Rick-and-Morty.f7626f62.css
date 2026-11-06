@@ -548,6 +548,99 @@ a {
   }
 }
 
+.hero__container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.hero__default {
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+}
+
+.hero__content {
+  flex: 1;
+  width: auto;
+  max-width: 555px;
+  margin-right: 0;
+}
+
+.hero__title {
+  text-align: left;
+}
+
+.hero__characters-wrapper {
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+  display: flex;
+}
+
+.hero__characters-wrapper picture {
+  width: 100%;
+  max-width: 400px;
+  display: block;
+}
+
+.hero__characters-wrapper img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero__result {
+  width: 100%;
+}
+
+.hero__default[hidden] {
+  display: none;
+}
+
+@media (width <= 1024px) {
+  .hero__default {
+    gap: 20px;
+  }
+
+  .hero__characters-wrapper picture {
+    max-width: 350px;
+  }
+}
+
+@media (width <= 768px) {
+  .hero__default {
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .hero__content {
+    align-items: center;
+    width: 100%;
+    max-width: 555px;
+  }
+
+  .hero__title, .hero__info {
+    text-align: center;
+  }
+
+  .hero__characters-wrapper {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero__characters-wrapper picture {
+    max-width: 320px;
+  }
+}
+
 .main-characters {
   padding: 100px 0 110px;
 }
@@ -2534,13 +2627,6 @@ body.modal-open {
   display: flex;
 }
 
-.empty-state__img {
-  object-fit: contain;
-  width: 300px;
-  max-width: 100%;
-  height: auto;
-}
-
 .empty-state__text {
   color: #111;
   font-style: normal;
@@ -2554,6 +2640,147 @@ body.modal-open {
 
 .empty-state[hidden] {
   display: none;
+}
+
+.hero__preview {
+  -webkit-backdrop-filter: blur(20px);
+  background: #ffffff14;
+  border: 1px solid #ffffff26;
+  border-radius: 24px;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 20px;
+  transition: transform .3s, box-shadow .3s;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 10px 40px #0003;
+}
+
+.hero__preview:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px #0000004d;
+}
+
+.hero__preview-img {
+  object-fit: cover;
+  border: 2px solid #97ce4c80;
+  border-radius: 18px;
+  flex-shrink: 0;
+  width: 180px;
+  height: 180px;
+}
+
+.hero__preview-info {
+  color: #fff;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  display: flex;
+}
+
+.hero__preview-info span {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 117%;
+}
+
+.hero__preview-info h2 {
+  color: #97ce4c;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 117%;
+}
+
+.hero__preview-info p {
+  color: #fafafa;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 129%;
+}
+
+.hero__preview-info p span {
+  color: #fafafa80;
+  font-size: 12px;
+}
+
+.hero__preview-info a {
+  color: var(--black);
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: 0;
+  background: #97ce4c;
+  border-radius: 30px;
+  margin-top: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 129%;
+  text-decoration: none;
+  transition: all .3s;
+  display: inline-block;
+}
+
+.hero__preview-info a:hover {
+  background: #c7ed83;
+  transform: scale(1.05);
+}
+
+.empty-state {
+  text-align: center;
+}
+
+.empty-state p {
+  color: #c1b3b3;
+  font-style: normal;
+  font-family: var(--font-family);
+  letter-spacing: .02em;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 100%;
+}
+
+.empty-state__img {
+  object-fit: contain;
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+}
+
+@media (width <= 550px) {
+  .hero__preview {
+    text-align: center;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .hero__preview-img {
+    width: 100%;
+    max-width: 250px;
+    height: 200px;
+  }
+
+  .hero__preview-info {
+    align-items: center;
+  }
+
+  .empty-state p {
+    font-size: 18px;
+  }
 }
 
 :root {

@@ -731,12 +731,14 @@ var _episodesFilteringJs = require("../operation/episodesPage/episodesFiltering.
 var _characterModalJs = require("../operation/charactersPage/characterModal.js");
 var _renderExploreJs = require("./episodes/renderExplore.js");
 var _episodeModalJs = require("../operation/episodesPage/episodeModal.js");
+var _searchHeroJs = require("../operation/homePage/searchHero.js");
 const startEvents = async ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
     if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
     const moreBtnEpisodes = document.querySelector(".moreEpisodes");
     if (moreBtnEpisodes) moreBtnEpisodes.addEventListener("click", (0, _loadMoreEpisodesJs.loadMoreEpisodes));
     (0, _mainCharactersJs.startMainCharactersEvents)();
+    (0, _searchHeroJs.startHeroSearchEvents)();
     (0, _charactersFilteringJs.startCharactersFilteringEvents)();
     (0, _episodesFilteringJs.startEpisodesFilteringEvents)();
     (0, _characterModalJs.startCharacterModalEvents)();
@@ -745,11 +747,11 @@ const startEvents = async ()=>{
 const renderPage = async ()=>{
     await (0, _renderCharactersJs.renderCharacters)();
     await (0, _renderEpisodesJs.renderEpisodes)();
-    (0, _renderExploreJs.renderExplore)();
+    await (0, _renderExploreJs.renderExplore)();
     await startEvents();
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX"}],"jnFvT":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX","../operation/homePage/searchHero.js":"8RCSu"}],"jnFvT":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -1100,21 +1102,14 @@ const renderEpisodes = async ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "makeEpisodesList", ()=>makeEpisodesList);
-const episodesImages = {
-    1: new URL(require("aeff8f78bcde3893")).href,
-    2: new URL(require("84794266307e276a")).href,
-    3: new URL(require("f4e023180085420b")).href,
-    4: new URL(require("964a16b52586e182")).href,
-    5: new URL(require("87106697de2aa050")).href,
-    6: new URL(require("a99c74f319f0b021")).href
-};
+var _episodesImagesJs = require("./episodesImages.js");
 const makeEpisodesList = (episodes)=>{
     const markup = episodes.map((episode)=>{
         const season = Number(episode.episode.split("E")[0].replace("S", ""));
         return `
         <li class="episodes__item" data-episode-id="${episode.id}">
           <img
-            src="${episodesImages[season] || ""}"
+            src="${(0, _episodesImagesJs.episodesImages)[season] || ""}"
             alt="${episode.name}"
             class="episodes__img"
           >
@@ -1138,7 +1133,20 @@ const makeEpisodesList = (episodes)=>{
     return markup;
 };
 
-},{"aeff8f78bcde3893":"1viRO","84794266307e276a":"g3IR0","f4e023180085420b":"igdcw","964a16b52586e182":"ldcam","87106697de2aa050":"g7lUi","a99c74f319f0b021":"iQKN9","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1viRO":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./episodesImages.js":"fy4nJ"}],"fy4nJ":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "episodesImages", ()=>episodesImages);
+const episodesImages = {
+    1: new URL(require("74709e24f16585f6")).href,
+    2: new URL(require("f77e7ea48336ee7f")).href,
+    3: new URL(require("f0f742c16419a3dd")).href,
+    4: new URL(require("387cf32daba80dfc")).href,
+    5: new URL(require("3ab2b6b825dc0e9c")).href,
+    6: new URL(require("f72288e433765cb6")).href
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","74709e24f16585f6":"1viRO","f77e7ea48336ee7f":"g3IR0","f0f742c16419a3dd":"igdcw","387cf32daba80dfc":"ldcam","3ab2b6b825dc0e9c":"g7lUi","f72288e433765cb6":"iQKN9"}],"1viRO":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("episode-1.5b71d146.webp") + "?" + Date.now();
 
 },{}],"g3IR0":[function(require,module,exports,__globalThis) {
@@ -1790,6 +1798,128 @@ const getEpisodeCharactersApi = async (characters)=>{
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"8RCSu":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "startHeroSearchEvents", ()=>startHeroSearchEvents);
+var _searchCharactersApiJs = require("../../api/characters/searchCharactersApi.js");
+var _searchEpisodesApiJs = require("../../api/episodes/searchEpisodesApi.js");
+var _makeHeroPreviewJs = require("../../markup/homePage/makeHeroPreview.js");
+const emptyImage = new URL(require("22e7b2526522b613")).href;
+const startHeroSearchEvents = ()=>{
+    const searchInput = document.querySelector("#search-movie");
+    const heroDefault = document.querySelector("[data-hero-default]");
+    const heroResult = document.querySelector("[data-hero-result]");
+    if (!searchInput || !heroDefault || !heroResult) return;
+    searchInput.addEventListener("input", async ()=>{
+        const searchValue = searchInput.value.trim();
+        if (!searchValue) {
+            heroDefault.hidden = false;
+            heroResult.innerHTML = "";
+            return;
+        }
+        const [characters, episodes] = await Promise.all([
+            (0, _searchCharactersApiJs.searchCharactersApi)(searchValue),
+            (0, _searchEpisodesApiJs.searchEpisodesApi)(searchValue)
+        ]);
+        const character = characters?.results?.[0];
+        const episode = episodes?.results?.[0];
+        if (character || episode) {
+            heroDefault.hidden = true;
+            heroResult.innerHTML = `
+        ${character ? (0, _makeHeroPreviewJs.makeHeroPreview)(character, "character") : ""}
+        ${episode ? (0, _makeHeroPreviewJs.makeHeroPreview)(episode, "episode") : ""}
+      `;
+        } else {
+            heroDefault.hidden = true;
+            heroResult.innerHTML = `
+        <div class="empty-state">
+          <img
+            src="${emptyImage}"
+            alt="No results found"
+            class="empty-state__img"
+          />
+          <p>Oops! Try looking for something else...</p>
+        </div>
+      `;
+        }
+    });
+};
+
+},{"../../api/characters/searchCharactersApi.js":"c5dPa","../../api/episodes/searchEpisodesApi.js":"a2NNN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/homePage/makeHeroPreview.js":"cznag","22e7b2526522b613":"hEehL"}],"c5dPa":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "searchCharactersApi", ()=>searchCharactersApi);
+const searchCharactersApi = async (name)=>{
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${encodeURIComponent(name)}`);
+        const result = await response.json();
+        if (!response.ok) return null;
+        return result;
+    } catch (error) {
+        console.error("Characters API error:", error);
+        return null;
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"a2NNN":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "searchEpisodesApi", ()=>searchEpisodesApi);
+const searchEpisodesApi = async (name)=>{
+    try {
+        const response = await fetch(`https://rickandmortyapi.com/api/episode/?name=${encodeURIComponent(name)}`);
+        const result = await response.json();
+        if (!response.ok) return null;
+        return result;
+    } catch (error) {
+        console.error("Episodes API error:", error);
+        return null;
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cznag":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeHeroPreview", ()=>makeHeroPreview);
+var _episodesImagesJs = require("../episodes/episodesImages.js");
+const makeHeroPreview = (item, type)=>{
+    let image = "";
+    let link = "";
+    if (type === "character") {
+        image = item.image;
+        link = `./characters.html?id=${item.id}`;
+    } else {
+        const match = item.episode?.match(/S(\d+)E\d+/i);
+        const season = match ? Number(match[1]) : 1;
+        image = (0, _episodesImagesJs.episodesImages)[season] || (0, _episodesImagesJs.episodesImages)[1];
+        link = `./episodes.html?id=${item.id}`;
+    }
+    return `
+    <div class="hero__preview">
+      <img
+        src="${image}"
+        alt="${item.name}"
+        class="hero__preview-img"
+      />
+
+      <div class="hero__preview-info">
+        <span>${type === "character" ? "CHARACTER" : "EPISODE"}</span>
+
+        <h2>${item.name}</h2>
+
+        ${type === "character" ? `<p><span>Status:</span> ${item.status}</p>
+               <p><span>Species:</span> ${item.species}</p>` : `<p>${item.episode}</p>
+               <p>${item.air_date}</p>`}
+
+        <a href="${link}">
+          ${type === "character" ? "View character" : "View episode"}
+        </a>
+      </div>
+    </div>
+  `;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../episodes/episodesImages.js":"fy4nJ"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
 
 //# sourceMappingURL=Rick-and-Morty.31b563d9.js.map
