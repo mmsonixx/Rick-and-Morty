@@ -1,0 +1,158 @@
+@use "../utils/mixin" as *;
+
+.hero__preview {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  width: 100%;
+  max-width: 650px;
+  padding: 20px;
+  margin: 25px auto;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  overflow: hidden;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+  }
+
+  &-img {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    object-fit: cover;
+
+    border-radius: 18px;
+    border: 2px solid rgba(151, 206, 76, 0.5);
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    color: #fff;
+
+    span {
+      @include text(
+        $color: #fafafa,
+        $size: 12px,
+        $height: 117%,
+        $weight: 800,
+        $spacing: 2px
+      );
+    }
+
+    h2 {
+      margin: 0;
+
+      @include text(
+        $color: #97ce4c,
+        $size: 22px,
+        $height: 117%,
+        $weight: 600
+      );
+    }
+
+    p {
+      margin: 0;
+
+      @include text(
+        $color: #fafafa,
+        $size: 14px,
+        $height: 129%,
+        $weight: 400
+      );
+
+      span {
+        color: rgba(250, 250, 250, 0.5);
+        font-size: 12px;
+      }
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 10px 20px;
+
+      background: #97ce4c;
+      border-radius: 30px;
+      text-decoration: none;
+
+      @include text(
+        $color: var(--black),
+        $size: 14px,
+        $height: 129%,
+        $weight: 600
+      );
+
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #c7ed83;
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+/* Empty state */
+
+.empty-state {
+  text-align: center;
+
+  p {
+    @include text(
+      $color: #c1b3b3,
+      $size: 24px,
+      $height: 100%,
+      $weight: 400,
+      $spacing: 0.02em
+    );
+  }
+
+  &__img {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 550px) {
+  .hero__preview {
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
+
+    &-img {
+      width: 100%;
+      max-width: 250px;
+      height: 200px;
+    }
+
+    &-info {
+      align-items: center;
+    }
+  }
+
+  .empty-state p {
+    font-size: 18px;
+  }
+}

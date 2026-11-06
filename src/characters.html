@@ -43,53 +43,66 @@
         </div>
       </div>
     </header>
-    <section class="hero">
-      <div class="container">
-        <div class="hero__container">
-          <div class="hero__content">
-            <h2 class="hero__title">Characters</h2>
-            <p class="hero__info">
-              Our character bios provide detailed information on every member of
-              the Smith family and beyond. Get to know these unforgettable
-              characters on a whole new level - start exploring now!
-            </p>
-            <a href="./index.html"
-              ><button class="hero__button">Back home</button></a
-            >
-          </div>
-          <div class="hero__characters-wrapper">
-            <picture>
-              <source
-                srcset="
-                  ./img/desktop/characters/rick@desktop-1x.webp 1x,
-                  ./img/desktop/characters/rick@desktop-2x.webp 2x
-                "
-                media="(min-width: 1280px)"
-              />
-              <source
-                srcset="
-                  ./img/tablet/characters/rick@tablet-1x.webp 1x,
-                  ./img/tablet/characters/rick@tablet-2x.webp 2x
-                "
-                media="(min-width: 768px)"
-              />
-              <source
-                srcset="
-                  ./img/mobile/characters/rick@mobile-1x.webp 1x,
-                  ./img/mobile/characters/rick@mobile-2x.webp 2x
-                "
-                media="(max-width: 767px)"
-              />
-              <img
-                class="hero__img"
-                src="./img/mobile/characters/rick@mobile-1x.webp"
-                alt="Rick Sanchez"
-              />
-            </picture>
-          </div>
+<section class="hero">
+  <div class="container">
+    <div class="hero__container" data-hero>
+
+      <!-- Default Hero -->
+      <div class="hero__default" data-hero-default>
+
+        <div class="hero__content">
+          <h2 class="hero__title">Characters</h2>
+
+          <p class="hero__info">
+            Our character bios provide detailed information on every member
+            of the Smith family and beyond. Get to know these unforgettable
+            characters on a whole new level - start exploring now!
+          </p>
+
+          <a href="./index.html">
+            <button class="hero__button">Back home</button>
+          </a>
         </div>
+
+        <div class="hero__characters-wrapper">
+          <picture>
+            <source
+              srcset="
+                ./img/desktop/characters/rick@desktop-1x.webp 1x,
+                ./img/desktop/characters/rick@desktop-2x.webp 2x
+              "
+              media="(min-width: 1280px)"
+            />
+            <source
+              srcset="
+                ./img/tablet/characters/rick@tablet-1x.webp 1x,
+                ./img/tablet/characters/rick@tablet-2x.webp 2x
+              "
+              media="(min-width: 768px)"
+            />
+            <source
+              srcset="
+                ./img/mobile/characters/rick@mobile-1x.webp 1x,
+                ./img/mobile/characters/rick@mobile-2x.webp 2x
+              "
+              media="(max-width: 767px)"
+            />
+            <img
+              class="hero__img"
+              src="./img/mobile/characters/rick@mobile-1x.webp"
+              alt="Rick Sanchez"
+            />
+          </picture>
+        </div>
+
       </div>
-    </section>
+
+      <!-- Search Result -->
+      <div class="hero__result" data-hero-result></div>
+
+    </div>
+  </div>
+</section>
     <section class="topics">
       <div class="topics__tags">
         <span class="topics__tag topics__tag--1">Sitcom</span>

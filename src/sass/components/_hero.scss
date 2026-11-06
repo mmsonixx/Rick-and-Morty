@@ -282,3 +282,100 @@
     font-size: 13px;
   }
 }
+// Default Hero layout for Characters and Episodes
+
+.hero__container {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.hero__default {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  min-height: 400px;
+}
+
+.hero__content {
+  flex: 1;
+  width: auto;
+  max-width: 555px;
+  margin-right: 0;
+}
+
+.hero__title {
+  text-align: left;
+}
+
+.hero__characters-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+}
+
+.hero__characters-wrapper picture {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+}
+
+.hero__characters-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero__result {
+  width: 100%;
+}
+
+.hero__default[hidden] {
+  display: none;
+}
+
+// Tablet
+@media (max-width: 1024px) {
+  .hero__default {
+    gap: 20px;
+  }
+
+  .hero__characters-wrapper picture {
+    max-width: 350px;
+  }
+}
+
+// Mobile
+@media (max-width: 768px) {
+  .hero__default {
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+    text-align: center;
+  }
+
+  .hero__content {
+    width: 100%;
+    max-width: 555px;
+    align-items: center;
+  }
+
+  .hero__title,
+  .hero__info {
+    text-align: center;
+  }
+
+  .hero__characters-wrapper {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero__characters-wrapper picture {
+    max-width: 320px;
+  }
+}

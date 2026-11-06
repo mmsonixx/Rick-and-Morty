@@ -46,54 +46,67 @@
       </div>
     </header>
 
-    <section class="hero">
-      <div class="container">
-        <div class="hero__container">
-          <div class="hero__content">
-            <h2 class="hero__title">Episodes</h2>
-            <p class="hero__info">
-              With a comprehensive guide to every episode, you can relive your
-              favorite moments and discover new ones. From the bizarre and
-              hilarious to the emotional and thought-provoking, our episode
-              guide covers it all.
-            </p>
-            <a href="./index.html"
-              ><button class="hero__button">Back home</button></a
-            >
-          </div>
-          <div class="hero__characters-wrapper">
-            <picture>
-              <source
-                srcset="
-                  ./img/desktop/episodes/group@desktop-1x.webp 1x,
-                  ./img/desktop/episodes/group@desktop-2x.webp 2x
-                "
-                media="(min-width: 1280px)"
-              />
-              <source
-                srcset="
-                  ./img/tablet/episodes/group@tablet-1x.webp 1x,
-                  ./img/tablet/episodes/group@tablet-2x.webp 2x
-                "
-                media="(min-width: 768px)"
-              />
-              <source
-                srcset="
-                  ./img/mobile/episodes/group@mobile-1x.webp 1x,
-                  ./img/mobile/episodes/group@mobile-2x.webp 2x
-                "
-                media="(max-width: 767px)"
-              />
-              <img
-                class="hero__img"
-                src="./img/desktop/episodes/group@desktop-1x.webp"
-                alt="Group"
-              />
-            </picture>
-          </div>
+   <section class="hero">
+  <div class="container">
+    <div class="hero__container" data-hero>
+
+      <!-- Default Hero -->
+      <div class="hero__default" data-hero-default>
+
+        <div class="hero__content">
+          <h2 class="hero__title">Episodes</h2>
+
+          <p class="hero__info">
+            With a comprehensive guide to every episode, you can relive your
+            favorite moments and discover new ones. From the bizarre and
+            hilarious to the emotional and thought-provoking, our episode
+            guide covers it all.
+          </p>
+
+          <a href="./index.html">
+            <button class="hero__button">Back home</button>
+          </a>
         </div>
+
+        <div class="hero__characters-wrapper">
+          <picture>
+            <source
+              srcset="
+                ./img/desktop/episodes/group@desktop-1x.webp 1x,
+                ./img/desktop/episodes/group@desktop-2x.webp 2x
+              "
+              media="(min-width: 1280px)"
+            />
+            <source
+              srcset="
+                ./img/tablet/episodes/group@tablet-1x.webp 1x,
+                ./img/tablet/episodes/group@tablet-2x.webp 2x
+              "
+              media="(min-width: 768px)"
+            />
+            <source
+              srcset="
+                ./img/mobile/episodes/group@mobile-1x.webp 1x,
+                ./img/mobile/episodes/group@mobile-2x.webp 2x
+              "
+              media="(max-width: 767px)"
+            />
+            <img
+              class="hero__img"
+              src="./img/desktop/episodes/group@desktop-1x.webp"
+              alt="Group"
+            />
+          </picture>
+        </div>
+
       </div>
-    </section>
+
+      <!-- Search Result -->
+      <div class="hero__result" data-hero-result></div>
+
+    </div>
+  </div>
+</section>>
     <section class="topics">
       <div class="topics__tags">
         <span class="topics__tag topics__tag--1">Sitcom</span>

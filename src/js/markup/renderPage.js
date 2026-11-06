@@ -8,7 +8,7 @@ import { startEpisodesFilteringEvents } from "../operation/episodesPage/episodes
 import { startCharacterModalEvents } from "../operation/charactersPage/characterModal.js";
 import { renderExplore } from "./episodes/renderExplore.js";
 import { startEpisodeModalEvents } from "../operation/episodesPage/episodeModal.js";
-
+import { startHeroSearchEvents } from "../operation/homePage/searchHero.js";
 
 const startEvents = async () => {
   const moreBtn = document.querySelector(".moreCharacters");
@@ -23,6 +23,7 @@ const startEvents = async () => {
     moreBtnEpisodes.addEventListener("click", loadMoreEpisodes);
   }
   startMainCharactersEvents();
+  startHeroSearchEvents();
   startCharactersFilteringEvents();
   startEpisodesFilteringEvents();
     startCharacterModalEvents();
@@ -32,7 +33,7 @@ const startEvents = async () => {
 export const renderPage = async () => {
   await renderCharacters();
   await renderEpisodes();
-  renderExplore();
+await  renderExplore();
   await startEvents();
 };
 
