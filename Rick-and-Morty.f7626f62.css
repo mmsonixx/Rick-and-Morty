@@ -1207,6 +1207,10 @@ a {
   line-height: 113%;
 }
 
+.characters__title button {
+  background-color: #0000;
+}
+
 .characters__info {
   color: #111;
   font-style: normal;
@@ -1219,6 +1223,10 @@ a {
 
 .characters__info span {
   color: #11111180;
+}
+
+.moreCharacters[hidden] {
+  display: none !important;
 }
 
 .moreCharacters {

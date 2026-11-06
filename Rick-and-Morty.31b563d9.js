@@ -732,11 +732,11 @@ var _characterModalJs = require("../operation/charactersPage/characterModal.js")
 var _renderExploreJs = require("./episodes/renderExplore.js");
 var _episodeModalJs = require("../operation/episodesPage/episodeModal.js");
 var _searchHeroJs = require("../operation/homePage/searchHero.js");
-const startEvents = async ()=>{
+const startEvents = ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
-    if (moreBtn) moreBtn.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
+    moreBtn?.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
     const moreBtnEpisodes = document.querySelector(".moreEpisodes");
-    if (moreBtnEpisodes) moreBtnEpisodes.addEventListener("click", (0, _loadMoreEpisodesJs.loadMoreEpisodes));
+    moreBtnEpisodes?.addEventListener("click", (0, _loadMoreEpisodesJs.loadMoreEpisodes));
     (0, _mainCharactersJs.startMainCharactersEvents)();
     (0, _searchHeroJs.startHeroSearchEvents)();
     (0, _charactersFilteringJs.startCharactersFilteringEvents)();
@@ -745,10 +745,12 @@ const startEvents = async ()=>{
     (0, _episodeModalJs.startEpisodeModalEvents)();
 };
 const renderPage = async ()=>{
-    await (0, _renderCharactersJs.renderCharacters)();
-    await (0, _renderEpisodesJs.renderEpisodes)();
-    await (0, _renderExploreJs.renderExplore)();
-    await startEvents();
+    startEvents();
+    await Promise.all([
+        (0, _renderCharactersJs.renderCharacters)(),
+        (0, _renderEpisodesJs.renderEpisodes)(),
+        (0, _renderExploreJs.renderExplore)()
+    ]);
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX","../operation/homePage/searchHero.js":"8RCSu"}],"jnFvT":[function(require,module,exports,__globalThis) {
@@ -791,22 +793,33 @@ var _charactersFilteringJs = require("./charactersFiltering.js");
 let isLoading = false;
 const loadMoreCharacters = async ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
-    if (!(0, _renderCharactersJs.nextPage) || isLoading) return;
+    if (isLoading || (0, _renderCharactersJs.nextPage) === null) return;
     isLoading = true;
-    if (moreBtn) moreBtn.disabled = true;
+    const pageToLoad = (0, _renderCharactersJs.nextPage);
+    if (moreBtn) {
+        moreBtn.disabled = true;
+        moreBtn.textContent = "Loading...";
+    }
     try {
-        const currentPage = (0, _renderCharactersJs.nextPage);
-        const result = await (0, _getCharactersApiJs.getCharactersApi)(currentPage);
-        if (!result || !Array.isArray(result.results)) return;
+        const result = await (0, _getCharactersApiJs.getCharactersApi)(pageToLoad);
+        if (!result || !Array.isArray(result.results)) throw new Error("Invalid characters response");
+        console.log("Characters received:", result.results.length);
+        console.log("Page loaded:", pageToLoad);
         (0, _renderCharactersJs.addCharacters)(result.results);
-        (0, _renderCharactersJs.setNextPage)(result.info.next ? currentPage + 1 : null);
-        (0, _charactersFilteringJs.updateCharacters)();
+        if (result.info?.next) {
+            const url = new URL(result.info.next);
+            (0, _renderCharactersJs.setNextPage)(Number(url.searchParams.get("page")));
+        } else (0, _renderCharactersJs.setNextPage)(null);
+        if (typeof (0, _charactersFilteringJs.updateCharacters) === "function") (0, _charactersFilteringJs.updateCharacters)();
         if (moreBtn) moreBtn.hidden = (0, _renderCharactersJs.nextPage) === null;
     } catch (error) {
         console.error("Error loading characters:", error);
     } finally{
         isLoading = false;
-        if (moreBtn) moreBtn.disabled = false;
+        if (moreBtn) {
+            moreBtn.disabled = false;
+            moreBtn.textContent = "Load more";
+        }
     }
 };
 
@@ -815,14 +828,9 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
 const getCharactersApi = async (page = 1)=>{
-    try {
-        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
-        if (!response.ok) throw new Error("Failed to load characters");
-        return await response.json();
-    } catch (error) {
-        console.error(error.message);
-        return null;
-    }
+    const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+    if (!response.ok) throw new Error(`Failed to load characters: ${response.status}`);
+    return await response.json();
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aRxsR":[function(require,module,exports,__globalThis) {
@@ -830,30 +838,42 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "charactersData", ()=>charactersData);
 parcelHelpers.export(exports, "nextPage", ()=>nextPage);
-parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
 parcelHelpers.export(exports, "setNextPage", ()=>setNextPage);
+parcelHelpers.export(exports, "setCharacters", ()=>setCharacters);
+parcelHelpers.export(exports, "addCharacters", ()=>addCharacters);
 parcelHelpers.export(exports, "renderCharacters", ()=>renderCharacters);
 var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
 var _makeCharactersListJs = require("./makeCharactersList.js");
 let charactersData = [];
-let nextPage = 2;
-const addCharacters = (newCharacters)=>{
-    charactersData.push(...newCharacters);
-};
+let nextPage = null;
 const setNextPage = (page)=>{
     nextPage = page;
+};
+const setCharacters = (characters)=>{
+    charactersData = characters;
+};
+const addCharacters = (newCharacters)=>{
+    const existingIds = new Set(charactersData.map((character)=>character.id));
+    const uniqueCharacters = newCharacters.filter((character)=>!existingIds.has(character.id));
+    charactersData.push(...uniqueCharacters);
 };
 const renderCharacters = async ()=>{
     const charactersList = document.querySelector(".characters__list");
     const moreBtn = document.querySelector(".moreCharacters");
     if (!charactersList) return;
-    const result = await (0, _getCharactersApiJs.getCharactersApi)(1);
-    if (!result || !Array.isArray(result.results)) return;
-    charactersData = result.results;
-    // Проверяем, существует ли следующая страница
-    setNextPage(result.info.next ? 2 : null);
-    charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
-    if (moreBtn) moreBtn.hidden = nextPage === null;
+    try {
+        const result = await (0, _getCharactersApiJs.getCharactersApi)(1);
+        if (!result || !Array.isArray(result.results)) throw new Error("Invalid characters response");
+        setCharacters(result.results);
+        if (result.info?.next) {
+            const url = new URL(result.info.next);
+            setNextPage(Number(url.searchParams.get("page")));
+        } else setNextPage(null);
+        charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(charactersData);
+        if (moreBtn) moreBtn.hidden = nextPage === null;
+    } catch (error) {
+        console.error("Error rendering characters:", error);
+    }
 };
 
 },{"../../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"6aKzq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"6aKzq":[function(require,module,exports,__globalThis) {
@@ -861,23 +881,35 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "makeCharactersList", ()=>makeCharactersList);
 const makeCharactersList = (characters)=>{
-    const markup = characters.map((character)=>`
+    return characters.map((character)=>`
         <li class="characters__item">
-            <img src="${character.image}" alt="" class="characters__img">
-             <h2 class="characters__title">
-  <button
-    type="button"
-    class="characters__name"
-    data-character-id="${character.id}"
-  >
-    ${character.name}
-  </button>
-</h2>
-            <p class="characters__info"><span>Origin:</span> ${character.origin.name}</p>
-            <p class="characters__info"><span>Location:</span> Svazilend</p>
-          </li>
+          <img
+            src="${character.image}"
+            alt="${character.name}"
+            class="characters__img"
+          >
+
+          <h2 class="characters__title">
+            <button
+              type="button"
+              class="characters__name"
+              data-character-id="${character.id}"
+            >
+              ${character.name}
+            </button>
+          </h2>
+
+          <p class="characters__info">
+            <span>Origin:</span>
+            ${character.origin?.name || "Unknown"}
+          </p>
+
+          <p class="characters__info">
+            <span>Location:</span>
+            ${character.location?.name || "Unknown"}
+          </p>
+        </li>
       `).join("");
-    return markup;
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"icb2Z":[function(require,module,exports,__globalThis) {
@@ -914,7 +946,7 @@ const startCharactersFilteringEvents = ()=>{
         charactersList.innerHTML = (0, _makeCharactersListJs.makeCharactersList)(filteredCharacters);
         const isEmpty = filteredCharacters.length === 0;
         (0, _renderEmptyStateJs.renderEmptyState)(emptyState, isEmpty);
-        if (moreBtn) moreBtn.hidden = isEmpty || (0, _renderCharactersJs.nextPage) === null;
+        if (moreBtn) moreBtn.hidden = isEmpty || !(0, _renderCharactersJs.nextPage);
     };
     // Поиск
     searchInput.addEventListener("input", updateCharacters);
@@ -1024,20 +1056,37 @@ parcelHelpers.export(exports, "loadMoreEpisodes", ()=>loadMoreEpisodes);
 var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
 var _renderEpisodesJs = require("../../markup/episodes/renderEpisodes.js");
 var _episodesFilteringJs = require("./episodesFiltering.js");
-let page = 2;
+let isLoading = false;
 const loadMoreEpisodes = async ()=>{
+    const moreBtn = document.querySelector(".moreEpisodes");
+    if (isLoading || (0, _renderEpisodesJs.nextEpisodePage) === null) return;
+    isLoading = true;
+    const pageToLoad = (0, _renderEpisodesJs.nextEpisodePage);
+    if (moreBtn) {
+        moreBtn.disabled = true;
+        moreBtn.textContent = "Loading...";
+    }
     try {
-        const result = await (0, _getEpisodesApiJs.getEpisodesApi)(page);
-        if (!result || !Array.isArray(result.results)) return;
+        const result = await (0, _getEpisodesApiJs.getEpisodesApi)(pageToLoad);
+        if (!result || !Array.isArray(result.results)) throw new Error("Invalid episodes response");
+        // Добавляем новые эпизоды без повторов
         (0, _renderEpisodesJs.addEpisodes)(result.results);
-        if (0, _episodesFilteringJs.updateEpisodes) (0, _episodesFilteringJs.updateEpisodes)();
-        if (result.info.next === null) {
-            document.querySelector(".moreEpisodes").hidden = true;
-            return;
-        }
-        page++;
+        // Получаем следующую страницу из API
+        if (result.info?.next) {
+            const url = new URL(result.info.next);
+            (0, _renderEpisodesJs.setNextEpisodePage)(Number(url.searchParams.get("page")));
+        } else (0, _renderEpisodesJs.setNextEpisodePage)(null);
+        if (moreBtn) moreBtn.dataset.hasMore = String((0, _renderEpisodesJs.nextEpisodePage) !== null);
+        // Обновляем список с учётом поиска и фильтров
+        if (typeof (0, _episodesFilteringJs.updateEpisodes) === "function") (0, _episodesFilteringJs.updateEpisodes)();
     } catch (error) {
         console.error("Error loading episodes:", error);
+    } finally{
+        isLoading = false;
+        if (moreBtn) {
+            moreBtn.disabled = false;
+            moreBtn.textContent = "Load more";
+        }
     }
 };
 
@@ -1061,41 +1110,48 @@ const getEpisodesApi = async (page = 1)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "episodesData", ()=>episodesData);
+parcelHelpers.export(exports, "nextEpisodePage", ()=>nextEpisodePage);
+parcelHelpers.export(exports, "setNextEpisodePage", ()=>setNextEpisodePage);
 parcelHelpers.export(exports, "setEpisodes", ()=>setEpisodes);
 parcelHelpers.export(exports, "addEpisodes", ()=>addEpisodes);
 parcelHelpers.export(exports, "renderEpisodes", ()=>renderEpisodes);
 var _getEpisodesApiJs = require("../../api/episodes/getEpisodesApi.js");
 var _makeEpisodesListJs = require("./makeEpisodesList.js");
 let episodesData = [];
+let nextEpisodePage = null;
+const setNextEpisodePage = (page)=>{
+    nextEpisodePage = page;
+};
 const setEpisodes = (episodes)=>{
     episodesData = episodes;
 };
 const addEpisodes = (episodes)=>{
-    episodesData.push(...episodes);
+    const existingIds = new Set(episodesData.map((episode)=>episode.id));
+    const uniqueEpisodes = episodes.filter((episode)=>!existingIds.has(episode.id));
+    episodesData.push(...uniqueEpisodes);
 };
 const renderEpisodes = async ()=>{
     const episodesList = document.querySelector(".episodes__list");
+    const moreBtn = document.querySelector(".moreEpisodes");
     if (!episodesList) return;
-    const result = await (0, _getEpisodesApiJs.getEpisodesApi)();
-    if (!result || !result.info) return;
-    let allEpisodes = [
-        ...result.results
-    ];
-    for(let page = 2; page <= result.info.pages; page++){
-        const nextResult = await (0, _getEpisodesApiJs.getEpisodesApi)(page);
-        if (!nextResult) continue;
-        allEpisodes.push(...nextResult.results);
+    try {
+        const result = await (0, _getEpisodesApiJs.getEpisodesApi)(1);
+        if (!result || !Array.isArray(result.results)) throw new Error("Invalid episodes response");
+        // Сохраняем только первую страницу
+        setEpisodes(result.results);
+        // Определяем номер следующей страницы
+        if (result.info?.next) {
+            const url = new URL(result.info.next);
+            setNextEpisodePage(Number(url.searchParams.get("page")));
+        } else setNextEpisodePage(null);
+        episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(episodesData);
+        if (moreBtn) {
+            moreBtn.dataset.hasMore = String(nextEpisodePage !== null);
+            moreBtn.hidden = nextEpisodePage === null;
+        }
+    } catch (error) {
+        console.error("Error rendering episodes:", error);
     }
-    allEpisodes.sort((a, b)=>{
-        const seasonA = Number(a.episode.slice(1, 3));
-        const seasonB = Number(b.episode.slice(1, 3));
-        const episodeA = Number(a.episode.slice(4));
-        const episodeB = Number(b.episode.slice(4));
-        if (seasonA !== seasonB) return seasonA - seasonB;
-        return episodeA - episodeB;
-    });
-    setEpisodes(allEpisodes);
-    episodesList.innerHTML = (0, _makeEpisodesListJs.makeEpisodesList)(episodesData);
 };
 
 },{"../../api/episodes/getEpisodesApi.js":"18nPX","./makeEpisodesList.js":"1QUQf","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1QUQf":[function(require,module,exports,__globalThis) {
