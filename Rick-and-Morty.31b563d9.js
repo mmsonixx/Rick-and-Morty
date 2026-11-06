@@ -732,6 +732,7 @@ var _characterModalJs = require("../operation/charactersPage/characterModal.js")
 var _renderExploreJs = require("./episodes/renderExplore.js");
 var _episodeModalJs = require("../operation/episodesPage/episodeModal.js");
 var _searchHeroJs = require("../operation/homePage/searchHero.js");
+var _scrollJs = require("../operation/homePage/scroll.js");
 const startEvents = ()=>{
     const moreBtn = document.querySelector(".moreCharacters");
     moreBtn?.addEventListener("click", (0, _loadMoreCharactersJs.loadMoreCharacters));
@@ -743,6 +744,7 @@ const startEvents = ()=>{
     (0, _episodesFilteringJs.startEpisodesFilteringEvents)();
     (0, _characterModalJs.startCharacterModalEvents)();
     (0, _episodeModalJs.startEpisodeModalEvents)();
+    (0, _scrollJs.startScrollEvents)();
 };
 const renderPage = async ()=>{
     startEvents();
@@ -753,87 +755,7 @@ const renderPage = async ()=>{
     ]);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX","../operation/homePage/searchHero.js":"8RCSu"}],"jnFvT":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"lV1uf":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "loadMoreCharacters", ()=>loadMoreCharacters);
-var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
-var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
-var _charactersFilteringJs = require("./charactersFiltering.js");
-let isLoading = false;
-const loadMoreCharacters = async ()=>{
-    const moreBtn = document.querySelector(".moreCharacters");
-    if (isLoading || (0, _renderCharactersJs.nextPage) === null) return;
-    isLoading = true;
-    const pageToLoad = (0, _renderCharactersJs.nextPage);
-    if (moreBtn) {
-        moreBtn.disabled = true;
-        moreBtn.textContent = "Loading...";
-    }
-    try {
-        const result = await (0, _getCharactersApiJs.getCharactersApi)(pageToLoad);
-        if (!result || !Array.isArray(result.results)) throw new Error("Invalid characters response");
-        console.log("Characters received:", result.results.length);
-        console.log("Page loaded:", pageToLoad);
-        (0, _renderCharactersJs.addCharacters)(result.results);
-        if (result.info?.next) {
-            const url = new URL(result.info.next);
-            (0, _renderCharactersJs.setNextPage)(Number(url.searchParams.get("page")));
-        } else (0, _renderCharactersJs.setNextPage)(null);
-        if (typeof (0, _charactersFilteringJs.updateCharacters) === "function") (0, _charactersFilteringJs.updateCharacters)();
-        if (moreBtn) moreBtn.hidden = (0, _renderCharactersJs.nextPage) === null;
-    } catch (error) {
-        console.error("Error loading characters:", error);
-    } finally{
-        isLoading = false;
-        if (moreBtn) {
-            moreBtn.disabled = false;
-            moreBtn.textContent = "Load more";
-        }
-    }
-};
-
-},{"../../api/characters/getCharactersApi.js":"1mQTM","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/renderCharacters.js":"aRxsR","./charactersFiltering.js":"icb2Z"}],"1mQTM":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
-const getCharactersApi = async (page = 1)=>{
-    const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
-    if (!response.ok) throw new Error(`Failed to load characters: ${response.status}`);
-    return await response.json();
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aRxsR":[function(require,module,exports,__globalThis) {
+},{"./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX","../operation/homePage/searchHero.js":"8RCSu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/homePage/scroll.js":"RBHrz"}],"aRxsR":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "charactersData", ()=>charactersData);
@@ -876,7 +798,47 @@ const renderCharacters = async ()=>{
     }
 };
 
-},{"../../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"6aKzq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"6aKzq":[function(require,module,exports,__globalThis) {
+},{"../../api/characters/getCharactersApi.js":"1mQTM","./makeCharactersList.js":"6aKzq","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1mQTM":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getCharactersApi", ()=>getCharactersApi);
+const getCharactersApi = async (page = 1)=>{
+    const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}`);
+    if (!response.ok) throw new Error(`Failed to load characters: ${response.status}`);
+    return await response.json();
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"6aKzq":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "makeCharactersList", ()=>makeCharactersList);
@@ -912,7 +874,47 @@ const makeCharactersList = (characters)=>{
       `).join("");
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"icb2Z":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"lV1uf":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "loadMoreCharacters", ()=>loadMoreCharacters);
+var _getCharactersApiJs = require("../../api/characters/getCharactersApi.js");
+var _renderCharactersJs = require("../../markup/characters/renderCharacters.js");
+var _charactersFilteringJs = require("./charactersFiltering.js");
+let isLoading = false;
+const loadMoreCharacters = async ()=>{
+    const moreBtn = document.querySelector(".moreCharacters");
+    if (isLoading || (0, _renderCharactersJs.nextPage) === null) return;
+    isLoading = true;
+    const pageToLoad = (0, _renderCharactersJs.nextPage);
+    if (moreBtn) {
+        moreBtn.disabled = true;
+        moreBtn.textContent = "Loading...";
+    }
+    try {
+        const result = await (0, _getCharactersApiJs.getCharactersApi)(pageToLoad);
+        if (!result || !Array.isArray(result.results)) throw new Error("Invalid characters response");
+        console.log("Characters received:", result.results.length);
+        console.log("Page loaded:", pageToLoad);
+        (0, _renderCharactersJs.addCharacters)(result.results);
+        if (result.info?.next) {
+            const url = new URL(result.info.next);
+            (0, _renderCharactersJs.setNextPage)(Number(url.searchParams.get("page")));
+        } else (0, _renderCharactersJs.setNextPage)(null);
+        if (typeof (0, _charactersFilteringJs.updateCharacters) === "function") (0, _charactersFilteringJs.updateCharacters)();
+        if (moreBtn) moreBtn.hidden = (0, _renderCharactersJs.nextPage) === null;
+    } catch (error) {
+        console.error("Error loading characters:", error);
+    } finally{
+        isLoading = false;
+        if (moreBtn) {
+            moreBtn.disabled = false;
+            moreBtn.textContent = "Load more";
+        }
+    }
+};
+
+},{"../../api/characters/getCharactersApi.js":"1mQTM","../../markup/characters/renderCharacters.js":"aRxsR","./charactersFiltering.js":"icb2Z","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"icb2Z":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateCharacters", ()=>updateCharacters);
@@ -1002,7 +1004,7 @@ const startCharactersFilteringEvents = ()=>{
     });
 };
 
-},{"./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/makeCharactersList.js":"6aKzq","../../markup/characters/renderCharacters.js":"aRxsR","../../markup/renderEmptyState.js":"hVWt8"}],"bLpCG":[function(require,module,exports,__globalThis) {
+},{"../../markup/characters/renderCharacters.js":"aRxsR","../../markup/characters/makeCharactersList.js":"6aKzq","./filterCharacters.js":"bLpCG","./searchCharacters.js":"5k6uW","../../markup/renderEmptyState.js":"hVWt8","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"bLpCG":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "filterCharacters", ()=>filterCharacters);
@@ -1046,7 +1048,7 @@ function renderEmptyState(container, isEmpty) {
   `;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","8638a140c6828267":"hEehL"}],"hEehL":[function(require,module,exports,__globalThis) {
+},{"8638a140c6828267":"hEehL","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"hEehL":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("kisspng-portal-morty-rick.140c7cba.webp") + "?" + Date.now();
 
 },{}],"aAso4":[function(require,module,exports,__globalThis) {
@@ -1189,7 +1191,7 @@ const makeEpisodesList = (episodes)=>{
     return markup;
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./episodesImages.js":"fy4nJ"}],"fy4nJ":[function(require,module,exports,__globalThis) {
+},{"./episodesImages.js":"fy4nJ","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fy4nJ":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "episodesImages", ()=>episodesImages);
@@ -1202,7 +1204,7 @@ const episodesImages = {
     6: new URL(require("f72288e433765cb6")).href
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","74709e24f16585f6":"1viRO","f77e7ea48336ee7f":"g3IR0","f0f742c16419a3dd":"igdcw","387cf32daba80dfc":"ldcam","3ab2b6b825dc0e9c":"g7lUi","f72288e433765cb6":"iQKN9"}],"1viRO":[function(require,module,exports,__globalThis) {
+},{"74709e24f16585f6":"1viRO","f77e7ea48336ee7f":"g3IR0","f0f742c16419a3dd":"igdcw","387cf32daba80dfc":"ldcam","3ab2b6b825dc0e9c":"g7lUi","f72288e433765cb6":"iQKN9","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1viRO":[function(require,module,exports,__globalThis) {
 module.exports = module.bundle.resolve("episode-1.5b71d146.webp") + "?" + Date.now();
 
 },{}],"g3IR0":[function(require,module,exports,__globalThis) {
@@ -1275,7 +1277,7 @@ const startEpisodesFilteringEvents = ()=>{
     });
 };
 
-},{"../../markup/episodes/renderEpisodes.js":"deM5h","../../markup/episodes/makeEpisodesList.js":"1QUQf","./filterEpisodes.js":"e6YlG","./searchEpisodes.js":"aGMTN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/renderEmptyState.js":"hVWt8"}],"e6YlG":[function(require,module,exports,__globalThis) {
+},{"../../markup/episodes/renderEpisodes.js":"deM5h","../../markup/episodes/makeEpisodesList.js":"1QUQf","./filterEpisodes.js":"e6YlG","./searchEpisodes.js":"aGMTN","../../markup/renderEmptyState.js":"hVWt8","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"e6YlG":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "filterEpisodes", ()=>filterEpisodes);
@@ -1514,7 +1516,7 @@ const startCharacterModalEvents = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/characters/renderCharactersModal.js":"eSdI6"}],"eSdI6":[function(require,module,exports,__globalThis) {
+},{"../../markup/characters/renderCharactersModal.js":"eSdI6","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"eSdI6":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "renderCharacterModal", ()=>renderCharacterModal);
@@ -1542,38 +1544,7 @@ const renderCharacterModal = async (characterId)=>{
     }
 };
 
-},{"./makeCharacterEpisodesList.js":"bkVYy","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./makeCharactersModal.js":"dzclk"}],"bkVYy":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "makeCharacterEpisodesList", ()=>makeCharacterEpisodesList);
-const makeCharacterEpisodesList = (episodes)=>{
-    const markup = episodes.map((episode)=>`
-        <li class="episode-card">
-
-          <h3 class="episode-card__name">
-            ${episode.name}
-          </h3>
-
-          <div class="episode-card__info">
-
-            <div>
-              <span>Season</span>
-              <p>${episode.episode.match(/S(\d+)E/)?.[1] || "?"}</p>
-            </div>
-
-            <div>
-              <span>Air date</span>
-              <p>${episode.air_date}</p>
-            </div>
-
-          </div>
-
-        </li>
-      `).join("");
-    return markup;
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"dzclk":[function(require,module,exports,__globalThis) {
+},{"./makeCharactersModal.js":"dzclk","./makeCharacterEpisodesList.js":"bkVYy","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"dzclk":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "makeCharacterModal", ()=>makeCharacterModal);
@@ -1640,6 +1611,37 @@ const makeCharacterModal = (character)=>{
       </div>
     </div>
   `;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"bkVYy":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "makeCharacterEpisodesList", ()=>makeCharacterEpisodesList);
+const makeCharacterEpisodesList = (episodes)=>{
+    const markup = episodes.map((episode)=>`
+        <li class="episode-card">
+
+          <h3 class="episode-card__name">
+            ${episode.name}
+          </h3>
+
+          <div class="episode-card__info">
+
+            <div>
+              <span>Season</span>
+              <p>${episode.episode.match(/S(\d+)E/)?.[1] || "?"}</p>
+            </div>
+
+            <div>
+              <span>Air date</span>
+              <p>${episode.air_date}</p>
+            </div>
+
+          </div>
+
+        </li>
+      `).join("");
+    return markup;
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"do906":[function(require,module,exports,__globalThis) {
@@ -1737,7 +1739,7 @@ const startEpisodeModalEvents = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/episodes/renderEpisodeModal.js":"cjXUd"}],"cjXUd":[function(require,module,exports,__globalThis) {
+},{"../../markup/episodes/renderEpisodeModal.js":"cjXUd","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cjXUd":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "renderEpisodeModal", ()=>renderEpisodeModal);
@@ -1902,7 +1904,7 @@ const startHeroSearchEvents = ()=>{
     });
 };
 
-},{"../../api/characters/searchCharactersApi.js":"c5dPa","../../api/episodes/searchEpisodesApi.js":"a2NNN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../../markup/homePage/makeHeroPreview.js":"cznag","22e7b2526522b613":"hEehL"}],"c5dPa":[function(require,module,exports,__globalThis) {
+},{"../../api/characters/searchCharactersApi.js":"c5dPa","../../api/episodes/searchEpisodesApi.js":"a2NNN","../../markup/homePage/makeHeroPreview.js":"cznag","22e7b2526522b613":"hEehL","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"c5dPa":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "searchCharactersApi", ()=>searchCharactersApi);
@@ -1976,6 +1978,28 @@ const makeHeroPreview = (item, type)=>{
   `;
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../episodes/episodesImages.js":"fy4nJ"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
+},{"../episodes/episodesImages.js":"fy4nJ","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"RBHrz":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "startScrollEvents", ()=>startScrollEvents);
+const startScrollEvents = ()=>{
+    const scrollBtn = document.querySelector("#scrollBtn");
+    if (!scrollBtn) return;
+    const updateScrollButton = ()=>{
+        const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+        scrollBtn.innerHTML = isBottom ? `<i class="fa-solid fa-arrow-up"></i>` : `<i class="fa-solid fa-arrow-down"></i>`;
+    };
+    scrollBtn.addEventListener("click", ()=>{
+        const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+        window.scrollTo({
+            top: isBottom ? 0 : document.documentElement.scrollHeight,
+            behavior: "smooth"
+        });
+    });
+    window.addEventListener("scroll", updateScrollButton);
+    updateScrollButton();
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire619d", {}, "./", "/")
 
 //# sourceMappingURL=Rick-and-Morty.31b563d9.js.map
