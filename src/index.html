@@ -50,26 +50,25 @@
     </header>
 
     <section class="hero">
-  <div class="container">
-    <div class="hero__container" data-hero>
+      <div class="container">
+        <div class="hero__container" data-hero>
+          <div class="hero__default" data-hero-default>
+            <p class="hero__text">
+              If you're a fan of Rick and Morty, you don't want to miss out on
+              our app! Start exploring the endless possibilities of Rick and
+              Morty!
+            </p>
 
-      <div class="hero__default" data-hero-default>
-        <p class="hero__text">
-          If you're a fan of Rick and Morty, you don't want to miss out on our
-          app! Start exploring the endless possibilities of Rick and Morty!
-        </p>
+            <div class="hero__wrapper">
+              <img src="./img/rick-and-morty.webp" alt="" class="hero__img" />
+              <img src="./img/logo.webp" alt="" class="hero__logo" />
+            </div>
+          </div>
 
-        <div class="hero__wrapper">
-          <img src="./img/rick-and-morty.webp" alt="" class="hero__img" />
-          <img src="./img/logo.webp" alt="" class="hero__logo" />
+          <div class="hero__result" data-hero-result></div>
         </div>
       </div>
-
-      <div class="hero__result" data-hero-result></div>
-
-    </div>
-  </div>
-</section>
+    </section>
 
     <section class="topics">
       <div class="topics__tags">
@@ -95,7 +94,7 @@
         <div class="main-characters__container">
           <picture>
             <source
-            class="main-characters__desktop"
+              class="main-characters__desktop"
               srcset="
                 ./img/desktop/main-characters/rick-sanchez@desktop-1x.webp 1x,
                 ./img/desktop/main-characters/rick-sanchez@desktop-2x.webp 2x
@@ -103,7 +102,7 @@
               media="(min-width: 1280px)"
             />
             <source
-             class="main-characters__tablet"
+              class="main-characters__tablet"
               srcset="
                 ./img/tablet/main-characters/rick-sanchez@tablet-1x.webp 1x,
                 ./img/tablet/main-characters/rick-sanchez@tablet-2x.webp 2x
@@ -170,34 +169,36 @@
         </div>
       </div>
     </section>
-<section class="explore">
-  
-    <div class="explore__inner">
-      <h2 class="explore__title">
-        Ready to <span>explore</span> the crazy
-        <br />
-        world of Rick and Morty?
-      </h2>
+    <section class="explore">
+      <div class="explore__inner">
+        <h2 class="explore__title">
+          Ready to <span>explore</span> the crazy
+          <br />
+          world of Rick and Morty?
+        </h2>
 
-      <div class="explore__slider">
-        <div class="explore__track" id="exploreTrack">
-       
+        <div class="explore__slider">
+          <div class="explore__track" id="exploreTrack"></div>
         </div>
-      </div>
 
-      <a href="./episodes.html" class="explore__button">
-        Episodes
-      </a>
-    </div>
- 
-</section>
+        <a href="./episodes.html" class="explore__button"> Episodes </a>
+      </div>
+    </section>
     <footer class="footer">
       <div class="container">
         <div class="footer__container">
-        <div class="footer__logos">
-  <img src="./img/footer-logo.webp" alt="Rick and Morty" class="footer__logo" />
-  <img src="./img/footer-logo-button.webp" alt="" class="footer__logo-button" />
-</div>
+          <div class="footer__logos">
+            <img
+              src="./img/footer-logo.webp"
+              alt="Rick and Morty"
+              class="footer__logo"
+            />
+            <img
+              src="./img/footer-logo-button.webp"
+              alt=""
+              class="footer__logo-button"
+            />
+          </div>
           <div class="footer__btns">
             <a href="./characters.html" class="footer__btn__link">
               <button>Characters</button></a
@@ -209,7 +210,10 @@
 
           <ul class="footer__list">
             <li class="footer__item">
-              <a href="https://www.facebook.com/RickandMorty/tv/" class="footer__link">
+              <a
+                href="https://www.facebook.com/RickandMorty/tv/"
+                class="footer__link"
+              >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-facebook"></use>
                 </svg>
@@ -223,7 +227,10 @@
               </a>
             </li>
             <li class="footer__item">
-              <a href="https://www.instagram.com/rickandmorty?exln=bnh6azhuZGlzbzV4" class="footer__link">
+              <a
+                href="https://www.instagram.com/rickandmorty?exln=bnh6azhuZGlzbzV4"
+                class="footer__link"
+              >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-instagram"></use>
                 </svg>
@@ -234,7 +241,9 @@
         <p class="footer__info">Privacy Policy Public Offering Agreement</p>
       </div>
     </footer>
-
+<button class="scroll-btn" id="scrollBtn">
+  <i class="fa-solid fa-arrow-down"></i>
+</button>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

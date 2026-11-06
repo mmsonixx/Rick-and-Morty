@@ -1,11 +1,20 @@
 @use "../utils/mixin" as *;
-
-.header {
-    padding-top: 24px;
-    padding-bottom: 24px;
-    background-color: var(--black);
-
+body {
+  padding-top: 90px;
 }
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background-color: var(--black);
+  box-sizing: border-box;
+}
+
 
 .header__container {
     margin-left: auto;
@@ -116,6 +125,9 @@ height: 73px;
 
 
 @media (max-width: 768px) {
+  body {
+  padding-top: 40px;
+}
   .header {
     width: 100%;
     padding: 12px 0;

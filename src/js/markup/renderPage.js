@@ -9,6 +9,7 @@ import { startCharacterModalEvents } from "../operation/charactersPage/character
 import { renderExplore } from "./episodes/renderExplore.js";
 import { startEpisodeModalEvents } from "../operation/episodesPage/episodeModal.js";
 import { startHeroSearchEvents } from "../operation/homePage/searchHero.js";
+import { startScrollEvents } from "../operation/homePage/scroll.js";
 
 const startEvents = () => {
   const moreBtn = document.querySelector(".moreCharacters");
@@ -26,6 +27,7 @@ const startEvents = () => {
 
   startCharacterModalEvents();
   startEpisodeModalEvents();
+  startScrollEvents();
 };
 
 export const renderPage = async () => {
