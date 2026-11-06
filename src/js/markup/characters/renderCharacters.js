@@ -2,14 +2,26 @@ import { getCharactersApi } from "../../api/characters/getCharactersApi.js";
 import { makeCharactersList } from "./makeCharactersList.js";
 
 export let charactersData = [];
-export let nextPage = 2;
-
-export const addCharacters = (newCharacters) => {
-  charactersData.push(...newCharacters);
-};
+export let nextPage = null;
 
 export const setNextPage = (page) => {
   nextPage = page;
+};
+
+export const setCharacters = (characters) => {
+  charactersData = characters;
+};
+
+export const addCharacters = (newCharacters) => {
+  const existingIds = new Set(
+    charactersData.map((character) => character.id)
+  );
+
+  const uniqueCharacters = newCharacters.filter(
+    (character) => !existingIds.has(character.id)
+  );
+
+  charactersData.push(...uniqueCharacters);
 };
 
 export const renderCharacters = async () => {
@@ -18,18 +30,29 @@ export const renderCharacters = async () => {
 
   if (!charactersList) return;
 
-  const result = await getCharactersApi(1);
+  try {
+    const result = await getCharactersApi(1);
 
-  if (!result || !Array.isArray(result.results)) return;
+    if (!result || !Array.isArray(result.results)) {
+      throw new Error("Invalid characters response");
+    }
 
-  charactersData = result.results;
+    setCharacters(result.results);
 
-  // Проверяем, существует ли следующая страница
-  setNextPage(result.info.next ? 2 : null);
+    if (result.info?.next) {
+      const url = new URL(result.info.next);
+      setNextPage(Number(url.searchParams.get("page")));
+    } else {
+      setNextPage(null);
+    }
 
-  charactersList.innerHTML = makeCharactersList(charactersData);
+    charactersList.innerHTML = makeCharactersList(charactersData);
 
-  if (moreBtn) {
-    moreBtn.hidden = nextPage === null;
+    if (moreBtn) {
+      moreBtn.hidden = nextPage === null;
+    }
+
+  } catch (error) {
+    console.error("Error rendering characters:", error);
   }
 };

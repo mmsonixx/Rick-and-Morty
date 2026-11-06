@@ -10,30 +10,32 @@ import { renderExplore } from "./episodes/renderExplore.js";
 import { startEpisodeModalEvents } from "../operation/episodesPage/episodeModal.js";
 import { startHeroSearchEvents } from "../operation/homePage/searchHero.js";
 
-const startEvents = async () => {
+const startEvents = () => {
   const moreBtn = document.querySelector(".moreCharacters");
 
-  if (moreBtn) {
-    moreBtn.addEventListener("click", loadMoreCharacters);
-  }
+  moreBtn?.addEventListener("click", loadMoreCharacters);
 
   const moreBtnEpisodes = document.querySelector(".moreEpisodes");
 
-  if (moreBtnEpisodes) {
-    moreBtnEpisodes.addEventListener("click", loadMoreEpisodes);
-  }
+  moreBtnEpisodes?.addEventListener("click", loadMoreEpisodes);
+
   startMainCharactersEvents();
   startHeroSearchEvents();
   startCharactersFilteringEvents();
   startEpisodesFilteringEvents();
-    startCharacterModalEvents();
-    startEpisodeModalEvents();
- 
+
+  startCharacterModalEvents();
+  startEpisodeModalEvents();
 };
+
 export const renderPage = async () => {
-  await renderCharacters();
-  await renderEpisodes();
-await  renderExplore();
-  await startEvents();
+  startEvents();
+
+  await Promise.all([
+    renderCharacters(),
+    renderEpisodes(),
+    renderExplore(),
+  ]);
 };
+
 

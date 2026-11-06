@@ -34,24 +34,26 @@ export const startCharactersFilteringEvents = () => {
     gender: "",
   };
 
-  updateCharacters = () => {
-    let filteredCharacters = filterCharacters(filters, charactersData);
+  
+updateCharacters = () => {
+  let filteredCharacters = filterCharacters(filters, charactersData);
 
-    filteredCharacters = searchCharacters(
-      searchInput.value,
-      filteredCharacters,
-    );
+  filteredCharacters = searchCharacters(
+    searchInput.value,
+    filteredCharacters
+  );
 
-    charactersList.innerHTML = makeCharactersList(filteredCharacters);
+  charactersList.innerHTML = makeCharactersList(filteredCharacters);
 
-    const isEmpty = filteredCharacters.length === 0;
+  const isEmpty = filteredCharacters.length === 0;
 
-    renderEmptyState(emptyState, isEmpty);
+  renderEmptyState(emptyState, isEmpty);
 
-    if (moreBtn) {
-      moreBtn.hidden = isEmpty || nextPage === null;
-    }
-  };
+  if (moreBtn) {
+    moreBtn.hidden = isEmpty || !nextPage;
+  }
+};
+
 
   // Поиск
   searchInput.addEventListener("input", updateCharacters);

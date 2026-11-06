@@ -13,29 +13,44 @@ let isLoading = false;
 export const loadMoreCharacters = async () => {
   const moreBtn = document.querySelector(".moreCharacters");
 
-  if (!nextPage || isLoading) return;
+  if (isLoading || nextPage === null) return;
 
   isLoading = true;
 
+  const pageToLoad = nextPage;
+
   if (moreBtn) {
     moreBtn.disabled = true;
+    moreBtn.textContent = "Loading...";
   }
 
   try {
-    const currentPage = nextPage;
-    const result = await getCharactersApi(currentPage);
+    const result = await getCharactersApi(pageToLoad);
 
-    if (!result || !Array.isArray(result.results)) return;
+    if (!result || !Array.isArray(result.results)) {
+      throw new Error("Invalid characters response");
+    }
+
+    console.log("Characters received:", result.results.length);
+    console.log("Page loaded:", pageToLoad);
 
     addCharacters(result.results);
 
-    setNextPage(result.info.next ? currentPage + 1 : null);
+    if (result.info?.next) {
+      const url = new URL(result.info.next);
+      setNextPage(Number(url.searchParams.get("page")));
+    } else {
+      setNextPage(null);
+    }
 
-    updateCharacters();
+    if (typeof updateCharacters === "function") {
+      updateCharacters();
+    }
 
     if (moreBtn) {
       moreBtn.hidden = nextPage === null;
     }
+
   } catch (error) {
     console.error("Error loading characters:", error);
   } finally {
@@ -43,6 +58,7 @@ export const loadMoreCharacters = async () => {
 
     if (moreBtn) {
       moreBtn.disabled = false;
+      moreBtn.textContent = "Load more";
     }
   }
 };

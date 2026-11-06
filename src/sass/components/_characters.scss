@@ -34,13 +34,18 @@
 .characters__title {
   @include text($color: #111, $size: 16px, $height: 113%, $weight: 600);
 }
+.characters__title button {
+ background-color: transparent;
+}
 .characters__info {
   @include text($color: #111, $size: 14px, $height: 129%, $weight: 400);
 }
 .characters__info span {
   color: rgba(17, 17, 17, 0.5);
 }
-
+.moreCharacters[hidden] {
+  display: none !important;
+}
 .moreCharacters {
   @include text($color: var(--black), $size: 14px, $height: 129%, $weight: 600);
   border-radius: 1000px;
