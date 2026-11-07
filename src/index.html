@@ -9,12 +9,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap"
+  rel="stylesheet"
+/>
     <title>Rick-and-Morty</title>
   </head>
   <body class="home-page">
@@ -48,142 +49,149 @@
         </div>
       </div>
     </header>
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero__container" data-hero>
+            <div class="hero__default" data-hero-default>
+              <p class="hero__text">
+                If you're a fan of Rick and Morty, you don't want to miss out on
+                our app! Start exploring the endless possibilities of Rick and
+                Morty!
+              </p>
 
-    <section class="hero">
-      <div class="container">
-        <div class="hero__container" data-hero>
-          <div class="hero__default" data-hero-default>
-            <p class="hero__text">
-              If you're a fan of Rick and Morty, you don't want to miss out on
-              our app! Start exploring the endless possibilities of Rick and
-              Morty!
-            </p>
-
-            <div class="hero__wrapper">
-              <img src="./img/rick-and-morty.webp" alt="" class="hero__img" />
-              <img src="./img/logo.webp" alt="" class="hero__logo" />
+              <div class="hero__wrapper">
+                <img
+                  src="./img/rick-and-morty.webp"
+                  alt=""
+                  class="hero__img"
+                  fetchpriority="high"
+                  loading="eager"
+                />
+                <img src="./img/logo.webp" alt="" class="hero__logo" />
+              </div>
             </div>
+
+            <div class="hero__result" data-hero-result></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="topics">
+        <div class="topics__tags">
+          <span class="topics__tag topics__tag--1">Sitcom</span>
+          <span class="topics__tag topics__tag--2">Animated</span>
+          <span class="topics__tag topics__tag--3">the adventures</span>
+          <span class="topics__tag topics__tag--4">Superpower</span>
+          <span class="topics__tag topics__tag--5">Justin Roiland</span>
+          <span class="topics__tag topics__tag--6">creative</span>
+          <span class="topics__tag topics__tag--7">Amazing!</span>
+          <span class="topics__tag topics__tag--8">Rick and Morty</span>
+          <span class="topics__tag topics__tag--9">Comics</span>
+          <span class="topics__tag topics__tag--10">follows</span>
+          <span class="topics__tag topics__tag--11">characters</span>
+          <span class="topics__tag topics__tag--12">Whoa</span>
+        </div>
+      </section>
+
+      <section class="main-characters">
+        <div class="container">
+          <h2 class="title__main-characters"><span>Main</span> characters</h2>
+
+          <div class="main-characters__container">
+            <picture>
+              <source
+                class="main-characters__desktop"
+                srcset="
+                  ./img/desktop/main-characters/rick-sanchez@desktop-1x.webp 1x,
+                  ./img/desktop/main-characters/rick-sanchez@desktop-2x.webp 2x
+                "
+                media="(min-width: 1280px)"
+              />
+              <source
+                class="main-characters__tablet"
+                srcset="
+                  ./img/tablet/main-characters/rick-sanchez@tablet-1x.webp 1x,
+                  ./img/tablet/main-characters/rick-sanchez@tablet-2x.webp 2x
+                "
+                media="(min-width: 768px)"
+              />
+              <source
+                class="main-characters__mobile"
+                srcset="
+                  ./img/mobile/main-characters/rick-sanchez@mobile-1x.webp 1x,
+                  ./img/mobile/main-characters/rick-sanchez@mobile-2x.webp 2x
+                "
+                media="(max-width: 767px)"
+              />
+              <img
+                class="main-characters__img"
+                src="./img/desktop/main-characters/rick-sanchez@desktop-1x.webp"
+                alt="Rick Sanchez"
+                id="mainCharacterImage"
+              />
+            </picture>
+
+            <ul class="main-characters__list">
+              <li class="main-characters__item">
+                <h3 class="main-characters__subtitle active">Rick Sanchez</h3>
+                <p class="main-characters__text">
+                  Rick Sanchez is a brilliant but deeply troubled scientist and
+                  one of the main characters in the animated TV show Rick and
+                  Morty.
+                </p>
+              </li>
+
+              <li class="main-characters__item">
+                <h3 class="main-characters__subtitle">Morty Smith</h3>
+                <p class="main-characters__text">
+                  Morty Smith is the other main character in the animated TV
+                  show Rick and Morty, and Rick's grandson.
+                </p>
+              </li>
+
+              <li class="main-characters__item">
+                <h3 class="main-characters__subtitle">Summer Smith</h3>
+                <p class="main-characters__text">
+                  Summer Smith is Morty's older sister and one of the main
+                  characters in Rick and Morty.
+                </p>
+              </li>
+
+              <li class="main-characters__item">
+                <h3 class="main-characters__subtitle">Beth Smith</h3>
+                <p class="main-characters__text">
+                  Beth is a horse surgeon and Rick's daughter.
+                </p>
+              </li>
+
+              <li class="main-characters__item">
+                <h3 class="main-characters__subtitle">Jerry Smith</h3>
+                <p class="main-characters__text">
+                  Jerry is Beth Smith's husband and the father of Summer and
+                  Morty.
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="explore">
+        <div class="explore__inner">
+          <h2 class="explore__title">
+            Ready to <span>explore</span> the crazy
+            <br />
+            world of Rick and Morty?
+          </h2>
+
+          <div class="explore__slider">
+            <div class="explore__track" id="exploreTrack"></div>
           </div>
 
-          <div class="hero__result" data-hero-result></div>
+          <a href="./episodes.html" class="explore__button"> Episodes </a>
         </div>
-      </div>
-    </section>
-
-    <section class="topics">
-      <div class="topics__tags">
-        <span class="topics__tag topics__tag--1">Sitcom</span>
-        <span class="topics__tag topics__tag--2">Animated</span>
-        <span class="topics__tag topics__tag--3">the adventures</span>
-        <span class="topics__tag topics__tag--4">Superpower</span>
-        <span class="topics__tag topics__tag--5">Justin Roiland</span>
-        <span class="topics__tag topics__tag--6">creative</span>
-        <span class="topics__tag topics__tag--7">Amazing!</span>
-        <span class="topics__tag topics__tag--8">Rick and Morty</span>
-        <span class="topics__tag topics__tag--9">Comics</span>
-        <span class="topics__tag topics__tag--10">follows</span>
-        <span class="topics__tag topics__tag--11">characters</span>
-        <span class="topics__tag topics__tag--12">Whoa</span>
-      </div>
-    </section>
-
-    <section class="main-characters">
-      <div class="container">
-        <h2 class="title__main-characters"><span>Main</span> characters</h2>
-
-        <div class="main-characters__container">
-          <picture>
-            <source
-              class="main-characters__desktop"
-              srcset="
-                ./img/desktop/main-characters/rick-sanchez@desktop-1x.webp 1x,
-                ./img/desktop/main-characters/rick-sanchez@desktop-2x.webp 2x
-              "
-              media="(min-width: 1280px)"
-            />
-            <source
-              class="main-characters__tablet"
-              srcset="
-                ./img/tablet/main-characters/rick-sanchez@tablet-1x.webp 1x,
-                ./img/tablet/main-characters/rick-sanchez@tablet-2x.webp 2x
-              "
-              media="(min-width: 768px)"
-            />
-            <source
-              class="main-characters__mobile"
-              srcset="
-                ./img/mobile/main-characters/rick-sanchez@mobile-1x.webp 1x,
-                ./img/mobile/main-characters/rick-sanchez@mobile-2x.webp 2x
-              "
-              media="(max-width: 767px)"
-            />
-            <img
-              class="main-characters__img"
-              src="./img/desktop/main-characters/rick-sanchez@desktop-1x.webp"
-              alt="Rick Sanchez"
-              id="mainCharacterImage"
-            />
-          </picture>
-
-          <ul class="main-characters__list">
-            <li class="main-characters__item">
-              <h3 class="main-characters__subtitle active">Rick Sanchez</h3>
-              <p class="main-characters__text">
-                Rick Sanchez is a brilliant but deeply troubled scientist and
-                one of the main characters in the animated TV show Rick and
-                Morty.
-              </p>
-            </li>
-
-            <li class="main-characters__item">
-              <h3 class="main-characters__subtitle">Morty Smith</h3>
-              <p class="main-characters__text">
-                Morty Smith is the other main character in the animated TV show
-                Rick and Morty, and Rick's grandson.
-              </p>
-            </li>
-
-            <li class="main-characters__item">
-              <h3 class="main-characters__subtitle">Summer Smith</h3>
-              <p class="main-characters__text">
-                Summer Smith is Morty's older sister and one of the main
-                characters in Rick and Morty.
-              </p>
-            </li>
-
-            <li class="main-characters__item">
-              <h3 class="main-characters__subtitle">Beth Smith</h3>
-              <p class="main-characters__text">
-                Beth is a horse surgeon and Rick's daughter.
-              </p>
-            </li>
-
-            <li class="main-characters__item">
-              <h3 class="main-characters__subtitle">Jerry Smith</h3>
-              <p class="main-characters__text">
-                Jerry is Beth Smith's husband and the father of Summer and
-                Morty.
-              </p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <section class="explore">
-      <div class="explore__inner">
-        <h2 class="explore__title">
-          Ready to <span>explore</span> the crazy
-          <br />
-          world of Rick and Morty?
-        </h2>
-
-        <div class="explore__slider">
-          <div class="explore__track" id="exploreTrack"></div>
-        </div>
-
-        <a href="./episodes.html" class="explore__button"> Episodes </a>
-      </div>
-    </section>
+      </section>
+    </main>
     <footer class="footer">
       <div class="container">
         <div class="footer__container">
@@ -213,6 +221,8 @@
               <a
                 href="https://www.facebook.com/RickandMorty/tv/"
                 class="footer__link"
+                target="_blank"
+                aria-label="Read more about Rick and Morty characters"
               >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-facebook"></use>
@@ -220,7 +230,12 @@
               </a>
             </li>
             <li class="footer__item">
-              <a href="https://x.com/RickandMorty" class="footer__link">
+              <a
+                href="https://x.com/RickandMorty"
+                class="footer__link"
+                target="_blank"
+                aria-label="Read more about Rick and Morty characters"
+              >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-twitter"></use>
                 </svg>
@@ -230,6 +245,8 @@
               <a
                 href="https://www.instagram.com/rickandmorty?exln=bnh6azhuZGlzbzV4"
                 class="footer__link"
+                target="_blank"
+                aria-label="Read more about Rick and Morty characters"
               >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-instagram"></use>
@@ -241,9 +258,9 @@
         <p class="footer__info">Privacy Policy Public Offering Agreement</p>
       </div>
     </footer>
-<button class="scroll-btn" id="scrollBtn">
-  <i class="fa-solid fa-arrow-down"></i>
-</button>
+    <button class="scroll-btn" id="scrollBtn" aria-label="Scroll down">
+      <i class="fa-solid fa-arrow-down"></i>
+    </button>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

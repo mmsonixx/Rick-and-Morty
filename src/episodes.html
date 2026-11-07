@@ -10,12 +10,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap"
+  rel="stylesheet"
+/>
 
     <title>Episodes</title>
   </head>
@@ -45,145 +46,164 @@
         </div>
       </div>
     </header>
+    <main>
+      <section class="hero">
+        <div class="container">
+          <div class="hero__container" data-hero>
+            <!-- Default Hero -->
+            <div class="hero__default" data-hero-default>
+              <div class="hero__content">
+                <h2 class="hero__title">Episodes</h2>
 
-   <section class="hero">
-  <div class="container">
-    <div class="hero__container" data-hero>
+                <p class="hero__info">
+                  With a comprehensive guide to every episode, you can relive
+                  your favorite moments and discover new ones. From the bizarre
+                  and hilarious to the emotional and thought-provoking, our
+                  episode guide covers it all.
+                </p>
 
-      <!-- Default Hero -->
-      <div class="hero__default" data-hero-default>
+                <a href="./index.html">
+                  <button class="hero__button">Back home</button>
+                </a>
+              </div>
 
-        <div class="hero__content">
-          <h2 class="hero__title">Episodes</h2>
+              <div class="hero__characters-wrapper">
+                <picture>
+                  <source
+                    srcset="
+                      ./img/desktop/episodes/group@desktop-1x.webp 1x,
+                      ./img/desktop/episodes/group@desktop-2x.webp 2x
+                    "
+                    media="(min-width: 1280px)"
+                  />
+                  <source
+                    srcset="
+                      ./img/tablet/episodes/group@tablet-1x.webp 1x,
+                      ./img/tablet/episodes/group@tablet-2x.webp 2x
+                    "
+                    media="(min-width: 768px)"
+                  />
+                  <source
+                    srcset="
+                      ./img/mobile/episodes/group@mobile-1x.webp 1x,
+                      ./img/mobile/episodes/group@mobile-2x.webp 2x
+                    "
+                    media="(max-width: 767px)"
+                  />
+                  <img
+                    class="hero__img"
+                    src="./img/desktop/episodes/group@desktop-1x.webp"
+                    alt="Group"
+                  />
+                </picture>
+              </div>
+            </div>
 
-          <p class="hero__info">
-            With a comprehensive guide to every episode, you can relive your
-            favorite moments and discover new ones. From the bizarre and
-            hilarious to the emotional and thought-provoking, our episode
-            guide covers it all.
-          </p>
-
-          <a href="./index.html">
-            <button class="hero__button">Back home</button>
-          </a>
-        </div>
-
-        <div class="hero__characters-wrapper">
-          <picture>
-            <source
-              srcset="
-                ./img/desktop/episodes/group@desktop-1x.webp 1x,
-                ./img/desktop/episodes/group@desktop-2x.webp 2x
-              "
-              media="(min-width: 1280px)"
-            />
-            <source
-              srcset="
-                ./img/tablet/episodes/group@tablet-1x.webp 1x,
-                ./img/tablet/episodes/group@tablet-2x.webp 2x
-              "
-              media="(min-width: 768px)"
-            />
-            <source
-              srcset="
-                ./img/mobile/episodes/group@mobile-1x.webp 1x,
-                ./img/mobile/episodes/group@mobile-2x.webp 2x
-              "
-              media="(max-width: 767px)"
-            />
-            <img
-              class="hero__img"
-              src="./img/desktop/episodes/group@desktop-1x.webp"
-              alt="Group"
-            />
-          </picture>
-        </div>
-
-      </div>
-
-      <!-- Search Result -->
-      <div class="hero__result" data-hero-result></div>
-
-    </div>
-  </div>
-</section>>
-    <section class="topics">
-      <div class="topics__tags">
-        <span class="topics__tag topics__tag--1">Sitcom</span>
-        <span class="topics__tag topics__tag--2">Animated</span>
-        <span class="topics__tag topics__tag--3">the adventures</span>
-        <span class="topics__tag topics__tag--4">Superpower</span>
-        <span class="topics__tag topics__tag--5">Justin Roiland</span>
-        <span class="topics__tag topics__tag--6">creative</span>
-        <span class="topics__tag topics__tag--7">Amazing!</span>
-        <span class="topics__tag topics__tag--8">Rick and Morty</span>
-        <span class="topics__tag topics__tag--9">Comics</span>
-        <span class="topics__tag topics__tag--10">follows</span>
-        <span class="topics__tag topics__tag--11">characters</span>
-        <span class="topics__tag topics__tag--12">Whoa</span>
-      </div>
-    </section>
-<section class="episodes__filtering">
-  <div class="container">
-    <div class="filter">
-      <!-- Name -->
-      <div class="filter-item">
-        <label for="search-episodes">Name</label>
-
-        <div class="filter-search">
-          <input
-            id="search-episodes"
-            type="search"
-            placeholder="Enter name"
-            data-search
-          />
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
-      </div>
-
-      <!-- Season -->
-      <div class="filter-item" data-season>
-        <label>Episode code</label>
-
-        <div class="select">
-          <button class="selected" type="button">
-            <span class="selected-text">All seasons</span>
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-
-          <div class="options">
-            <button class="option" data-season="" type="button">All seasons</button>
-            <button class="option" data-season="1" type="button">Season 1</button>
-            <button class="option" data-season="2" type="button">Season 2</button>
-            <button class="option" data-season="3" type="button">Season 3</button>
-            <button class="option" data-season="4" type="button">Season 4</button>
-            <button class="option" data-season="5" type="button">Season 5</button>
-            <button class="option" data-season="6" type="button">Season 6</button>
+            <!-- Search Result -->
+            <div class="hero__result" data-hero-result></div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
+      >
+      <section class="topics">
+        <div class="topics__tags">
+          <span class="topics__tag topics__tag--1">Sitcom</span>
+          <span class="topics__tag topics__tag--2">Animated</span>
+          <span class="topics__tag topics__tag--3">the adventures</span>
+          <span class="topics__tag topics__tag--4">Superpower</span>
+          <span class="topics__tag topics__tag--5">Justin Roiland</span>
+          <span class="topics__tag topics__tag--6">creative</span>
+          <span class="topics__tag topics__tag--7">Amazing!</span>
+          <span class="topics__tag topics__tag--8">Rick and Morty</span>
+          <span class="topics__tag topics__tag--9">Comics</span>
+          <span class="topics__tag topics__tag--10">follows</span>
+          <span class="topics__tag topics__tag--11">characters</span>
+          <span class="topics__tag topics__tag--12">Whoa</span>
+        </div>
+      </section>
+      <section class="episodes__filtering">
+        <div class="container">
+          <div class="filter">
+            <!-- Name -->
+            <div class="filter-item">
+              <label for="search-episodes">Name</label>
 
-<section class="episodes">
-  <div class="container">
-    <div class="episodes__container">
-        <ul class="episodes__list"></ul>
-        <div class="episodes__empty-state"></div>
-        <button type="submit" class="moreEpisodes">Load more</button>
-    </div>
-  </div>
-</section>
-<div class="episode-modal-container"></div>
+              <div class="filter-search">
+                <input
+                  id="search-episodes"
+                  type="search"
+                  placeholder="Enter name"
+                  data-search
+                />
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+            </div>
 
+            <!-- Season -->
+            <div class="filter-item" data-season>
+              <label>Episode code</label>
+
+              <div class="select">
+                <button class="selected" type="button">
+                  <span class="selected-text">All seasons</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+
+                <div class="options">
+                  <button class="option" data-season="" type="button">
+                    All seasons
+                  </button>
+                  <button class="option" data-season="1" type="button">
+                    Season 1
+                  </button>
+                  <button class="option" data-season="2" type="button">
+                    Season 2
+                  </button>
+                  <button class="option" data-season="3" type="button">
+                    Season 3
+                  </button>
+                  <button class="option" data-season="4" type="button">
+                    Season 4
+                  </button>
+                  <button class="option" data-season="5" type="button">
+                    Season 5
+                  </button>
+                  <button class="option" data-season="6" type="button">
+                    Season 6
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="episodes">
+        <div class="container">
+          <div class="episodes__container">
+            <ul class="episodes__list"></ul>
+            <div class="episodes__empty-state"></div>
+            <button type="submit" class="moreEpisodes">Load more</button>
+          </div>
+        </div>
+      </section>
+      <div class="episode-modal-container"></div>
+    </main>
     <footer class="footer">
       <div class="container">
         <div class="footer__container">
-        <div class="footer__logos">
-  <img src="./img/footer-logo.webp" alt="Rick and Morty" class="footer__logo" />
-  <img src="./img/footer-logo-button.webp" alt="" class="footer__logo-button" />
-</div>
+          <div class="footer__logos">
+            <img
+              src="./img/footer-logo.webp"
+              alt="Rick and Morty"
+              class="footer__logo"
+            />
+            <img
+              src="./img/footer-logo-button.webp"
+              alt=""
+              class="footer__logo-button"
+            />
+          </div>
           <div class="footer__btns">
             <a href="./characters.html" class="footer__btn__link">
               <button>Characters</button></a
@@ -195,21 +215,36 @@
 
           <ul class="footer__list">
             <li class="footer__item">
-              <a href="https://www.facebook.com/RickandMorty/tv/" class="footer__link">
+              <a
+                href="https://www.facebook.com/RickandMorty/tv/"
+                class="footer__link"
+                aria-label="Read more about Rick and Morty characters"
+                target="_blank"
+              >
                 <svg class="footer__svg">
                   <use href="./img/icons/symbol-defs.svg#icon-facebook"></use>
                 </svg>
               </a>
             </li>
             <li class="footer__item">
-              <a href="https://x.com/RickandMorty" class="footer__link">
+              <a
+                href="https://x.com/RickandMorty"
+                class="footer__link"
+                aria-label="Read more about Rick and Morty characters"
+                target="_blank"
+              >
                 <svg class="footer__svg">
                   <use href="./img/icons/symbol-defs.svg#icon-twitter"></use>
                 </svg>
               </a>
             </li>
             <li class="footer__item">
-              <a href="https://www.instagram.com/rickandmorty?exln=bnh6azhuZGlzbzV4" class="footer__link">
+              <a
+                href="https://www.instagram.com/rickandmorty?exln=bnh6azhuZGlzbzV4"
+                class="footer__link"
+                aria-label="Read more about Rick and Morty characters"
+                target="_blank"
+              >
                 <svg class="footer__svg">
                   <use href="./img/icons/symbol-defs.svg#icon-instagram"></use>
                 </svg>
@@ -220,9 +255,9 @@
         <p class="footer__info">Privacy Policy Public Offering Agreement</p>
       </div>
     </footer>
-    <button class="scroll-btn" id="scrollBtn">
-  <i class="fa-solid fa-arrow-down"></i>
-</button>
-   <script type="module" src="./index.js"></script>
+    <button class="scroll-btn" id="scrollBtn" aria-label="Scroll down">
+      <i class="fa-solid fa-arrow-down"></i>
+    </button>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
