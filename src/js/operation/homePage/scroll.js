@@ -3,14 +3,22 @@ export const startScrollEvents = () => {
 
   if (!scrollBtn) return;
 
+  const icon = scrollBtn.querySelector("use");
+
   const updateScrollButton = () => {
     const isBottom =
       window.innerHeight + window.scrollY >=
       document.documentElement.scrollHeight - 10;
 
-    scrollBtn.innerHTML = isBottom
-      ? `<i class="fa-solid fa-arrow-up"></i>`
-      : `<i class="fa-solid fa-arrow-down"></i>`;
+    icon.setAttribute(
+      "href",
+      `./img/icons/symbol-defs.svg#${isBottom ? "icon-arrow-up" : "icon-arrow-down"}`
+    );
+
+    scrollBtn.setAttribute(
+      "aria-label",
+      isBottom ? "Scroll to top" : "Scroll down"
+    );
   };
 
   scrollBtn.addEventListener("click", () => {
@@ -25,6 +33,5 @@ export const startScrollEvents = () => {
   });
 
   window.addEventListener("scroll", updateScrollButton);
-
   updateScrollButton();
 };

@@ -14,12 +14,20 @@
   border: none;
   border-radius: 50%;
   background-color: var(--green);
-  color: var(--black);
+fill: black;
+ fill: #000;
 
-  font-size: 20px;
   cursor: pointer;
-
   transition: 0.3s;
+
+  .scroll-btn__svg{
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: #000;
+  flex-shrink: 0;
+}
+
 
   &:hover {
     transform: translateY(-5px);
@@ -33,5 +41,11 @@
     height: 40px;
     right: 15px;
     bottom: 15px;
+
+    &__svg {
+      width: 19px;
+      height: 19px;
+    }
   }
 }
+

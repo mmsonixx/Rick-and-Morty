@@ -4,18 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./sass/main.scss" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
     />
 
-   <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap"
-  rel="stylesheet"
-/>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap"
+      />
+    </noscript>
     <title>Rick-and-Morty</title>
   </head>
   <body class="home-page">
@@ -35,7 +43,9 @@
             <form class="search-form">
               <label>
                 <div class="search_icon">
-                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <svg class="search__svg" aria-hidden="true">
+                    <use href="./img/icons/symbol-defs.svg#icon-search"></use>
+                  </svg>
                 </div>
                 <input
                   id="search-movie"
@@ -222,7 +232,7 @@
                 href="https://www.facebook.com/RickandMorty/tv/"
                 class="footer__link"
                 target="_blank"
-                aria-label="Read more about Rick and Morty characters"
+                aria-label="Rick and Morty on Facebook"
               >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-facebook"></use>
@@ -234,7 +244,7 @@
                 href="https://x.com/RickandMorty"
                 class="footer__link"
                 target="_blank"
-                aria-label="Read more about Rick and Morty characters"
+                aria-label="Rick and Morty on X"
               >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-twitter"></use>
@@ -246,7 +256,7 @@
                 href="https://www.instagram.com/rickandmorty?exln=bnh6azhuZGlzbzV4"
                 class="footer__link"
                 target="_blank"
-                aria-label="Read more about Rick and Morty characters"
+                aria-label="Rick and Morty on Instagram"
               >
                 <svg class="footer__svg">
                   <use href="img/icons/symbol-defs.svg#icon-instagram"></use>
@@ -259,7 +269,9 @@
       </div>
     </footer>
     <button class="scroll-btn" id="scrollBtn" aria-label="Scroll down">
-      <i class="fa-solid fa-arrow-down"></i>
+      <svg class="scroll-btn__svg" aria-hidden="true" fill="black">
+        <use href="./img/icons/symbol-defs.svg#icon-arrow-down"></use>
+      </svg>
     </button>
     <script type="module" src="./index.js"></script>
   </body>

@@ -1,19 +1,32 @@
 @use "../utils/mixin" as *;
 
 .episodes__filtering {
+  width: 100%;
+  max-width: 100%;
   padding: 40px 0 55px;
   background-color: #fff;
+  box-sizing: border-box;
+  overflow: visible;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   .filter {
-     display: grid;
-  grid-template-columns: 233px 190px;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
+    display: grid;
+    grid-template-columns: minmax(0, 233px) minmax(0, 190px);
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
   }
 
   .filter-item {
     position: relative;
+    width: 100%;
     min-width: 0;
 
     label {
@@ -29,35 +42,44 @@
 
   .filter-search {
     position: relative;
+    width: 100%;
+    min-width: 0;
 
     input {
       @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
+
+      display: block;
       width: 100%;
+      min-width: 0;
+      max-width: 100%;
       height: 44px;
       padding: 0 42px 0 20px;
       border: 1.5px solid #111;
       border-radius: 30px;
       outline: none;
 
-
       &::placeholder {
         color: #333;
       }
 
-     &:focus {
-  background-color: #d5ff35;
-  border-color: #a5cc00;
-}
+      &:focus {
+        background-color: #d5ff35;
+        border-color: #a5cc00;
+      }
     }
 
-    i {
+    &__svg {
       position: absolute;
-      right: 17px;
       top: 50%;
+      right: 17px;
       transform: translateY(-50%);
-      font-size: 15px;
-      color: #111;
+
+      display: block;
+      width: 16px;
+      height: 16px;
+      fill: #111;
       pointer-events: none;
+      flex-shrink: 0;
     }
   }
 
@@ -66,6 +88,7 @@
   .select {
     position: relative;
     width: 100%;
+    min-width: 0;
 
     .selected {
       @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
@@ -81,11 +104,13 @@
       background-color: #fff;
       font-size: 14px;
       cursor: pointer;
-&:focus {
-  background-color: #d5ff35;
-  border-color: #a5cc00;
-  outline: none;
-}
+
+      &:focus {
+        background-color: #d5ff35;
+        border-color: #a5cc00;
+        outline: none;
+      }
+
       i {
         font-size: 12px;
         transition: transform 0.3s ease;
@@ -93,20 +118,20 @@
     }
 
     &.active {
-  .selected {
-    background-color: #d5ff35;
-    border-color: #a5cc00;
-    border-radius: 22px 22px 0 0;
+      .selected {
+        background-color: #d5ff35;
+        border-color: #a5cc00;
+        border-radius: 22px 22px 0 0;
+      }
 
-    i {
-      transform: rotate(180deg);
+      .selected i {
+        transform: rotate(180deg);
+      }
+
+      .options {
+        display: flex;
+      }
     }
-  }
-
-  .options {
-    display: flex;
-  }
-}
 
     // Dropdown
 
@@ -155,8 +180,8 @@
   }
 }
 
-
 // Tablet
+
 @media (max-width: 1200px) {
   .episodes__filtering {
     padding: 35px 20px 45px;
@@ -170,6 +195,7 @@
 }
 
 // Mobile
+
 @media (max-width: 768px) {
   .episodes__filtering {
     padding: 30px 16px 40px;
@@ -202,11 +228,12 @@
       height: 42px;
       padding: 0 38px 0 15px;
       font-size: 14px;
-      box-sizing: border-box;
     }
 
-    .filter-search i {
+    .filter-search__svg {
       right: 15px;
+      width: 15px;
+      height: 15px;
     }
 
     .select {
@@ -218,7 +245,6 @@
         height: 42px;
         padding: 0 14px;
         font-size: 13px;
-        box-sizing: border-box;
       }
 
       .options {
@@ -235,6 +261,7 @@
 }
 
 // Small mobile
+
 @media (max-width: 380px) {
   .episodes__filtering {
     padding: 25px 12px 30px;

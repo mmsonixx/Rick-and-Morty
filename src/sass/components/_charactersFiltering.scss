@@ -1,17 +1,31 @@
 @use "../utils/mixin" as *;
+
 .characters__filtering {
+  width: 100%;
+  max-width: 100%;
   padding: 40px 0 55px;
   background-color: #fff;
+  box-sizing: border-box;
+  overflow: visible;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   .filter {
     display: grid;
     grid-template-columns: 1.2fr 0.85fr 1.05fr 0.9fr 0.9fr;
     gap: 14px;
     align-items: start;
+    width: 100%;
+    min-width: 0;
   }
 
   .filter-item {
     position: relative;
+    width: 100%;
     min-width: 0;
 
     label {
@@ -27,35 +41,44 @@
 
   .filter-search {
     position: relative;
+    width: 100%;
+    min-width: 0;
 
     input {
       @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
+
+      display: block;
       width: 100%;
+      min-width: 0;
+      max-width: 100%;
       height: 44px;
       padding: 0 42px 0 20px;
       border: 1.5px solid #111;
       border-radius: 30px;
       outline: none;
-     
 
       &::placeholder {
         color: #333;
       }
 
-    &:focus {
-  background-color: #d5ff35;
-  border-color: #a5cc00;
-}
+      &:focus {
+        background-color: #d5ff35;
+        border-color: #a5cc00;
+      }
     }
 
-    i {
+    &__svg {
       position: absolute;
-      right: 17px;
       top: 50%;
+      right: 17px;
       transform: translateY(-50%);
-      font-size: 15px;
-      color: #111;
+
+      display: block;
+      width: 16px;
+      height: 16px;
+      fill: #111;
       pointer-events: none;
+      flex-shrink: 0;
     }
   }
 
@@ -64,6 +87,7 @@
   .select {
     position: relative;
     width: 100%;
+    min-width: 0;
 
     .selected {
       @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
@@ -79,35 +103,33 @@
       background-color: #fff;
       font-size: 14px;
       cursor: pointer;
- &:focus {
-  background-color: #d5ff35;
-  border-color: #a5cc00;
-  outline: none;
-}
+
+      &:focus {
+        background-color: #d5ff35;
+        border-color: #a5cc00;
+        outline: none;
+      }
+
       i {
         font-size: 12px;
+        transition: transform 0.3s ease;
       }
     }
 
-    .selected i {
-      transition: transform 0.3s ease;
-    }
-
     &.active {
-  .selected {
-    background-color: #d5ff35;
-    border-color: #a5cc00;
-    border-radius: 22px 22px 0 0;
-  }
+      .selected {
+        background-color: #d5ff35;
+        border-color: #a5cc00;
+        border-radius: 22px 22px 0 0;
+      }
 
-  .selected i {
-    transform: rotate(180deg);
-  }
+      .selected i {
+        transform: rotate(180deg);
+      }
 
-  .options {
-    display: flex;
-  }
-}
+      .options {
+        display: flex;
+      }
     }
 
     // Dropdown
@@ -139,8 +161,9 @@
       }
 
       .option {
-              @include text($color: #111, $size: 14px, $height: 129%, $weight: 400);
-              width: 100%;
+        @include text($color: #111, $size: 14px, $height: 129%, $weight: 400);
+
+        width: 100%;
         padding: 6px 15px;
         border: none;
         background: transparent;
@@ -153,60 +176,10 @@
         }
       }
     }
-
-    // Open dropdown
-
-    &.active {
-      .selected {
-        border-radius: 22px 22px 0 0;
-      }
-
-      .options {
-        display: flex;
-      }
-    }
-  }
-
-  // Адаптив
-
-
-
-
-.characters__filtering {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow: visible;
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  .filter {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .filter-item {
-    min-width: 0;
-    width: 100%;
-  }
-
-  .filter-search,
-  .select {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .filter-search input,
-  .select .selected {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
   }
 }
+
+// Tablet and mobile
 
 @media (max-width: 768px) {
   .characters__filtering {
@@ -231,6 +204,12 @@
       font-size: 14px;
     }
 
+    .filter-search__svg {
+      right: 14px;
+      width: 15px;
+      height: 15px;
+    }
+
     .select .selected {
       height: 42px;
       padding: 0 10px;
@@ -252,7 +231,6 @@
 @media (max-width: 380px) {
   .characters__filtering {
     padding: 20px 0 30px;
-
 
     .filter {
       grid-template-columns: minmax(0, 1fr);
