@@ -1,3 +1,4 @@
+
 @use "../utils/mixin" as *;
 
 .characters__filtering {
@@ -104,17 +105,29 @@
       font-size: 14px;
       cursor: pointer;
 
-      &:focus {
-        background-color: #d5ff35;
-        border-color: #a5cc00;
-        outline: none;
-      }
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        border-radius 0.2s ease;
 
-      i {
-        font-size: 12px;
-        transition: transform 0.3s ease;
+      &:focus-visible {
+        outline: 2px solid #a5cc00;
+        outline-offset: 2px;
       }
     }
+
+    // SVG arrow
+
+    .select__arrow {
+      display: block;
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      color: #111;
+      transition: transform 0.3s ease;
+    }
+
+    // Active select
 
     &.active {
       .selected {
@@ -123,7 +136,7 @@
         border-radius: 22px 22px 0 0;
       }
 
-      .selected i {
+      .select__arrow {
         transform: rotate(180deg);
       }
 
@@ -136,9 +149,9 @@
 
     .options {
       position: absolute;
-      top: calc(100% + 1px);
+      top: 100%;
       left: 0;
-      z-index: 10;
+      z-index: 30;
 
       display: none;
       flex-direction: column;
@@ -148,6 +161,7 @@
       overflow-y: auto;
 
       border: 1px solid #111;
+      border-top: none;
       border-radius: 0 0 17px 17px;
       background-color: #fff;
 
@@ -217,8 +231,9 @@
       gap: 5px;
     }
 
-    .select .selected i {
-      flex-shrink: 0;
+    .select .select__arrow {
+      width: 11px;
+      height: 11px;
     }
 
     .select .options {
