@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npx parcel src/index.html",
-    "build": "parcel build src/index.html  --public-url /Rick-and-Morty/",
-    "deploy": "gh-pages -d dist",
-    "predeploy": "npm run build",
-    "sass-compile": "sass src/sass/main.scss dist/css/style.css",
-    "sass-watch": "sass --watch src/sass/main.scss dist/css/style.css"
-  },
+  "dev": "npx parcel src/index.html",
+  "build": "parcel build src/index.html src/characters.html src/episodes.html",
+  "deploy": "gh-pages -d dist",
+  "predeploy": "npm run build",
+  "sass-compile": "sass src/sass/main.scss dist/css/style.css",
+  "sass-watch": "sass --watch src/sass/main.scss dist/css/style.css"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mmsonixx/Rick-and-Morty.git"
