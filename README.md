@@ -5,7 +5,7 @@ A responsive website dedicated to the animated series **Rick and Morty**. Explor
 
 # Links
 
-Live Demo: https://mmsonixx.github.io/Rick-and-Morty/
+Live Demo: [https://mmsonixx.github.io/Rick-and-Morty/](https://rick-and-morty-ashen-theta.vercel.app)
 Figma Design: https://www.figma.com/design/p3orQfZlsTnEhW63Ql8M2Q/Rick-and-Morty?node-id=0-1
 API: https://rickandmortyapi.com/api
 
