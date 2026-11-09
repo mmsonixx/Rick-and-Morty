@@ -755,7 +755,7 @@ const renderPage = async ()=>{
     ]);
 };
 
-},{"./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX","../operation/homePage/searchHero.js":"8RCSu","../operation/homePage/scroll.js":"RBHrz","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aRxsR":[function(require,module,exports,__globalThis) {
+},{"./characters/renderCharacters.js":"aRxsR","../operation/charactersPage/loadMoreCharacters.js":"lV1uf","../operation/episodesPage/loadMoreEpisodes.js":"aAso4","../operation/homePage/mainCharacters.js":"fx8t1","../operation/charactersPage/charactersFiltering.js":"icb2Z","./episodes/renderEpisodes.js":"deM5h","../operation/episodesPage/episodesFiltering.js":"86OMy","../operation/charactersPage/characterModal.js":"1md57","./episodes/renderExplore.js":"do906","../operation/episodesPage/episodeModal.js":"3rvdX","../operation/homePage/searchHero.js":"8RCSu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","../operation/homePage/scroll.js":"RBHrz"}],"aRxsR":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "charactersData", ()=>charactersData);
@@ -1985,20 +1985,20 @@ parcelHelpers.export(exports, "startScrollEvents", ()=>startScrollEvents);
 const startScrollEvents = ()=>{
     const scrollBtn = document.querySelector("#scrollBtn");
     if (!scrollBtn) return;
-    const icon = scrollBtn.querySelector("use");
     const updateScrollButton = ()=>{
         const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
-        icon.setAttribute("href", `./img/icons/symbol-defs.svg#${isBottom ? "icon-arrow-up" : "icon-arrow-down"}`);
+        scrollBtn.classList.toggle("scroll-up", isBottom);
         scrollBtn.setAttribute("aria-label", isBottom ? "Scroll to top" : "Scroll down");
     };
     scrollBtn.addEventListener("click", ()=>{
-        const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+        const isBottom = scrollBtn.classList.contains("scroll-up");
         window.scrollTo({
             top: isBottom ? 0 : document.documentElement.scrollHeight,
             behavior: "smooth"
         });
     });
     window.addEventListener("scroll", updateScrollButton);
+    window.addEventListener("resize", updateScrollButton);
     updateScrollButton();
 };
 

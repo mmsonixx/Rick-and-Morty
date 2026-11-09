@@ -1423,18 +1423,22 @@ body {
   font-size: 14px;
   font-weight: 400;
   line-height: 113%;
+  transition: background-color .2s, border-color .2s, border-radius .2s;
   display: flex;
 }
 
-.characters__filtering .select .selected:focus {
-  background-color: #d5ff35;
-  border-color: #a5cc00;
-  outline: none;
+.characters__filtering .select .selected:focus-visible {
+  outline-offset: 2px;
+  outline: 2px solid #a5cc00;
 }
 
-.characters__filtering .select .selected i {
-  font-size: 12px;
+.characters__filtering .select .select__arrow {
+  color: #111;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
   transition: transform .3s;
+  display: block;
 }
 
 .characters__filtering .select.active .selected {
@@ -1443,7 +1447,7 @@ body {
   border-radius: 22px 22px 0 0;
 }
 
-.characters__filtering .select.active .selected i {
+.characters__filtering .select.active .select__arrow {
   transform: rotate(180deg);
 }
 
@@ -1452,9 +1456,10 @@ body {
 }
 
 .characters__filtering .select .options {
-  z-index: 10;
+  z-index: 30;
   background-color: #fff;
   border: 1px solid #111;
+  border-top: none;
   border-radius: 0 0 17px 17px;
   flex-direction: column;
   width: 100%;
@@ -1462,7 +1467,7 @@ body {
   padding: 8px 0;
   display: none;
   position: absolute;
-  top: calc(100% + 1px);
+  top: 100%;
   left: 0;
   overflow-y: auto;
 }
@@ -1534,8 +1539,9 @@ body {
     font-size: 12px;
   }
 
-  .characters__filtering .select .selected i {
-    flex-shrink: 0;
+  .characters__filtering .select .select__arrow {
+    width: 11px;
+    height: 11px;
   }
 
   .characters__filtering .select .options {
@@ -1853,18 +1859,22 @@ body {
   font-size: 14px;
   font-weight: 400;
   line-height: 113%;
+  transition: background-color .2s, border-color .2s, border-radius .2s;
   display: flex;
 }
 
-.episodes__filtering .select .selected:focus {
-  background-color: #d5ff35;
-  border-color: #a5cc00;
-  outline: none;
+.episodes__filtering .select .selected:focus-visible {
+  outline-offset: 2px;
+  outline: 2px solid #a5cc00;
 }
 
-.episodes__filtering .select .selected i {
-  font-size: 12px;
+.episodes__filtering .select .select__arrow {
+  color: #111;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
   transition: transform .3s;
+  display: block;
 }
 
 .episodes__filtering .select.active .selected {
@@ -1873,7 +1883,7 @@ body {
   border-radius: 22px 22px 0 0;
 }
 
-.episodes__filtering .select.active .selected i {
+.episodes__filtering .select.active .select__arrow {
   transform: rotate(180deg);
 }
 
@@ -1882,9 +1892,10 @@ body {
 }
 
 .episodes__filtering .select .options {
-  z-index: 10;
+  z-index: 30;
   background-color: #fff;
   border: 1px solid #111;
+  border-top: none;
   border-radius: 0 0 17px 17px;
   flex-direction: column;
   width: 100%;
@@ -1892,7 +1903,7 @@ body {
   padding: 8px 0;
   display: none;
   position: absolute;
-  top: calc(100% + 1px);
+  top: 100%;
   left: 0;
   overflow-y: auto;
 }
@@ -1990,6 +2001,11 @@ body {
     height: 42px;
     padding: 0 14px;
     font-size: 13px;
+  }
+
+  .episodes__filtering .select .select__arrow {
+    width: 11px;
+    height: 11px;
   }
 
   .episodes__filtering .select .options {
@@ -2843,7 +2859,6 @@ body.modal-open {
 .scroll-btn {
   z-index: 1001;
   background-color: var(--green);
-  fill: #000;
   cursor: pointer;
   border: none;
   border-radius: 50%;
@@ -2859,11 +2874,16 @@ body.modal-open {
 }
 
 .scroll-btn .scroll-btn__svg {
-  fill: #000;
+  color: #000;
   flex-shrink: 0;
   width: 22px;
   height: 22px;
+  transition: transform .3s;
   display: block;
+}
+
+.scroll-btn.scroll-up .scroll-btn__svg {
+  transform: rotate(180deg);
 }
 
 .scroll-btn:hover {
@@ -2879,7 +2899,7 @@ body.modal-open {
     right: 15px;
   }
 
-  .scroll-btn__svg {
+  .scroll-btn .scroll-btn__svg {
     width: 19px;
     height: 19px;
   }
