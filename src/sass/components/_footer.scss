@@ -1,11 +1,11 @@
+
 @use "../utils/mixin" as *;
 
 .footer {
   padding-top: 50px;
   padding-bottom: 20px;
-  .characters-page & {
-    background: var(--black);
-  }
+
+  .characters-page &,
   .episodes-page & {
     background: var(--black);
   }
@@ -17,6 +17,7 @@
   justify-content: space-between;
   margin-bottom: 100px;
 }
+
 .footer__logos {
   position: relative;
   width: 225px;
@@ -28,32 +29,30 @@
   position: absolute;
   left: 25px;
   top: 10px;
- width: 99px;
-height: 84px;
+  width: 99px;
+  height: 84px;
   object-fit: contain;
 }
 
 .footer__logo-button {
   position: absolute;
- width: 225px;
+  width: 225px;
   height: auto;
   top: 35px;
   right: -2px;
- 
   z-index: 2;
 }
+
 .footer__btns {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.footer__btn__link {
-}
+
 .footer__btn__link button {
   @include text($color: #111, $size: 16px, $height: 113%, $weight: 400);
-  .characters-page & {
-    color: #fafafa;
-  }
+
+  .characters-page &,
   .episodes-page & {
     color: #fafafa;
   }
@@ -66,6 +65,7 @@ height: 84px;
   display: flex;
   gap: 32px;
 }
+
 .footer__item {
   border: 1px solid #11111147;
   border-radius: 12px;
@@ -74,25 +74,40 @@ height: 84px;
   display: flex;
   justify-content: center;
   align-items: center;
-  .characters-page & {
+
+  .characters-page &,
+  .episodes-page & {
     border: 1px solid #4c4b4baa;
   }
-  .episodes-page & {
-border: 1px solid #4c4b4baa;
-  }
 }
+
 .footer__link {
-  .characters-page & {
-    fill: #fafafa;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Default page
+  color: #111;
+
+  // Dark pages
+  .characters-page &,
   .episodes-page & {
-    fill: #fafafa;
+    color: #fafafa;
+  }
+
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    color: #888;
+    transform: translateY(-3px);
   }
 }
+
 .footer__svg {
   width: 28px;
   height: 28px;
 }
+
 .footer__info {
   @include text(
     $color: rgba(17, 17, 17, 0.4),
@@ -103,14 +118,11 @@ border: 1px solid #4c4b4baa;
 
   text-align: center;
 
-   .characters-page & {
-    color:  rgba(250, 250, 250, 0.4);
-  }
+  .characters-page &,
   .episodes-page & {
-    color:  rgba(250, 250, 250, 0.4);
+    color: rgba(250, 250, 250, 0.4);
   }
 }
-
 
 // Tablet
 @media (max-width: 768px) {
@@ -126,13 +138,6 @@ border: 1px solid #4c4b4baa;
     gap: 20px 10px;
     margin-bottom: 50px;
   }
-
-
-.footer__btns {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
 
   .footer__btns {
     grid-column: 2;
@@ -175,35 +180,31 @@ border: 1px solid #4c4b4baa;
     gap: 15px 30px;
     margin-bottom: 40px;
   }
-.footer__logos {
-  position: relative;
- width: 149px;
-height: 107px;
-  flex-shrink: 0;
-}
-  .footer__logo {
-  position: absolute;
-  left: 15px;
-  top: 15px;
- width: 71px;
-height: 60px;
-  object-fit: contain;
-}
 
-.footer__logo-button {
-  position: absolute;
-width: 149px;
-  height: auto;
-  top: 35px;
-  right: -2px;
- 
-  z-index: 2;
-}
-.footer__btns {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+  .footer__logos {
+    position: relative;
+    width: 149px;
+    height: 107px;
+    flex-shrink: 0;
+  }
+
+  .footer__logo {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    width: 71px;
+    height: 60px;
+    object-fit: contain;
+  }
+
+  .footer__logo-button {
+    position: absolute;
+    width: 149px;
+    height: auto;
+    top: 35px;
+    right: -2px;
+    z-index: 2;
+  }
 
   .footer__btns {
     gap: 8px;
